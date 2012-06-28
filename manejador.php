@@ -2,7 +2,7 @@
 
 require_once 'funcionesPHP/funcionesGenerales.php';
 
-//session_save_path("/home/users/web/b1235/ipw.efoodcommx/public_html/cgi-bin/tmp");
+session_save_path("/home/users/web/b1235/ipw.efoodcommx/public_html/cgi-bin/tmp");
 session_start();
 
 
