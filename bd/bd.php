@@ -6,4 +6,3 @@ class Configpdo extends PDO {
     }
 }
 ?>
-
