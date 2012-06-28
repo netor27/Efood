@@ -85,7 +85,7 @@ function getGruposIngredientesDePlatillo($idPlatillo) {
     }
 }
 
-function getGrupoIngredientes($idGrupoIngredientes){
+function getGrupoIngredientes($idGrupoIngredientes) {
     global $conex;
     $stmt = $conex->prepare("SELECT * 
                             FROM grupoingredientes 
@@ -103,13 +103,13 @@ function getGrupoIngredientes($idGrupoIngredientes){
         $grupoIngredientes->nombre = $row['nombre'];
         $grupoIngredientes->idIngredienteDepende = $row['idIngredienteDepende'];
         return $grupoIngredientes;
-    }else{
+    } else {
         print_r($stmt->errorInfo());
         return NULL;
     }
 }
 
-function getIdPlatilloDeGrupoIngredientes($idGrupoIngredientes){
+function getIdPlatilloDeGrupoIngredientes($idGrupoIngredientes) {
     global $conex;
     $stmt = $conex->prepare("SELECT idPlatillo 
                             FROM grupoingredientes 
@@ -119,7 +119,36 @@ function getIdPlatilloDeGrupoIngredientes($idGrupoIngredientes){
         $row = $stmt->fetch();
         $id = $row['idPlatillo'];
         return $id;
-    }else{
+    } else {
+        print_r($stmt->errorInfo());
+        return NULL;
+    }
+}
+
+function getGruposIngredientesQueDependenDeEsteGrupo($idGrupoIngredientes) {
+    global $conex;
+    $stmt = $conex->prepare("SELECT * FROM grupoingredientes 
+                            WHERE idGrupoDepende = :id");
+    $stmt->bindParam(':id', $idGrupoIngredientes);
+    if ($stmt->execute()) {
+        $gruposIngredientes = array();
+        $rows = $stmt->fetchAll();
+        require_once 'modulos/platillos/clases/GrupoIngredientes.php';
+        $i = 0;
+        foreach ($rows as $row) {
+            $grupoIngredientes = new GrupoIngredientes();
+            $grupoIngredientes->idGrupoIngredientes = $row['idGrupoIngredientes'];
+            $grupoIngredientes->idPlatillo = $row['idPlatillo'];
+            $grupoIngredientes->nombre = $row['nombre'];
+            $grupoIngredientes->excluyente = $row['excluyente'];
+            $grupoIngredientes->requerido = $row['requerido'];
+            $grupoIngredientes->idGrupoDepende = $row['idGrupoDepende'];
+            $grupoIngredientes->idIngredienteDepende = $row['idIngredienteDepende'];
+            $gruposIngredientes[$i] = $grupoIngredientes;
+            $i++;
+        }
+        return $gruposIngredientes;
+    } else {
         print_r($stmt->errorInfo());
         return NULL;
     }

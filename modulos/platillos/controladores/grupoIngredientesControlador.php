@@ -78,6 +78,11 @@ function formaGrupoIngredientesSubmit() {
         }
     } else if ($tipo == "editar") {
         $grupoIngredientes->idGrupoIngredientes = $_POST['idGrupoIngredientes'];
+
+        if ($grupoIngredientes->idGrupoDepende == $grupoIngredientes->idGrupoIngredientes) {
+            $grupoIngredientes->idGrupoDepende = -1;
+            $grupoIngredientes->idIngredienteDepende = -1;
+        }
         if (modificaGrupoIngredientes($grupoIngredientes)) {
             setSessionMessage('Se modificó correctamente el grupo de ingredientes ' . $grupoIngredientes->nombre);
         } else {
@@ -105,12 +110,16 @@ function borrar() {
     $idGrupoIngredientes = $_GET['i'];
     require_once 'modulos/platillos/modelos/grupoIngredientesModelo.php';
     $idPlatillo = getIdPlatilloDeGrupoIngredientes($idGrupoIngredientes);
-    if (bajaGrupoIngredientes($idGrupoIngredientes)) {
-        setSessionMessage("Se borró correctamente");
+    if (is_null(getGruposIngredientesQueDependenDeEsteGrupo($idGrupoIngredientes))) {        
+        if (bajaGrupoIngredientes($idGrupoIngredientes)) {
+            setSessionMessage("Se borró correctamente");
+        } else {
+            setSessionMessage("Ocurrió un error al borrar");
+        }
     } else {
-        setSessionMessage("Ocurrió un error al borrar");
+        setSessionMessage("No puedes borrar este grupo de ingredientes porque hay grupos que dependen de el.");
     }
-    redirect("grupoIngredientes.php?i=" . $grupoIngredientes->idPlatillo);
+    redirect("grupoIngredientes.php?i=" . $idPlatillo);
 }
 
 function getIngredientesJSON() {

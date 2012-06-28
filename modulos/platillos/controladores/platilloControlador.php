@@ -4,7 +4,9 @@ function alta() {
     $idRestaurante = $_GET['r'];
     $tipo = "alta";
     require_once 'modulos/platillos/clases/Platillo.php';
+    require_once 'modulos/platillos/clases/Categoria.php';
     $platillo = new Platillo();
+    $categoria = new Categoria();
     require_once 'modulos/platillos/vistas/formaPlatillo.php';
 }
 
@@ -62,9 +64,11 @@ function modificar() {
     $tipo = "editar";
     $idPlatillo = $_GET['i'];
     require_once 'modulos/platillos/modelos/platilloModelo.php';
+    require_once 'modulos/platillos/modelos/CategoriaModelo.php';
     $idRestaurante = getIdRestauranteDePlatillo($idPlatillo);
     require_once 'modulos/platillos/clases/Platillo.php';
     $platillo = getPlatillo($idPlatillo);
+    $categoria = getCategoria($platillo->idCategoria);
     require_once 'modulos/platillos/vistas/formaPlatillo.php';
 }
 
@@ -233,6 +237,53 @@ function mostrar() {
     Platillo::printHeader();
     $platillo->printPlatillo();
     echo '</table';
+}
+
+function duplicar(){
+    $idRestaurante = $_GET['r'];
+    require_once 'modulos/platillos/modelos/platilloModelo.php';
+    $platillos = getPlatillosDeRestaurante($idRestaurante);
+    require_once 'modulos/platillos/vistas/duplicarPlatillo.php';
+}
+
+function duplicarSubmit(){
+    $idRestaurante = $_POST['idRestaurante'];
+    $idPlatillo = $_POST['idPlatillo'];
+    require_once 'modulos/platillos/modelos/platilloModelo.php';
+    require_once 'modulos/platillos/modelos/grupoIngredientesModelo.php';
+    require_once 'modulos/platillos/modelos/ingredienteModelo.php';
+    
+    //obtenemos el platillo que vamos a duplicar
+    $platillo = getPlatillo($idPlatillo);
+    //obtenemos su horario
+    $horario = getHorarioPlatillo($idPlatillo);
+    
+    
+    //generamos un platillo nuevo, con la misma información, pero con un idNuevo
+    $idPlatilloNuevo = altaPlatillo($platillo);
+    //actualizamos la hora de este platillo
+    actualizaHorarioPlatillo($idPlatilloNuevo, $horario);
+    
+    //obtenemos los grupos de ingredientes que pertenecen a este platillo
+    $gruposIngredientes = getGruposIngredientesDePlatillo($idPlatillo);
+    
+    foreach($gruposIngredientes as $grupo){     
+        //actualizamos el idPlatillo al platillo nuevo
+        $grupo->idPlatillo = $idPlatilloNuevo;
+        //establecer la dependencia de los grupos en -1
+        $grupo->idGrupoDepende = -1;
+        $grupo->idIngredienteDepende = -1;
+        //duplicamos este grupo de ingredientes
+        $idGrupoNuevo = altaGrupoIngredientes($grupo);
+        //obtenemos los ingredientes
+        $ingredientes = getIngredientesDeGrupo($grupo->idGrupoIngredientes);
+        foreach($ingredientes as $ingrediente){
+            $ingrediente->idGrupoIngredientes = $idGrupoNuevo;
+            $idIngrediente = altaIngrediente($ingrediente);
+        }
+    }
+    setSessionMessage("Se duplicó correctamente el platillo");
+    redirect("restaurantes.php?a=menu&i=" . $idRestaurante);
 }
 
 ?>
