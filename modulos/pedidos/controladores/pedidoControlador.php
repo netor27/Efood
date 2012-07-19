@@ -31,7 +31,9 @@ function menu() {
     require_once('modulos/restaurantes/modelos/RestauranteModelo.php');
     $restaurante = getRestaurante($idRestaurante);
     $platillos = getPlatillosDeRestaurante($idRestaurante);
-
+    //if(isset($_SESSION[$idRestaurante]))
+        //$_SESSION['pedido'] = $_SESSION[$idRestaurante];
+    
     
     require_once('modulos/platillos/vistas/mostrarPlatillosPedido.php');
 }
@@ -44,10 +46,24 @@ function obtenIngredientes(){
     echo json_encode($json);
 }
 
+function obtenPedidos(){
+    require_once('modulos/pedidos/modelos/pedidoModelo.php');
+    require_once 'modulos/pedidos/clases/PlatilloElementos.php';
+    $pedidos = getPedidos();
+    return $pedidos;
+}
+
 function agregaAlPedido(){
     require_once('modulos/pedidos/modelos/pedidoModelo.php');
     require_once 'modulos/pedidos/clases/PlatilloElementos.php';
     $json = guardaPedido();
+    echo json_encode($json);
+}
+
+function pedir(){
+    require_once('modulos/pedidos/modelos/pedidoModelo.php');
+    require_once 'modulos/pedidos/clases/PlatilloElementos.php';
+    $json = generarPedido();
     echo json_encode($json);
 }
 ?>
