@@ -1,8 +1,6 @@
 <?php
 
 function handlePaypalIpnMessage() {
-    $header = "";
-    $emailtext = "";
 
     if (isset($_GET['email']))
         $email = $_GET['email'];
@@ -79,19 +77,16 @@ function handlePaypalIpnMessage() {
             $ipnMensaje->test_ipn = $_POST['test_ipn'];
         if (isset($_POST['custom']))
             $ipnMensaje->custom = $_POST['custom'];
-        $msg = $ipnMensaje->toString();
 
         $mensaje = "";
-        $recibidoAnteriormente = txnRecibido($ipnMensaje->txn_id);
-        if ($recibidoAnteriormente) {
-            $mensaje = "El txn_id=" . $ipnMensaje->txn_id . " ya había sido recibido\n\n\n";
+        if (txnRecibido($ipnMensaje->txn_id)) {
+            $mensaje = "El txn_id=" . $ipnMensaje->txn_id . " ya había sido recibido";
         } else {
             $id = agregarIpnMensaje($ipnMensaje);
             if (is_array($id)) {
-                errorArray('000', $id);
+                $mensaje = "ERROR al agregar a la bd errorInfo => " . implode(", ", $id);
             } else {
                 if ($id < 0) {
-                    error("001", "Error al agregar a la bd");
                     $mensaje = "ERROR al agregar a la bd \n\n\n";
                 } else {
                     //error("001","Se agrego el mensaje a la bd correctamente");
@@ -101,15 +96,16 @@ function handlePaypalIpnMessage() {
             }
         }
 
-       
 
-        mail($email, "Live-VERIFIED IPN", $mensaje . $emailtext . "\n\n" . $req);
+
+        mail($email, "IPN Paypal Valido", $mensaje . "<br><br><br>" . $ipnMensaje->toString());
     } else if (strcmp($res, "INVALID") == 0) {
         // log for manual investigation
         // If 'INVALID', send an email. TODO: Log for manual investigation.
         foreach ($_POST as $key => $value) {
             $emailtext .= $key . " = " . $value . "\n\n";
         }
-        mail($email, "Live-INVALID IPN", $aux . "\n\n" . $errno . "\n" . $errstr . "\n\n\n" . $emailtext . "\n\n" . $req);
+        $msg = "Se recibio un IPN de paypal invalido. <br> estos son los datos:<br><br>";
+        mail($email, "IPN Paypal Invalido", $msg . $emailtext);
     }
 }
