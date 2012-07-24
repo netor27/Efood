@@ -1,6 +1,8 @@
 <?php
 
 function handlePaypalIpnMessage() {
+    $emailtext = "mensaje recibido";
+    $subject = "IPN MSG";
 
     if (isset($_GET['email']))
         $email = $_GET['email'];
@@ -93,10 +95,8 @@ function handlePaypalIpnMessage() {
                 }
             }
         }
-
-
-
-        mail($email, "IPN Paypal Valido", $mensaje . "<br><br><br>" . $ipnMensaje->toString());
+        $subject = "IPN Paypal Valido";
+        $emailtext = $mensaje . "<br><br><br>" . $ipnMensaje->toString();
     } else if (strcmp($res, "INVALID") == 0) {
         // log for manual investigation
         // If 'INVALID', send an email. TODO: Log for manual investigation.
@@ -105,6 +105,9 @@ function handlePaypalIpnMessage() {
             $emailtext .= $key . " = " . $value . "<br>";
         }
         $msg = "Se recibio un IPN de paypal invalido. <br> estos son los datos:<br><br>";
-        mail($email, "IPN Paypal Invalido", $msg . "<br><br>" . $emailtext);
+        
+        $subject = "IPN Paypal Invalido";
+        $emailtext = $msg . "<br><br>" . $emailtext;
     }
+    mail($email, $subject, $emailtext);
 }
