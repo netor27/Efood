@@ -24,7 +24,7 @@ function handlePaypalIpnMessage() {
     curl_setopt($ch, CURLOPT_POSTFIELDS, $req);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
     curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Host: www.paypal.com'));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Host: www.sandbox.paypal.com'));
     $res = curl_exec($ch);
     curl_close($ch);
 
