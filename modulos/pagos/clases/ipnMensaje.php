@@ -8,7 +8,6 @@ class IpnMensaje {
     public $receiver_email = null;
     public $item_name = null;
     public $item_number = null;
-    public $item_id = null;
     public $payment_status = null;
     public $parent_txt_id = null;
     public $mc_gross = null;
@@ -18,7 +17,7 @@ class IpnMensaje {
     public $last_name = null;
     public $payer_email = null;
     public $payment_date = null;
-    public $test_ipn = null;
+    public $test_ipn = 0;
     public $custom = null;
     public $complete_post = null;
 
@@ -34,7 +33,6 @@ class IpnMensaje {
         $res.=" <br> receirver_email =>" . $receiver_email;
         $res.=" <br> item_name =>" . $item_name;
         $res.=" <br> item_number =>" . $item_number;
-        $res.=" <br> item_id =>" . $item_id;
         $res.=" <br> payment_status =>" . $payment_status;
         $res.=" <br> parent_txt_id =>" . $parent_txt_id;
         $res.=" <br> mc_gross (cantidad depositada)=>" . $mc_gross;

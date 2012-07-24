@@ -53,8 +53,6 @@ function handlePaypalIpnMessage() {
             $ipnMensaje->item_name = $_POST['item_name'];
         if (isset($_POST['item_number']))
             $ipnMensaje->item_number = $_POST['item_number'];
-        if (isset($_POST['item_id']))
-            $ipnMensaje->item_id = $_POST['item_id'];
         if (isset($_POST['payment_status']))
             $ipnMensaje->payment_status = $_POST['payment_status'];
         if (isset($_POST['parent_txn_id']))
