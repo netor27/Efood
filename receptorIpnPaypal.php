@@ -79,9 +79,8 @@ if (strcmp($res, "VERIFIED") == 0) {
             if ($id < 0) {
                 $mensaje = "ERROR al agregar a la bd \n\n\n";
             } else {
-                //error("001","Se agrego el mensaje a la bd correctamente");
                 $mensaje = "Se agregó correctamente el mensaje\n\n\n";
-                analizarIpnMensaje($ipnMensaje);
+                //analizarIpnMensaje($ipnMensaje);
             }
         }
     }
