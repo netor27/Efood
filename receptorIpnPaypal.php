@@ -30,7 +30,7 @@ $res = curl_exec($ch);
 curl_close($ch);
 
 if (strcmp($res, "VERIFIED") == 0) {
-    equire_once('modulos/ipn/modelos/ipnModelo.php');
+    require_once('modulos/pagos/modelos/ipnModelo.php');
 
     $ipnMensaje = new IpnMensaje();
     $ipnMensaje->complete_post = $req;
@@ -39,8 +39,6 @@ if (strcmp($res, "VERIFIED") == 0) {
         $ipnMensaje->txn_type = $_POST['txn_type'];
     if (isset($_POST['txn_id']))
         $ipnMensaje->txn_id = $_POST['txn_id'];
-    if (isset($_POST['business']))
-        $ipnMensaje->business = $_POST['business'];
     if (isset($_POST['receiver_email']))
         $ipnMensaje->receiver_email = $_POST['receiver_email'];
     if (isset($_POST['item_name']))
