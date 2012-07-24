@@ -24,7 +24,7 @@ function handlePaypalIpnMessage() {
     curl_setopt($ch, CURLOPT_POSTFIELDS, $req);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
     curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Host: www.sandbox.paypal.com'));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Host: www.paypal.com'));
     $res = curl_exec($ch);
     curl_close($ch);
 
@@ -100,10 +100,11 @@ function handlePaypalIpnMessage() {
     } else if (strcmp($res, "INVALID") == 0) {
         // log for manual investigation
         // If 'INVALID', send an email. TODO: Log for manual investigation.
+        $emailtext = "";
         foreach ($_POST as $key => $value) {
-            $emailtext .= $key . " = " . $value . "\n\n";
+            $emailtext .= $key . " = " . $value . "<br>";
         }
         $msg = "Se recibio un IPN de paypal invalido. <br> estos son los datos:<br><br>";
-        mail($email, "IPN Paypal Invalido", $msg . $emailtext);
+        mail($email, "IPN Paypal Invalido", $msg . "<br><br>" . $emailtext);
     }
 }
