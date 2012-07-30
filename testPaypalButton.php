@@ -1,21 +1,21 @@
 <HTML>
     <?php
-    $form = array('cmd' => '_xclick',
-        'business' => 'gerardov15@hotmail.com',
-        'cert_id' => 'K3XLPDNFUKNFA',
-        'lc' => 'ES_MX',
-        'custom' => '123custom456',
-        'invoice' => '',
-        'currency_code' => 'MXN',
-        'no_shipping' => '1',
-        'item_name' => 'Pedido a Chillis',
-        'item_number' => '123456',
-        'amount' => '300'
-        
-    );
-
     require_once 'modulos/pagos/modelos/PayPalModelo.php';
-    $encrypted = paypal_encrypt($form);
+    //Ejemplo para crear un boton de pago de paypal con la información encriptada
+    //La funcion recibe 4 variables:
+    //$nombreArticulo => Descripción de lo que el usuario va a comprar. Aparecerá en la página de paypal 
+    //                  como descripción de máximo 127 caracteres. La longitud se valida dentro de la función,
+    //                  si hace un substring.
+    //$numeroArticulo => Variable que aparece como "numero de articulo", esta variable se muestra al usuario.
+    //                  Máximo 127 caracteres, se valida dentro de la función
+    //$precio         =>    Precio total
+    //$variableId     => Variable que no se muestra al usuario, es para usarse dentro del sistema. Cuando paypal
+    //                  avisa que se realizo el pago, envía esta variable para que el sistema pueda identificar
+    //                  que pedido se pago. Lo mejor sería poner el idPedido o algo así en esta variable
+    //                  Máximo 256 caracteres, se valida dentro de la función
+    //
+    $encrypted = encriptarInformacionBotonPago("Pedido a Chillis", "123456", "300", "123custom456");
+    
     ?> 
     <HEAD>
         <TITLE>Boton encriptado de Paypal</TITLE>

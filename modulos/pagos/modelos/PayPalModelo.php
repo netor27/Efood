@@ -1,14 +1,10 @@
 <?php
-
-# private key file to use
-$MY_KEY_FILE = "/home/neto/paypal/my-prvkeyFood.pem";
-
-# public certificate file to use
-$MY_CERT_FILE = "/home/neto/paypal/my-pubcertFood.pem";
-
-# Paypal's public certificate
-$PAYPAL_CERT_FILE = "/home/neto/paypal/paypal_cert.pem";
-
+# Archivo de llave privada
+$MY_KEY_FILE = "../../certificadosPaypal/my-prvkeyFood.pem";
+# Archivo de llave publica
+$MY_CERT_FILE = "../../certificadosPaypal/my-pubcertFood.pem";
+# Archivo de llave publica de paypal
+$PAYPAL_CERT_FILE = "../../certificadosPaypal/paypal_cert.pem";
 # path to the openssl binary
 $OPENSSL = "/usr/bin/openssl";
 
@@ -17,8 +13,7 @@ function paypal_encrypt($hash) {
     global $MY_CERT_FILE;
     global $PAYPAL_CERT_FILE;
     global $OPENSSL;
-
-
+    
     if (!file_exists($MY_KEY_FILE)) {
         echo "ERROR: MY_KEY_FILE $MY_KEY_FILE not found\n";
     }
@@ -30,12 +25,11 @@ function paypal_encrypt($hash) {
     }
 
     //Assign Build Notation for PayPal Support
-    $hash['bn'] = 'UNOVA DEVELOPMENT';
+    $hash['bn'] = 'EFOOD DEVELOPMENT';
 
     $data = "";
     foreach ($hash as $key => $value) {
         if ($value != "") {
-            //echo "Adding to blob: $key=$value\n";
             $data .= "$key=$value\n";
         }
     }
@@ -53,4 +47,30 @@ function paypal_encrypt($hash) {
     }
 }
 
+function encriptarInformacionBotonPago($nombreArticulo, $numeroArticulo, $precio, $variableId){
+    //validar la longitud máxima de las variables
+    if(strlen($nombreArticulo) > 127)
+        $nombreArticulo = substr($nombreArticulo, 0, 127);
+    if(strlen($numeroArticulo) > 127)
+        $numeroArticulo = substr($numeroArticulo, 0, 127);
+    if(strlen($variableId) > 256)
+        $variableId = substr($variableId, 0, 256);
+    
+    $form = array(
+        'cmd' => '_xclick',
+        'business' => 'gerardov15@hotmail.com',
+        'cert_id' => 'K3XLPDNFUKNFA',
+        'lc' => 'ES_MX',
+        'invoice' => '',
+        'currency_code' => 'MXN',
+        'no_shipping' => '1',
+        'quantity' => '1',
+        'item_name' => $nombreArticulo,
+        'item_number' => $numeroArticulo,
+        'amount' => $precio,
+        'custom' => $variableId
+    );
+    $encrypted = paypal_encrypt($form);
+    return $encrypted;
+}
 ?>
