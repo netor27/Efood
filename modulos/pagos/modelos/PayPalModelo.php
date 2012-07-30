@@ -1,10 +1,10 @@
 <?php
 # Archivo de llave privada
-$MY_KEY_FILE = "../../certificadosPaypal/my-prvkeyFood.pem";
+$MY_KEY_FILE = "archivos/certificadosPaypal/my-prvkeyFood.pem";
 # Archivo de llave publica
-$MY_CERT_FILE = "../../certificadosPaypal/my-pubcertFood.pem";
+$MY_CERT_FILE = "archivos/certificadosPaypal/my-pubcertFood.pem";
 # Archivo de llave publica de paypal
-$PAYPAL_CERT_FILE = "../../certificadosPaypal/paypal_cert.pem";
+$PAYPAL_CERT_FILE = "archivos/certificadosPaypal/paypal_cert.pem";
 # path to the openssl binary
 $OPENSSL = "/usr/bin/openssl";
 
