@@ -3,20 +3,23 @@
 $emailtext = "mensaje recibido";
 $subject = "IPN MSG";
 
+//Si en paypal esta configurado un email como variable de get, enviamos a ese mail
+//sino, se envía por default a un mail establecido
 if (isset($_GET['email']))
     $email = $_GET['email'];
 else
     $email = 'neto.webmaster.r27@gmail.com';
-
-// read the post from PayPal system and add 'cmd'
+//Se tiene que regresar el mismo post a paypal con cmd=_notify-validate
+//para validar que lo que se haya recibido si venga de paypal
 $req = 'cmd=' . urlencode('_notify-validate');
 
+//Concatenamos todas las variables que recibimos de paypal
 foreach ($_POST as $key => $value) {
     $value = urlencode(stripslashes($value));
     $req .= "&$key=$value";
 }
 
-
+//Se hace un post a paypal y se le la respuesta
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, 'https://www.sandbox.paypal.com/cgi-bin/webscr');
 curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -29,12 +32,14 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array('Host: www.sandbox.paypal.com'));
 $res = curl_exec($ch);
 curl_close($ch);
 
+//Si la respuesta contiene VERIFIED, si es un mensaje de paypal válido,
+//lo procesamos
 if (strcmp($res, "VERIFIED") == 0) {
     require_once('modulos/pagos/modelos/ipnModelo.php');
 
     $ipnMensaje = new IpnMensaje();
     $ipnMensaje->complete_post = $req;
-
+    //Guardamos los datos que recibimos de paypal en un objeto
     if (isset($_POST['txn_type']))
         $ipnMensaje->txn_type = $_POST['txn_type'];
     if (isset($_POST['txn_id']))
@@ -69,9 +74,12 @@ if (strcmp($res, "VERIFIED") == 0) {
         $ipnMensaje->custom = $_POST['custom'];
 
     $mensaje = "";
+    //validamos que no hayamos recibido antes este mensaje, ya que paypal puede enviarlos dobles
     if (txnRecibido($ipnMensaje->txn_id)) {
         $mensaje = "El txn_id=" . $ipnMensaje->txn_id . " ya había sido recibido";
     } else {
+        //el mensaje no se había recibido, entonces agregamos el mensaje a la bd y procesamos
+        //la información
         $id = agregarIpnMensaje($ipnMensaje);
         if (is_array($id)) {
             $mensaje = "ERROR al agregar a la bd errorInfo => " . implode(", ", $id);
@@ -87,8 +95,7 @@ if (strcmp($res, "VERIFIED") == 0) {
     $subject = "IPN Paypal Valido";
     $emailtext = $mensaje . "/n/n/n" . $ipnMensaje->toString();
 } else if (strcmp($res, "INVALID") == 0) {
-    // log for manual investigation
-    // If 'INVALID', send an email. TODO: Log for manual investigation.
+    // El mensaje que llego no es válido, INVESTIGAR
     $emailtext = "";
     foreach ($_POST as $key => $value) {
         $emailtext .= $key . " = " . $value . "/n";
