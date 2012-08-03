@@ -3,6 +3,9 @@
 $emailtext = "mensaje recibido";
 $subject = "IPN MSG";
 
+$url = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
+$host = 'Host: www.sandbox.paypal.com';
+
 //Si en paypal esta configurado un email como variable de get, enviamos a ese mail
 //sino, se envía por default a un mail establecido
 if (isset($_GET['email']))
@@ -21,14 +24,14 @@ foreach ($_POST as $key => $value) {
 
 //Se hace un post a paypal y se le la respuesta
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'https://www.sandbox.paypal.com/cgi-bin/webscr');
+curl_setopt($ch, CURLOPT_URL, $url);
 curl_setopt($ch, CURLOPT_HEADER, 0);
 curl_setopt($ch, CURLOPT_POST, 1);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_POSTFIELDS, $req);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
 curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-curl_setopt($ch, CURLOPT_HTTPHEADER, array('Host: www.sandbox.paypal.com'));
+curl_setopt($ch, CURLOPT_HTTPHEADER, array($host));
 $res = curl_exec($ch);
 curl_close($ch);
 
@@ -88,7 +91,8 @@ if (strcmp($res, "VERIFIED") == 0) {
                 $mensaje = "ERROR al agregar a la bd \n\n\n";
             } else {
                 $mensaje = "Se agregó correctamente el mensaje\n\n\n";
-                //analizarIpnMensaje($ipnMensaje);
+                require_once 'modulos/pagos/controladores/ipnControlador.php';
+                analizarIpnMensaje($ipnMensaje);
             }
         }
     }
