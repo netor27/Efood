@@ -1,19 +1,15 @@
 <?php
-# Archivo de llave privada
-$MY_KEY_FILE = "archivos/certificadosPaypal/my-prvkeyFood.pem";
-# Archivo de llave publica
-$MY_CERT_FILE = "archivos/certificadosPaypal/my-pubcertFood.pem";
-# Archivo de llave publica de paypal
-$PAYPAL_CERT_FILE = "archivos/certificadosPaypal/paypal_cert.pem";
-# path to the openssl binary
-$OPENSSL = "/usr/bin/openssl";
 
 function paypal_encrypt($hash) {
-    global $MY_KEY_FILE;
-    global $MY_CERT_FILE;
-    global $PAYPAL_CERT_FILE;
-    global $OPENSSL;
-    
+    # Archivo de llave privada
+    $MY_KEY_FILE = "archivos/certificadosPaypal/my-prvkeyFood.pem";
+# Archivo de llave publica
+    $MY_CERT_FILE = "archivos/certificadosPaypal/my-pubcertFood.pem";
+# Archivo de llave publica de paypal
+    $PAYPAL_CERT_FILE = "archivos/certificadosPaypal/paypal_cert.pem";
+# path to the openssl binary
+    $OPENSSL = "/usr/bin/openssl";
+
     if (!file_exists($MY_KEY_FILE)) {
         echo "ERROR: MY_KEY_FILE $MY_KEY_FILE not found\n";
     }
@@ -47,15 +43,15 @@ function paypal_encrypt($hash) {
     }
 }
 
-function encriptarInformacionBotonPago($nombreArticulo, $numeroArticulo, $precio, $variableId){
+function encriptarInformacionBotonPago($nombreArticulo, $numeroArticulo, $precio, $variableId) {
     //validar la longitud máxima de las variables
-    if(strlen($nombreArticulo) > 127)
+    if (strlen($nombreArticulo) > 127)
         $nombreArticulo = substr($nombreArticulo, 0, 127);
-    if(strlen($numeroArticulo) > 127)
+    if (strlen($numeroArticulo) > 127)
         $numeroArticulo = substr($numeroArticulo, 0, 127);
-    if(strlen($variableId) > 256)
+    if (strlen($variableId) > 256)
         $variableId = substr($variableId, 0, 256);
-    
+
     $form = array(
         'cmd' => '_xclick',
         'business' => 'gerardov15@hotmail.com',
@@ -73,4 +69,5 @@ function encriptarInformacionBotonPago($nombreArticulo, $numeroArticulo, $precio
     $encrypted = paypal_encrypt($form);
     return $encrypted;
 }
+
 ?>
