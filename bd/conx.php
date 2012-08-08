@@ -1,10 +1,11 @@
 <?php
+
 require_once('bd/bd.php');
 try {
-	$host = 'localhost';
-	$base = 'dbefood';
-	$usuario = 'root';
-	$pswd = 'root';
+    $host = 'localhost';
+    $base = 'dbefood';
+    $usuario = 'root';
+    $pswd = 'root';
 
 //    $host = 'efoodcommx.ipowermysql.com';
 //    $base = 'dbefood';
