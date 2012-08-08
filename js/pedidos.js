@@ -15,11 +15,13 @@ function obtenerIngredientes(id){
             //txt=txt + json[x].idCategoria;
             txt = txt + "<form id=\"pedido\" name=\"pedido\">"; 
             txt=txt + "<h3>"+json[0].nombrePlatillo+"</h3>";
-            txt=txt + json[0].descripcion+"<br>";
+            if(json[0].descripcion!="" || json[0].descripcion!=null || json[0].descripcion!="null")
+                txt=txt + json[0].descripcion+"<br>";
             txt=txt + "$"+json[0].precioBase+"<br><br>";
             var grupo = json[0].nombreGrupo;
             var checked = true;
-            txt = txt + grupo +"<br>";
+            if(grupo!=null)
+                txt = txt + grupo +"<br>";
             for (x in json){
                 if(json[x].nombreGrupo != null){
                     //txt=txt + json[x].hint;
@@ -58,7 +60,18 @@ function obtenerIngredientes(id){
                             else
                                 txt=txt+"<input type=\"radio\" value=\""+json[x].idIngrediente+"\" name=\""+quitaAcentos(grupo)+"\" id=\""+idDepende+"\" class=\"d"+idDepende+"\" />";
                         }else{
-                            txt=txt+"<input type=\"checkbox\" value=\""+json[x].idIngrediente+"\" name=\""+json[x].idIngrediente+"\" id=\""+idDepende+"\" class=\"hab\"/>";
+                            if(checked && json[x].idIngredienteDepende==-1){
+                                txt=txt+"<input type=\"checkbox\" value=\""+json[x].idIngrediente+"\" name=\""+quitaAcentos(grupo)+"\" id=\""+idDepende+"\" checked=\"checked\" class=\"hab\" />";
+                                checked = false;
+                            }
+                            else if(checked && json[x].idIngredienteDepende!=-1){
+                                txt=txt+"<input type=\"checkbox\" value=\""+json[x].idIngrediente+"\" name=\""+quitaAcentos(grupo)+"\" id=\""+idDepende+"\" checked=\"checked\" class=\"d"+idDepende+"\" />";
+                                checked = false;
+                            }else if(json[x].idIngredienteDepende==-1)
+                                txt=txt+"<input type=\"checkbox\" value=\""+json[x].idIngrediente+"\" name=\""+quitaAcentos(grupo)+"\" id=\""+idDepende+"\" class=\"hab\" />";
+                            else
+                                txt=txt+"<input type=\"checkbox\" value=\""+json[x].idIngrediente+"\" name=\""+quitaAcentos(grupo)+"\" id=\""+idDepende+"\" class=\"d"+idDepende+"\" />";
+                            //txt=txt+"<input type=\"checkbox\" value=\""+json[x].idIngrediente+"\" name=\""+json[x].idIngrediente+"\" id=\""+idDepende+"\" class=\"hab\"/>";
                         }
                         txt=txt + json[x].nombreIngrediente;
                         //txt=txt + json[x].idGrupoDepende+"<br>";

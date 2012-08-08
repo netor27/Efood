@@ -89,7 +89,7 @@ function guardaPedido() {
 
     unset($_SESSION['ingrediente']);
     $_SESSION['pedido']["'".$pedido->idPlatillo."'"] = $datosFinales;
-    $_SESSION["'rest".$pedido->idRestaurante."'"] = $_SESSION['pedido'];
+    $_SESSION["'rest".$pedido->idRestaurante."'"][$pedido->idIngrediente] = $_SESSION['pedido'];
     
     return $datosFinales;
 }
@@ -111,6 +111,8 @@ function getPedidos() {
 }
 
 function generarPedido($pedido){
-    $_SESSION["'rest".$pedido->idRestaurante."'"];
+    foreach($_SESSION["'rest".$pedido->idRestaurante."'"] as $key=>$value){
+        echo $value;
+    }
 }
 ?>
