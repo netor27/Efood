@@ -111,6 +111,7 @@ function agregarPedido(){
     var cantidad = $("#cantidad").val();
     var especificaciones = $("#especificaciones").val();
     var vals = $('#pedido :radio').serialize();
+    vals += "=";
     vals += $('#pedido :checkbox').serialize();
     if(cantidad!="" && cantidad!=null){
         $.ajax({
@@ -119,7 +120,7 @@ function agregarPedido(){
             data: ({
                 "cantidad" : cantidad,
                 "especificaciones" : especificaciones,
-                "valores" : vals
+                "valores" : utf8replace(vals)
             }),
             dataType: "json",
             success: function(json) {                 
@@ -157,4 +158,31 @@ function eventos(e){
     $("input:radio").attr('disabled',true);
     $(".hab").removeAttr('disabled');
     $(".d"+e.value).removeAttr('disabled');
+}
+
+function utf8replace(cadena){
+	cadena=cadena.replace('&#193;','A');
+	cadena=cadena.replace('&#201;','E');
+	cadena=cadena.replace('&#205;','I');
+	cadena=cadena.replace('&#211;','O');
+	cadena=cadena.replace('&#218;','U');
+	cadena=cadena.replace('&#209;','N');
+	cadena=cadena.replace('Ä','A');
+	cadena=cadena.replace('Ë','E');
+	cadena=cadena.replace('Ï','I');
+	cadena=cadena.replace('Ö','O');
+	cadena=cadena.replace('Ü','U');	
+        cadena=cadena.replace('&#225;','a');
+	cadena=cadena.replace('&#233;','e');
+	cadena=cadena.replace('&#237;','i');
+	cadena=cadena.replace('&#243;','o');
+	cadena=cadena.replace('&#250;','u');
+	cadena=cadena.replace('&#241;','n');
+	cadena=cadena.replace('ä','a');
+	cadena=cadena.replace('ë','e');
+	cadena=cadena.replace('ï','i');
+	cadena=cadena.replace('ö','o');
+	cadena=cadena.replace('ü','u');	
+        cadena=cadena.replace('%3A','');	
+	return cadena;
 }

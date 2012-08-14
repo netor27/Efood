@@ -39,10 +39,12 @@ WHERE p.idPlatillo = :id AND p.idPlatillo = gi.idPlatillo AND i.idGrupoIngredien
             $pedido->nombreIngrediente = $row['nombreIngrediente'];
             $pedido->precio = $row['precio'];
             $caracteristicas[$i] = $pedido;
-            if($pedido->idIngrediente!=NULL)
-                $_SESSION['ingrediente']["'".$pedido->idIngrediente."'"] = serialize($pedido);
+            $_SESSION['idPlatillo'] = $pedido->idPlatillo;
+            if($pedido->idIngrediente!=NULL){
+                $_SESSION['ingrediente']["".$pedido->idPlatillo.""]["'".$pedido->idIngrediente."'"] = serialize($pedido);
+            }
             else
-                $_SESSION['ingrediente']['sin'] = serialize($pedido);
+                $_SESSION['ingrediente']["'".$pedido->idPlatillo."'"]['sin'] = serialize($pedido);
             //$_SESSION['platillo'][$pedido->idPlatillo] = serialize($pedido);
             //$_SESSION['idPlatilloActual'] = $pedido->idPlatillo;
             $i++;
@@ -71,9 +73,9 @@ function guardaPedido() {
     $pedido = new PlatilloElementos();
     foreach ($datos as $valor) {
         if(isset($valor[0]) && $valor[0]!=NULL && $valor[0]!=""){
-            $pedido = unserialize($_SESSION['ingrediente']["'".$valor[1]."'"]);
+            $pedido = unserialize($_SESSION['ingrediente'][$_SESSION['idPlatillo']]["'".$valor[1]."'"]); //el valor en la posicion 1 sirve para discriminar porque es el tamaño del platillo
         }else{
-            $pedido = unserialize($_SESSION['ingrediente']['sin']);
+            $pedido = unserialize($_SESSION['ingrediente']["'".$pedido->idPlatillo."'"]['sin']);
         }
         //$pedido = unserialize($_SESSION['idPlatilloActual']);
         //$pedido = unserialize($_SESSION['ingrediente'][$_SESSION['idP']]);
@@ -88,7 +90,7 @@ function guardaPedido() {
     $datosFinales[3] = $total;
 
     unset($_SESSION['ingrediente']);
-    $_SESSION['pedido']["'".$pedido->idPlatillo."'"] = $datosFinales;
+    $_SESSION['pedido']["'".$pedido->idPlatillo."'"]["'".$pedido->idIngrediente."'"] = $datosFinales;
     $_SESSION["'rest".$pedido->idRestaurante."'"][$pedido->idIngrediente] = $_SESSION['pedido'];
     
     return $datosFinales;
@@ -97,8 +99,10 @@ function guardaPedido() {
 function getPedidos() {
     $pedidos = array();
     if (isset($_SESSION['pedido'])) {
-        foreach ($_SESSION['pedido'] as $key => $value) {        
-            $pedidos[$key] = $value;
+        foreach ($_SESSION['pedido'] as $value) {        
+            foreach ($value as $valor) {
+                array_push($pedidos, $valor);
+            }
         }
     }
     
@@ -114,5 +118,32 @@ function generarPedido($pedido){
     foreach($_SESSION["'rest".$pedido->idRestaurante."'"] as $key=>$value){
         echo $value;
     }
+}
+
+ function utf8replace($cadena){
+     str_replace('&#193;','A', $cadena);
+     str_replace('&#201;','E', $cadena);
+     str_replace('&#205;','I', $cadena);
+     str_replace('&#211;','O', $cadena);
+     str_replace('&#218;','U', $cadena);
+     str_replace('&#209;','N', $cadena);
+     str_replace('Ä','A', $cadena);
+     str_replace('Ë','E', $cadena);
+     str_replace('Ï','I', $cadena);
+     str_replace('Ö','O', $cadena);
+     str_replace('Ü','U', $cadena);
+     str_replace('&#225;','a', $cadena);
+     str_replace('&#233;','e', $cadena);
+     str_replace('&#237;','i', $cadena);
+     str_replace('&#243;','o', $cadena);
+     str_replace('&#250;','u', $cadena);
+     str_replace('&#241;','n', $cadena);
+     str_replace('ä','a', $cadena);
+     str_replace('ë','e', $cadena);
+     str_replace('ï','i', $cadena);
+     str_replace('ö','o', $cadena);
+     str_replace('ü','u', $cadena);
+     str_replace('%3A', '',$cadena);     
+     return $cadena;
 }
 ?>
