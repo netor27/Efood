@@ -13,5 +13,9 @@ $colonia = new Colonia();
 <h2><a href="restaurantes.php"> Administración de restaurantes</a></h2>
 <?php
 require_once('modulos/principal/vistas/buscador.html');
+?>
+<br><br><br>
+<h2><a href="adminRestaurante.php">Login de restaurantes</a></h2>
+<?php
 require_once('layout/footer.php');
 ?>

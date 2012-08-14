@@ -10,6 +10,14 @@ if (isset($error)) {
     echo '<h2 style="color: red">' . $error . '</h2>';
 }
 ?>
+<?php
+require_once 'funcionesPHP/funcionesGenerales.php';
+$mensaje = getSessionMessage();
+if (isset($mensaje)) {
+    echo $mensaje;
+}
+?>
+<h3><a href="restaurantes.php?a=establecerPassword&i=<?php echo $restaurante->idRestaurante; ?>">Establecer password</a></h3>
 <form action="restaurantes.php?a=formaRestauranteSubmit&t=<?php echo $tipo; ?>" method="POST">
     <?php
     if ($tipo == "editar")
@@ -23,10 +31,6 @@ if (isset($error)) {
         <li>
             <label>Usuario</label>
             <input type="text" name="usuario" value="<?php echo $restaurante->usuario; ?>">
-        </li>
-        <li>
-            <label>Password</label>
-            <input type="text" name="password" value="<?php echo $restaurante->password; ?>">
         </li>
         <li>
             <div class="ui-widget">

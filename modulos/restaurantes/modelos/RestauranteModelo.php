@@ -67,7 +67,6 @@ function modificaRestaurante($restaurante) {
     global $conex;
     $stmt = $conex->prepare("UPDATE restaurante
                             SET usuario =:usuario,
-                                password =:password,
                                 nombre =:nombre,
                                 idColonia =:idColonia,
                                 descripcion =:descripcion,                                
@@ -92,9 +91,7 @@ function modificaRestaurante($restaurante) {
                                 habilitado = :habilitado
                                 WHERE idRestaurante = :idRestaurante
                                 ");
-
     $stmt->bindParam(":usuario", $restaurante->usuario);
-    $stmt->bindParam(":password", $restaurante->password);
     $stmt->bindParam(":nombre", $restaurante->nombre);
     $stmt->bindParam(":idColonia", $restaurante->idColonia);
     $stmt->bindParam(":descripcion", $restaurante->descripcion);
@@ -120,6 +117,22 @@ function modificaRestaurante($restaurante) {
 
     $stmt->bindParam(":idRestaurante", $restaurante->idRestaurante);
 
+    if ($stmt->execute()) {
+        return true;
+    } else {
+        print_r($stmt->errorInfo());
+        return false;
+    }
+}
+
+function actualizarPassword($idRestaurante, $pass) {
+    global $conex;
+    $stmt = $conex->prepare("UPDATE restaurante
+                            SET password = :pass
+                                WHERE idRestaurante = :idRestaurante
+                                ");
+    $stmt->bindParam(":pass", $pass);
+    $stmt->bindParam(":idRestaurante", $idRestaurante);
     if ($stmt->execute()) {
         return true;
     } else {
@@ -154,6 +167,53 @@ function getRestaurante($idRestaurante) {
         $row = $stmt->fetch();
         require_once 'modulos/restaurantes/clases/Restaurante.php';
         $restaurante = new Restaurante();
+        $restaurante->calle = utf8_encode($row['calle']);
+        $restaurante->descripcion = utf8_encode($row['descripcion']);
+        $restaurante->email = utf8_encode($row['email']);
+        $restaurante->formaPago = utf8_encode($row['formaPago']);
+        $restaurante->gastoEnvio = utf8_encode($row['gastoEnvio']);
+        $restaurante->idColonia = utf8_encode($row['idColonia']);
+        $restaurante->idRestaurante = utf8_encode($row['idRestaurante']);
+        $restaurante->logo = utf8_encode($row['logo']);
+        $restaurante->metodoEntrega = utf8_encode($row['metodoEntrega']);
+        $restaurante->nombre = utf8_encode($row['nombre']);
+        $restaurante->numero = utf8_encode($row['numero']);
+        $restaurante->numeroInt = utf8_encode($row['numeroInt']);
+        $restaurante->paginaWeb = utf8_encode($row['paginaWeb']);
+        $restaurante->password = utf8_encode($row['password']);
+        $restaurante->pedidoMinimo = utf8_encode($row['pedidoMinimo']);
+        $restaurante->razonSocial = utf8_encode($row['razonSocial']);
+        $restaurante->referencia = utf8_encode($row['referencia']);
+        $restaurante->rfc = utf8_encode($row['rfc']);
+        $restaurante->telefono = utf8_encode($row['telefono']);
+        $restaurante->usuario = utf8_encode($row['usuario']);
+        $restaurante->nombreContacto = utf8_encode($row['nombreContacto']);
+        $restaurante->telefonoContacto = utf8_encode($row['telefonoContacto']);
+        $restaurante->comision = utf8_encode($row['comision']);
+        $restaurante->tipoGastoEnvio = $row['tipoGastoEnvio'];
+        $restaurante->habilitado = $row['habilitado'];
+        $restaurante->tipoComision = $row['tipoComision'];
+
+        return $restaurante;
+    } else {
+        return NULL;
+    }
+}
+
+function getRestaurantePorLogin($usuario, $pass) {
+    global $conex;
+    $stmt = $conex->prepare("SELECT * FROM restaurante
+                            WHERE usuario = :usuario AND password = :pass");
+    $stmt->bindParam(":usuario", $usuario);
+    $stmt->bindParam(":pass", $pass);
+
+    $stmt->execute();
+    echo $stmt->rowCount();
+    if ($stmt->rowCount() == 1) {
+        $row = $stmt->fetch();
+        require_once 'modulos/restaurantes/clases/Restaurante.php';
+        $restaurante = new Restaurante();
+        $restaurante->idRestaurante = $row['idRestaurante'];
         $restaurante->calle = utf8_encode($row['calle']);
         $restaurante->descripcion = utf8_encode($row['descripcion']);
         $restaurante->email = utf8_encode($row['email']);
@@ -456,7 +516,7 @@ function getRestaurantesColonia($idColonia) {
             $i++;
         }
         return $restaurantes;
-    }else {
+    } else {
         print_r($stmt->errorInfo());
         return NULL;
     }
@@ -475,8 +535,8 @@ function busquedaRestaurantesUTF8($term) {
         foreach ($rows as $row) {
             $aux = array();
             $aux['id'] = utf8_encode($row['idRestaurante']);
-            $aux['label'] = utf8_encode($row['nombre'] .",".$row['nombre_colonia'].",CP. " . $row['cp']);
-            $aux['value'] = utf8_encode($row['nombre'] .",".$row['nombre_colonia'].",CP. " . $row['cp']);
+            $aux['label'] = utf8_encode($row['nombre'] . "," . $row['nombre_colonia'] . ",CP. " . $row['cp']);
+            $aux['value'] = utf8_encode($row['nombre'] . "," . $row['nombre_colonia'] . ",CP. " . $row['cp']);
             $array[$i] = $aux;
             $i++;
         }
