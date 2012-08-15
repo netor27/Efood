@@ -49,7 +49,7 @@ function obtenIngredientes(){
 function obtenPedidos(){
     require_once('modulos/pedidos/modelos/pedidoModelo.php');
     require_once 'modulos/pedidos/clases/PlatilloElementos.php';
-    $pedidos = getPedidos();
+    $pedidos = getPedidos($_GET['i']);
     return $pedidos;
 }
 

@@ -41,10 +41,11 @@ WHERE p.idPlatillo = :id AND p.idPlatillo = gi.idPlatillo AND i.idGrupoIngredien
             $caracteristicas[$i] = $pedido;
             $_SESSION['idPlatillo'] = $pedido->idPlatillo;
             if($pedido->idIngrediente!=NULL){
-                $_SESSION['ingrediente']["".$pedido->idPlatillo.""]["'".$pedido->idIngrediente."'"] = serialize($pedido);
+                $_SESSION['ingrediente'][$pedido->idPlatillo]["'".$pedido->idIngrediente."'"] = serialize($pedido);
             }
-            else
-                $_SESSION['ingrediente']["'".$pedido->idPlatillo."'"]['sin'] = serialize($pedido);
+            else{
+                $_SESSION['ingrediente'][$pedido->idPlatillo]['sin'] = serialize($pedido);
+            }
             //$_SESSION['platillo'][$pedido->idPlatillo] = serialize($pedido);
             //$_SESSION['idPlatilloActual'] = $pedido->idPlatillo;
             $i++;
@@ -75,7 +76,7 @@ function guardaPedido() {
         if(isset($valor[0]) && $valor[0]!=NULL && $valor[0]!=""){
             $pedido = unserialize($_SESSION['ingrediente'][$_SESSION['idPlatillo']]["'".$valor[1]."'"]); //el valor en la posicion 1 sirve para discriminar porque es el tamaño del platillo
         }else{
-            $pedido = unserialize($_SESSION['ingrediente']["'".$pedido->idPlatillo."'"]['sin']);
+            $pedido = unserialize($_SESSION['ingrediente'][$_SESSION['idPlatillo']]['sin']);
         }
         //$pedido = unserialize($_SESSION['idPlatilloActual']);
         //$pedido = unserialize($_SESSION['ingrediente'][$_SESSION['idP']]);
@@ -90,16 +91,20 @@ function guardaPedido() {
     $datosFinales[3] = $total;
 
     unset($_SESSION['ingrediente']);
-    $_SESSION['pedido']["'".$pedido->idPlatillo."'"]["'".$pedido->idIngrediente."'"] = $datosFinales;
-    $_SESSION["'rest".$pedido->idRestaurante."'"][$pedido->idIngrediente] = $_SESSION['pedido'];
+    if(isset($pedido->idIngrediente))
+        $_SESSION['pedido'][$pedido->idPlatillo][$pedido->idIngrediente] = $datosFinales;
+    else
+        $_SESSION['pedido'][$pedido->idPlatillo]['sin'] = $datosFinales;
+    $_SESSION["'rest".$pedido->idRestaurante."'"] = $_SESSION['pedido'];
     
     return $datosFinales;
 }
 
-function getPedidos() {
+function getPedidos($idRestaurante) {
     $pedidos = array();
-    if (isset($_SESSION['pedido'])) {
-        foreach ($_SESSION['pedido'] as $value) {        
+    print_r($_SESSION["'rest".$idRestaurante."'"]);
+    if (isset($_SESSION["'rest".$idRestaurante."'"])) {
+        foreach ($_SESSION["'rest".$idRestaurante."'"] as $value) {        
             foreach ($value as $valor) {
                 array_push($pedidos, $valor);
             }
