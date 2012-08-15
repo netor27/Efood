@@ -1,6 +1,7 @@
 <?php
 
 require_once 'funcionesPHP/funcionesGenerales.php';
+require_once 'modulos/restaurantes/clases/Restaurante.php';
 
 //session_save_path("/home/users/web/b1235/ipw.efoodcommx/public_html/cgi-bin/tmp");
 session_start();

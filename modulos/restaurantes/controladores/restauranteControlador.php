@@ -20,7 +20,12 @@ function formaRestauranteSubmit() {
     $tipo = $_GET['t'];
 
     require_once 'modulos/restaurantes/clases/Restaurante.php';
-    $restaurante = new Restaurante();
+    require_once 'modulos/restaurantes/modelos/RestauranteModelo.php';
+    if (isset($_POST['idRestaurante'])) {
+        $restaurante = getRestaurante($_POST['idRestaurante']);
+    } else {
+        $restaurante = new Restaurante();
+    }
     $restaurante->calle = $_POST['calle'];
     $restaurante->descripcion = $_POST['descripcion'];
     $restaurante->email = $_POST['email'];
@@ -33,7 +38,7 @@ function formaRestauranteSubmit() {
     $restaurante->numero = $_POST['numero'];
     $restaurante->numeroInt = $_POST['numeroInt'];
     $restaurante->paginaWeb = $_POST['paginaWeb'];
-    $restaurante->password = md5($_POST['password']);
+
     $restaurante->pedidoMinimo = $_POST['pedidoMinimo'];
     $restaurante->razonSocial = $_POST['razonSocial'];
     $restaurante->referencia = $_POST['referencia'];
@@ -59,7 +64,7 @@ function formaRestauranteSubmit() {
 //            $restaurante->printRestaurante();
 //            echo '</table>';
 //            echo '<a href="restaurantes.php">Regresar</a>';
-            setSessionMessage("Se dió de alta el restaurante ".$restaurante->nombre);
+            setSessionMessage("Se dió de alta el restaurante " . $restaurante->nombre);
             redirect("restaurantes.php");
         } else {
             $tipo = "alta";
@@ -78,8 +83,8 @@ function formaRestauranteSubmit() {
 //            echo '</table>';
 //            echo '<br>';
 //            echo '<h2><a href="restaurantes.php">Regresar</a><h2>';
-            setSessionMessage("Se modificó el restaurante ".$restaurante->nombre);
-            redirect("restaurantes.php");
+            setSessionMessage("Se modificó el restaurante " . $restaurante->nombre);            
+            redirect("restaurantes.php?a=editar&i=".$restaurante->idRestaurante);
         } else {
             $tipo = "editar";
             $msg = "Ocurrió un error al modificar el restaurante";
@@ -371,13 +376,37 @@ function actualizarLogoSubmit() {
     }
 }
 
-function RestaurantesJSON(){
-    $term = $_GET['term'];    
+function RestaurantesJSON() {
+    $term = $_GET['term'];
     require_once 'modulos/restaurantes/modelos/RestauranteModelo.php';
-    $restaurantes = busquedaRestaurantesUTF8($term);  
-    
+    $restaurantes = busquedaRestaurantesUTF8($term);
+
     echo json_encode($restaurantes);
-    
+}
+
+function establecerPassword() {
+    $idRestaurante = $_GET['i'];
+    require_once 'modulos/restaurantes/vistas/formaPassword.php';
+}
+
+function establecerPasswordSubmit() {
+    $idRestaurante = $_POST['i'];
+    $pass = $_POST['pass'];
+    $pass2 = $_POST['pass2'];
+    if ($pass == $pass2) {
+        $pass = md5($pass);
+        require_once 'modulos/restaurantes/modelos/RestauranteModelo.php';
+        if (actualizarPassword($idRestaurante, $pass)) {
+            setSessionMessage("<h2 style='color:red'>Se actualizó correctamente el password</h2>");
+            redirect("restaurantes.php?a=editar&i=" . $idRestaurante);
+        } else {
+            setSessionMessage("<h2 style='color:red'>Ocurrió un error al acutalizar los datos</h2>");
+            redirect("restaurantes.php?a=establecerPassword&i=" . $idRestaurante);
+        }
+    } else {
+        setSessionMessage("<h2 style='color:red'>Las contraseñas no coinciden</h2>");
+        redirect("restaurantes.php?a=establecerPassword&i=" . $idRestaurante);
+    }
 }
 
 ?>
