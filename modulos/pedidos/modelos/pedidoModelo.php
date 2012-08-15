@@ -102,7 +102,6 @@ function guardaPedido() {
 
 function getPedidos($idRestaurante) {
     $pedidos = array();
-    print_r($_SESSION["'rest".$idRestaurante."'"]);
     if (isset($_SESSION["'rest".$idRestaurante."'"])) {
         foreach ($_SESSION["'rest".$idRestaurante."'"] as $value) {        
             foreach ($value as $valor) {
