@@ -18,7 +18,14 @@ require_once('layout/headers/headFin.php');
     }
     ?>
 </table>
-<a href="restaurantes.php">Regresar</a>
+<?php
+$restauranteLoggeado = getRestauranteLoggeado();
+if (isset($restauranteLoggeado)) {
+    echo '<a href="adminRestaurante.php">Regresar</a>';
+} else {
+    echo '<a href="restaurantes.php">Regresar</a>';
+}
+?>
 
 <?php
 require_once('layout/footer.php');

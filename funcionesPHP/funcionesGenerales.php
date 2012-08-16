@@ -52,7 +52,7 @@ function validarUsuarioLoggeado() {
         $msgLogin = "Debes iniciar sesión para ver este contenido.";
         require_once 'modulos/principal/vistas/login.php';
         return false;
-    }else{
+    } else {
         return true;
     }
 }
@@ -231,20 +231,37 @@ function getSessionMessage() {
         return NULL;
 }
 
-function validarRestauranteLoggeado(){
-     if (!isset($_SESSION['restauranteUsuario'])) {
+function validarRestauranteLoggeado() {
+    if (!isset($_SESSION['restauranteUsuario'])) {
         $pagina = getUrl();
         require_once 'modulos/administracionRestaurantes/vistas/login.php';
         return false;
-    }else{
+    } else {
         return true;
     }
 }
 
-function getRestauranteLoggeado(){
-    if(isset($_SESSION['restauranteUsuario'])){
+function getRestauranteLoggeado() {
+    if (isset($_SESSION['restauranteUsuario'])) {
         return $_SESSION['restauranteUsuario'];
     }
     return null;
 }
+
+function validarAdministrador() {
+    if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 1)
+        return true;
+    else
+        return false;
+}
+
+function validarRestauranteLoggeadoId($idRestaurante) {
+    if(!isset($_SESSION['restauranteUsuario'])) {
+        return false;
+    }else{
+        $res = $_SESSION['restauranteUsuario'];
+        return $res->idRestaurante == $idRestaurante;
+    }
+}
+
 ?>

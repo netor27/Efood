@@ -11,10 +11,11 @@ function altaSubmit() {
     $codigo = rand(0000000000, 9999999999);
     $user->email = $_POST['email'];
     $user->password = md5($_POST['password']);
-    $user->tipo = '1';
+    $user->tipo = '0'; // cero es usuario comun, uno es administrador
     $user->habilitado = md5($_POST['email']) . $codigo;
     $passwordConfirmation = md5($_POST['passwordr']);
     //$user->tipo = $_POST['tipo']; ??????????el tipo como se va a manejar, por admin?
+    //Si, que el tipo lo pongan desde phpmyadmin, si quieren agregar un tipo = 1 como administrador
 
     if ($user->password == $passwordConfirmation) {
         require_once 'modulos/usuarios/modelos/usuarioModelo.php';
@@ -37,18 +38,20 @@ function altaSubmit() {
 }
 
 function baja() {
-    require_once 'modulos/usuarios/modelos/usuarioModelo.php';
-    confirmBoxBaja();
-    $usuarios = getUsuarios();
-    $idUsuario = $_GET['i'];
+    if (validarAdministrador()) {
+        require_once 'modulos/usuarios/modelos/usuarioModelo.php';
+        confirmBoxBaja();
+        $usuarios = getUsuarios();
+        $idUsuario = $_GET['i'];
 
-    $id = eliminarUsuario($idUsuario);
-    if ($id >= 1) {
-        $mensaje = 'Usuario Eliminado';
-    } else {
-        $mensaje = 'Hubo un error al eliminar el usuario';
+        $id = eliminarUsuario($idUsuario);
+        if ($id >= 1) {
+            $mensaje = 'Usuario Eliminado';
+        } else {
+            $mensaje = 'Hubo un error al eliminar el usuario';
+        }
+        require_once('funcionesPHP/funcionesGenerales.php');
     }
-    require_once('funcionesPHP/funcionesGenerales.php');
     goToIndex();
 }
 
@@ -150,13 +153,16 @@ function modificacionDireccionSubmit() {
 }
 
 function mostrar() {
-    require_once('funcionesPHP/funcionesGenerales.php');
-    require_once 'modulos/usuarios/modelos/usuarioModelo.php';
-    require_once 'modulos/principal/modelos/login.php';
-    confirmBoxBaja();
-    $usuarios = getUsuarios();
-    require_once 'modulos/usuarios/vistas/mostrarUsuarios.html';
-    require_once 'modulos/principal/vistas/login.html';
+    if (validarAdministrador()) {
+        require_once('funcionesPHP/funcionesGenerales.php');
+        require_once 'modulos/usuarios/modelos/usuarioModelo.php';
+        require_once 'modulos/principal/modelos/login.php';
+        confirmBoxBaja();
+        $usuarios = getUsuarios();
+        require_once 'modulos/usuarios/vistas/mostrarUsuarios.html';
+    } else {
+        goToIndex();
+    }
 }
 
 function bajaDireccion() {

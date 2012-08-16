@@ -23,5 +23,7 @@
             }
             ?>
         </form>
+        <br><br>
+        <h2><a href="/">Regresar</a></h2>
     </body>
 </html>

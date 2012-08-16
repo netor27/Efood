@@ -5,8 +5,7 @@
  * and open the template in the editor.
  */
 
-function principal(){
-    
+function principal(){    
     $idCategoria = $_GET['i'];
     require_once 'modulos/platillos/modelos/CategoriaModelo.php';
     $categoria = getCategoria($idCategoria);

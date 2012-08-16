@@ -29,8 +29,7 @@ function login() {
                 setcookie("email", $usuario, time() + $tiempo);
                 setcookie("clv", $clv, time() + $tiempo);
             }
-            require_once 'modulos/usuarios/vistas/mostrarUsuarios.html';
-            require_once 'modulos/principal/vistas/login.html';
+            goToIndex();
         }
     }
 }

@@ -9,8 +9,22 @@ require_once 'modulos/colonias/clases/Colonia.php';
 $colonia = new Colonia();
 ?>
 <h1>efood</h1>
-<h2><a href="usuarios.php"> Administración de usuarios</a></h2>
-<h2><a href="restaurantes.php"> Administración de restaurantes</a></h2>
+<div style="border:solid; padding: 30px; width: 300px;">
+    <?php
+    require_once 'modulos/principal/vistas/login.php';
+    ?>
+</div>
+<br><br>
+<?php
+if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 1) {
+    echo 'Eres administrador';
+    ?>
+    
+    <h2><a href="usuarios.php"> Administración de usuarios</a></h2>
+    <h2><a href="restaurantes.php"> Administración de restaurantes</a></h2>
+    <?php
+}
+?>
 <?php
 require_once('modulos/principal/vistas/buscador.html');
 ?>
