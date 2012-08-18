@@ -20,8 +20,8 @@ body{
 }
 
 #contenidoHeader{
-    background: #FFFFFF url('/layout/imagenes/Home/Fondo_Header_1120x120.png') repeat-x;
-    padding-left: 45px;
+    background: #FFFFFF url('../imagenes/Home/Fondo_Header_1120x120.png') repeat-x;
+    padding-left: 18px;
     padding-top: 20px;
     height: 120px;
     padding-bottom: 30px;
