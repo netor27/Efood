@@ -4,7 +4,6 @@ require_once('layout/headers/headFin.php');
 ?>
 <h1>efood</h1>
 <h2>Duplicar platillo</h2>
-<h3 style="color:red;"><?php echo getSessionMessage(); ?></h4>
 <form method="post" action="platillos.php?a=duplicarSubmit">
     <input type="hidden" name="idRestaurante" value="<?php echo $idRestaurante; ?>">
     <br>

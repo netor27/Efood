@@ -4,7 +4,6 @@ require_once('layout/headers/headFin.php');
 ?>
 <h1>efood</h1>
 <h2>Grupos de Ingredientes del platillo <?php echo $platillo->nombre; ?></h2>
-<h3 style="color:red;"><?php echo getSessionMessage(); ?></h4>
 <h4>
     <a href="<?php echo "grupoIngredientes.php?a=agregarGrupoIngredientes&p=". $platillo->idPlatillo; ?>">
         Agregar grupo de ingredientes

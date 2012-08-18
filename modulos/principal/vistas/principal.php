@@ -8,13 +8,7 @@ $colonias = getColonias();
 require_once 'modulos/colonias/clases/Colonia.php';
 $colonia = new Colonia();
 ?>
-<h1>efood</h1>
-<div style="border:solid; padding: 30px; width: 300px;">
-    <?php
-    require_once 'modulos/principal/vistas/login.php';
-    ?>
-</div>
-<br><br>
+
 <?php
 if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 1) {
     echo 'Eres administrador';
