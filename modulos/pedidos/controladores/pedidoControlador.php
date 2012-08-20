@@ -34,6 +34,9 @@ function menu() {
     //if(isset($_SESSION[$idRestaurante]))
         //$_SESSION['pedido'] = $_SESSION[$idRestaurante];
     
+    if(empty($_SESSION["'rest".$restaurante->idRestaurante."'"])){
+        $_SESSION["'rest".$restaurante->idRestaurante."'"] = array();
+    }
     
     require_once('modulos/platillos/vistas/mostrarPlatillosPedido.php');
 }

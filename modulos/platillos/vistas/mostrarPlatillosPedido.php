@@ -33,12 +33,14 @@ $_SESSION['pedidoMinimo'] = $restaurante->gastoEnvio;
     $total = 0;
     if (isset($pedidos)) {
         foreach ($pedidos as $key => $value) {
-            echo $value[1] . " "; //cantidad
-            echo $value[0] . " "; //nombre
-            //echo $value[2]; //especificaciones
-            echo $value[3] . " "; //total
-            $total+=$value[3];
-            echo "<br>";
+            foreach($value as $clave=>$valor){
+                echo $valor[1] . " "; //cantidad
+                echo $valor[0] . " "; //nombre
+                //echo $value[2]; //especificaciones
+                echo $valor[3] . " "; //total
+                $total+=$valor[3];
+                echo "<br>";
+            }
         }
         echo "Total: " . $total;
         echo "<br><a href='pedidos.php?a=pedir'>Pedir</a>";

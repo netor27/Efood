@@ -95,7 +95,9 @@ function guardaPedido() {
         $_SESSION['pedido'][$pedido->idPlatillo][$pedido->idIngrediente] = $datosFinales;
     else
         $_SESSION['pedido'][$pedido->idPlatillo]['sin'] = $datosFinales;
-    $_SESSION["'rest".$pedido->idRestaurante."'"] = $_SESSION['pedido'];
+    
+    array_push($_SESSION["'rest".$pedido->idRestaurante."'"],$_SESSION['pedido']);
+    $_SESSION['pedido'] = null;
     
     return $datosFinales;
 }
@@ -109,7 +111,6 @@ function getPedidos($idRestaurante) {
             }
         }
     }
-    
     //$pedidos[0] nombre del platillo
     //$pedidos[1] cantidad del mismo tipo de platillo
     //$pedidos[2] especificaciones
