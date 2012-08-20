@@ -68,6 +68,17 @@ class Platillo {
        // echo "<td><form method='POST' action='pedidos.php?a=obtenIngredientes'><input type='hidden' value=".$this->idPlatillo." name='platillo'/><input type='submit' value='enviar'/></form></td>";
         echo '</tr>';
     }
+    
+    function printPlatilloPedidoDeshabilitado() {
+        echo '<tr>';
+        echo '<td>' . $this->nombre . '</td>';
+        echo '<td>' . $this->descripcion . '</td>';
+        echo '<td>' . $this->precioBase . '</td>';
+        echo '<td>' . $this->hint . '</td>';
+        echo '<td></td>';
+       // echo "<td><form method='POST' action='pedidos.php?a=obtenIngredientes'><input type='hidden' value=".$this->idPlatillo." name='platillo'/><input type='submit' value='enviar'/></form></td>";
+        echo '</tr>';
+    }
 
 }
 

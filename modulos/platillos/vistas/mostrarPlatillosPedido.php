@@ -19,9 +19,16 @@ $_SESSION['pedidoMinimo'] = $restaurante->gastoEnvio;
     require_once 'modulos/platillos/clases/Platillo.php';
     Platillo::printPlatilloPedidoHeader();
     if (isset($platillos)) {
-        foreach ($platillos as $platillo) {
-            $platillo->printPlatilloPedido();
+        if($habilitado){
+            foreach ($platillos as $platillo) {
+                $platillo->printPlatilloPedidoHabilitado();
+            } 
+        }else{
+            foreach ($platillos as $platillo) {
+                $platillo->printPlatilloPedidoDeshabilitado();
+            }
         }
+        
     }
     ?>
 </table>

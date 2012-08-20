@@ -26,17 +26,29 @@ function buscarRestaurante() {
 }
 
 function menu() {
+    require_once('funcionesPHP/funcionesGenerales.php');
     require_once('modulos/platillos/modelos/platilloModelo.php');
-    $idRestaurante = $_GET['i'];
     require_once('modulos/restaurantes/modelos/RestauranteModelo.php');
-    $restaurante = getRestaurante($idRestaurante);
-    $platillos = getPlatillosDeRestaurante($idRestaurante);
-    //if(isset($_SESSION[$idRestaurante]))
-        //$_SESSION['pedido'] = $_SESSION[$idRestaurante];
     
+    $idRestaurante = $_GET['i'];//obtenemos el id del restaurante por get
+    $habilitado = true;         //bandera que nos permite hacer las validaciones
+    
+    $restaurante = getRestaurante($idRestaurante);          //obtenemos la información del restaurante por su id
+    $platillos = getPlatillosDeRestaurante($idRestaurante); //obtenemos todos los platillos de ese restaurante
+    
+    //*********************VALIDACIÓN DEL HORARIO DEL RESTAURANTE********************
+    $hora = getHorario($idRestaurante);
+    $diaIni = getDay().'Ini';
+    $diaFin = getDay().'Fin';
+    if(getTime24()>$hora->$diaIni && getTime24()<$hora->$diaFin)
+        $habilitado = false;
+    //*******************************************************************************
+    
+    //Hace arreglo esa parte de la sesión para poder asignar platillos a diferentes restaurantes
     if(empty($_SESSION["'rest".$restaurante->idRestaurante."'"])){
         $_SESSION["'rest".$restaurante->idRestaurante."'"] = array();
     }
+    //***************************************************************************
     
     require_once('modulos/platillos/vistas/mostrarPlatillosPedido.php');
 }

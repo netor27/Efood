@@ -120,9 +120,7 @@ function getPedidos($idRestaurante) {
 }
 
 function generarPedido($pedido){
-    foreach($_SESSION["'rest".$pedido->idRestaurante."'"] as $key=>$value){
-        echo $value;
-    }
+    getPedidos($pedido->idRestaurante);
 }
 
  function utf8replace($cadena){
