@@ -31,7 +31,7 @@ function menu() {
     require_once('modulos/restaurantes/modelos/RestauranteModelo.php');
     
     $idRestaurante = $_GET['i'];//obtenemos el id del restaurante por get
-    $habilitado = true;         //bandera que nos permite hacer las validaciones
+    $habilitado = false;         //bandera que nos permite hacer las validaciones
     
     $restaurante = getRestaurante($idRestaurante);          //obtenemos la información del restaurante por su id
     $platillos = getPlatillosDeRestaurante($idRestaurante); //obtenemos todos los platillos de ese restaurante
@@ -41,7 +41,7 @@ function menu() {
     $diaIni = getDay().'Ini';
     $diaFin = getDay().'Fin';
     if(getTime24()>$hora->$diaIni && getTime24()<$hora->$diaFin)
-        $habilitado = false;
+        $habilitado = true;
     //*******************************************************************************
     
     //Hace arreglo esa parte de la sesión para poder asignar platillos a diferentes restaurantes
@@ -78,7 +78,9 @@ function agregaAlPedido(){
 function pedir(){
     require_once('modulos/pedidos/modelos/pedidoModelo.php');
     require_once 'modulos/pedidos/clases/PlatilloElementos.php';
-    $json = generarPedido();
-    echo json_encode($json);
+    $idRestaurante = $_GET['i'];
+    $pedidos = getPedidos($idRestaurante);
+    generarPedido($pedidos);
+    require_once('modulos/pedidos/vistas/pedir.php');
 }
 ?>

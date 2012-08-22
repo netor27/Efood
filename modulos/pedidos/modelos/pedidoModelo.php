@@ -120,7 +120,53 @@ function getPedidos($idRestaurante) {
 }
 
 function generarPedido($pedido){
-    getPedidos($pedido->idRestaurante);
+    if(isset($_SESSION['email'])){
+        global $conex;
+
+        try{
+            $conex->beginTransaction();
+            //numReferencia se genera aleatoriamente tomando en cuenta el id del usuario (email) encriptado
+            $numReferencia = md5($_SESSION['email']).rand(0000000000, 9999999999).chr(rand(ord("a"),ord("z"))); 
+            $insertPedido = "INSERT INTO pedido(idRestaurante,idUsuario,idEstadoPedido,comentario,idMetodoEntrega,idTipoPago,numReferencia) VALUES(:idRestaurante,:idUsuario,:idEstadoPedido,:comentario,:idMetodoEntrega,:idTipoPago,:numReferencia)";    
+            $stmtP = $conex->prepare($insertPedido);
+            $stmtP->bindParam(':idRestaurante', $_GET['i']);
+            $stmtP->bindParam(':idUsuario', $_SESSION['idUsuario']);
+            $stmtP->bindValue(':idEstadoPedido', 1);
+            $stmtP->bindValue(':comentario', "cualquiera");
+            $stmtP->bindValue(':idMetodoEntrega', 1);
+            $stmtP->bindValue(':idTipoPago', 1);
+            $stmtP->bindParam(':numReferencia', $numReferencia);
+            $val = $stmtP->execute();
+            if ($val)
+                $id = $conex->lastInsertId();
+
+            $insertPedidoPlatillo = "INSERT INTO pedidoplatillo(idPedido,idPlatillo,especificaciones,cantidad) VALUES(:idPedido,:idPlatillo,:especificaciones,:cantidad)";
+            if (isset($pedido)) {
+                foreach ($pedido as $key=>$value) {
+                    foreach($value as $clave=>$valor){
+                        print_r($valor[1]); //cantidad
+                        print_r($valor[0]); //nombre
+                        print_r($valor[2]); //especificaciones
+                        print_r($valor[3]); //total
+                        $stmtPP = $conex->prepare($insertPedidoPlatillo);
+                        $stmtPP->bindParam(':idPedido', $id);
+                        $stmtPP->bindParam(':idPlatillo', $key);
+                        $stmtPP->bindParam(':especificaciones', $valor[2]);
+                        $stmtPP->bindParam(':cantidad', $valor[1]);
+                        $valPP = $stmtPP->execute(); 
+                    }
+                }
+            }
+            $conex->commit();
+            //$_SESSION["'rest".$_GET['i']."'"] = null;
+        }catch (Exception $e) {
+            echo 'Ocurrió un error y no se pudo realizar el pedido: ',  $e->getMessage(), "\n";
+            $conex->rollBack();
+        }
+    }else{
+        print_r('Favor de hacer login');
+    }    
+   
 }
 
  function utf8replace($cadena){

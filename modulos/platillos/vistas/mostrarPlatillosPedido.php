@@ -21,7 +21,7 @@ $_SESSION['pedidoMinimo'] = $restaurante->gastoEnvio;
     if (isset($platillos)) {
         if($habilitado){
             foreach ($platillos as $platillo) {
-                $platillo->printPlatilloPedidoHabilitado();
+                $platillo->printPlatilloPedido();
             } 
         }else{
             foreach ($platillos as $platillo) {
@@ -50,7 +50,7 @@ $_SESSION['pedidoMinimo'] = $restaurante->gastoEnvio;
             }
         }
         echo "Total: " . $total;
-        echo "<br><a href='pedidos.php?a=pedir'>Pedir</a>";
+        echo "<br><a href='pedidos.php?a=pedir&i=".$restaurante->idRestaurante."'>Pedir</a>";
     }
     ?>
 </div>
