@@ -19,9 +19,16 @@ $_SESSION['pedidoMinimo'] = $restaurante->gastoEnvio;
     require_once 'modulos/platillos/clases/Platillo.php';
     Platillo::printPlatilloPedidoHeader();
     if (isset($platillos)) {
-        foreach ($platillos as $platillo) {
-            $platillo->printPlatilloPedido();
+        if($habilitado){
+            foreach ($platillos as $platillo) {
+                $platillo->printPlatilloPedido();
+            } 
+        }else{
+            foreach ($platillos as $platillo) {
+                $platillo->printPlatilloPedidoDeshabilitado();
+            }
         }
+        
     }
     ?>
 </table>
@@ -33,15 +40,17 @@ $_SESSION['pedidoMinimo'] = $restaurante->gastoEnvio;
     $total = 0;
     if (isset($pedidos)) {
         foreach ($pedidos as $key => $value) {
-            echo $value[1] . " "; //cantidad
-            echo $value[0] . " "; //nombre
-            //echo $value[2]; //especificaciones
-            echo $value[3] . " "; //total
-            $total+=$value[3];
-            echo "<br>";
+            foreach($value as $clave=>$valor){
+                echo $valor[1] . " "; //cantidad
+                echo $valor[0] . " "; //nombre
+                //echo $value[2]; //especificaciones
+                echo $valor[3] . " "; //total
+                $total+=$valor[3];
+                echo "<br>";
+            }
         }
         echo "Total: " . $total;
-        echo "<br><a href='pedidos.php?a=pedir'>Pedir</a>";
+        echo "<br><a href='pedidos.php?a=pedir&i=".$restaurante->idRestaurante."'>Pedir</a>";
     }
     ?>
 </div>
