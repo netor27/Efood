@@ -2,9 +2,9 @@
 
 function paypal_encrypt($hash) {
     # Archivo de llave privada
-    $MY_KEY_FILE = "archivos/certificadosPaypal/my-prvkeyFood.pem";
+    $MY_KEY_FILE = "archivos/certificadosPaypal/my-prvkeyEfood.pem";
 # Archivo de llave publica
-    $MY_CERT_FILE = "archivos/certificadosPaypal/my-pubcertFood.pem";
+    $MY_CERT_FILE = "archivos/certificadosPaypal/my-pubcertEfood.pem";
 # Archivo de llave publica de paypal
     $PAYPAL_CERT_FILE = "archivos/certificadosPaypal/paypal_cert.pem";
 # path to the openssl binary
@@ -54,8 +54,8 @@ function encriptarInformacionBotonPago($nombreArticulo, $numeroArticulo, $precio
 
     $form = array(
         'cmd' => '_xclick',
-        'business' => 'gerardov15@hotmail.com',
-        'cert_id' => 'K3XLPDNFUKNFA',
+        'business' => "gerardov15@hotmail.com",
+        'cert_id' => '2TT2TEQNWZ4YC',
         'lc' => 'ES_MX',
         'invoice' => '',
         'currency_code' => 'MXN',
