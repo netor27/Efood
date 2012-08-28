@@ -67,7 +67,15 @@ function encriptarInformacionBotonPago($nombreArticulo, $numeroArticulo, $precio
         'custom' => $variableId
     );
     $encrypted = paypal_encrypt($form);
-    return $encrypted;
+    $dom = '<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+            <input type="hidden" name="cmd" value="_s-xclick">
+            <input type="hidden" name="encrypted" value="' .
+            $encrypted . '">
+            <input type="image" src="https://www.paypalobjects.com/es_XC/MX/i/btn/btn_buynowCC_LG.gif" 
+            border="0" name="submit" alt="PayPal, la forma más segura y rápida de pagar en línea.">
+            </form>';
+    
+    return $dom;
 }
 
 ?>

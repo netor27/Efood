@@ -14,25 +14,20 @@
     //                  que pedido se pago. Lo mejor sería poner el idPedido o algo así en esta variable
     //                  Máximo 256 caracteres, se valida dentro de la función
     //
-    $encrypted = encriptarInformacionBotonPago("Pedido a Chillis", "123456", "300", "123custom456");
+    $botonPaypal = encriptarInformacionBotonPago("Pedido a Chillis", "123456", "300", "123custom456");
     ?> 
     <HEAD>
         <TITLE>Boton encriptado de Paypal</TITLE>
     </HEAD>
     <BODY bgcolor=white>
         <TABLE border=0>
-            <TR><TD align=center>
+            <TR>
+                <TD align=center>
                     <h1>Pagar pedido</h1>
-                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
-                        <input type="hidden" name="cmd" value="_s-xclick">
-                        <input type="hidden" name="encrypted" value="
-                               <?PHP echo $encrypted; ?>">
-                        <input type="image" src="https://www.paypalobjects.com/es_XC/MX/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal, la forma más segura y rápida de pagar en línea.">
-                        
-                    </form>
-
-
-                </TD></TR></TABLE>
+                    <?PHP echo $botonPaypal; ?>
+                </TD>
+            </TR>
+        </TABLE>
     </BODY>
 
 </HTML>
