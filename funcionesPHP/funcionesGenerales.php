@@ -1,7 +1,7 @@
 <?php
 
 function goToIndex() {
-    require_once('modulos/principal/vistas/principal.php');
+    redirect("/");
 }
 
 function getUrl() {

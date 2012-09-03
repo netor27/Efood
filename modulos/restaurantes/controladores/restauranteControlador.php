@@ -61,6 +61,7 @@ function formaRestauranteSubmit() {
     require_once 'modulos/restaurantes/modelos/RestauranteModelo.php';
     if ($tipo == "alta") {
         if (validarAdministrador()) {
+            $restaurante->password = md5($_POST['password']);
             $restaurante->idRestaurante = altaRestaurante($restaurante);
             if ($restaurante->idRestaurante >= 0) {
                 setSessionMessage("Se dió de alta el restaurante " . $restaurante->nombre);

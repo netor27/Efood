@@ -1,1 +1,1 @@
-<script src="js/jquery.validate.min.js"></script>
+<!--<script src="js/jquery.validate.min.js"></script>-->

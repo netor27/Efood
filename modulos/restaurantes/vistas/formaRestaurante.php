@@ -10,7 +10,14 @@ if (isset($error)) {
     echo '<h2 style="color: red">' . $error . '</h2>';
 }
 ?>
-<h3><a href="restaurantes.php?a=establecerPassword&i=<?php echo $restaurante->idRestaurante; ?>">Establecer password</a></h3>
+<?php
+if ($tipo == "editar") {
+    ?>
+    <h3><a href="restaurantes.php?a=establecerPassword&i=<?php echo $restaurante->idRestaurante; ?>">Establecer password</a></h3>
+    <?php
+}
+?>
+
 <form action="restaurantes.php?a=formaRestauranteSubmit&t=<?php echo $tipo; ?>" method="POST">
     <?php
     if ($tipo == "editar")
@@ -25,6 +32,16 @@ if (isset($error)) {
             <label>Usuario</label>
             <input type="text" name="usuario" value="<?php echo $restaurante->usuario; ?>">
         </li>
+        <?php
+        if($tipo == "alta"){
+        ?>
+        <li>
+            <label>Password</label>
+            <input type="text" name="password">
+        </li>
+        <?php
+        }
+        ?>
         <li>
             <div class="ui-widget">
                 <label>Colonia</label>
@@ -169,9 +186,9 @@ if (isset($error)) {
 
 <?php
 $restauranteLoggeado = getRestauranteLoggeado();
-if(isset($restauranteLoggeado)){
+if (isset($restauranteLoggeado)) {
     echo '<a href="adminRestaurante.php">Regresar</a>';
-}else{
+} else {
     echo '<a href="restaurantes.php">Regresar</a>';
 }
 ?>

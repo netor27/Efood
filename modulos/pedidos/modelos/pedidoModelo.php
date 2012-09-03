@@ -195,11 +195,11 @@ function generarPedido($pedido) {
                     $conex->commit();
                     $_SESSION["'rest" . $idRestaurante . "'"] = null;
                 } else {
-                    //print_r('Ocurrió un error y no se pudo realizar el pedido');
+                    print_r('Ocurrió un error y no se pudo realizar el pedido');
                     if (!$valPI)
-                        //print_r('Fallo el ultimo');
+                        print_r('Fallo el ultimo');
                     if (!$valPP)
-                        //print_r('Fallo el penultimo');
+                        print_r('Fallo el penultimo');
                     $errores = true;
                     $conex->rollBack();
                 }

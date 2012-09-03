@@ -95,8 +95,7 @@ function obtenerIngredientes(id){
             });
             
             $(".hab").bind("click", function(event) {
-                eventos(this);
-                
+                eventos(this);                
             });
         },
         error: function (XMLHttpRequest, textStatus, errThrown) {
@@ -129,7 +128,7 @@ function agregarPedido(){
                 $("P.close A").click();
                 $("#agregados").append(json[1]+" ");
                 $("#agregados").append(json[0]+" ");
-                $("#agregados").append(json[3]+" ");
+                $("#agregados").append(json[3]+" <br>");
                 var total = parseInt($("#totalc").html());
                 $("#totalc").html(total+json[3]);
                 $("#botonpedir").html("<br><div class='popuppedir' id='"+json[4]+"'><a href='#' rel='superbox[content]'>Pedir</a></div>");
@@ -183,6 +182,7 @@ function quitaAcentos(cadena){
 
 function eventos(e){
     $("input:radio").attr('disabled',true);
+    $("input:checkbox").attr('disabled',true);
     $(".hab").removeAttr('disabled');
     $(".d"+e.value).removeAttr('disabled');
 }
