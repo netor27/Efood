@@ -105,6 +105,7 @@ function obtenerIngredientes(id){
     });
 }
 
+var pedido=true;
 function agregarPedido(){
     //Va a guardar en la sesiÃ³n algunos valores que corresponden a la forma de pedido
     //Va a insertar en la tabla de pedidoplatillo
@@ -131,6 +132,7 @@ function agregarPedido(){
                 $("#agregados").append(json[3]+" ");
                 var total = parseInt($("#totalc").html());
                 $("#totalc").html(total+json[3]);
+                $("#botonpedir").html("<br><div class='popuppedir' id='"+json[4]+"'><a href='#' rel='superbox[content]'>Pedir</a></div>");
             },
             error: function (XMLHttpRequest, textStatus, errThrown) {
                 alert(textStatus); 

@@ -80,7 +80,7 @@ function pedir(){
     require_once 'modulos/pedidos/clases/PlatilloElementos.php';
     $idRestaurante = $_GET['i'];
     $pedidos = getPedidos($idRestaurante);
-    generarPedido($pedidos);
+    $errores = generarPedido($pedidos);
     require_once('modulos/pedidos/vistas/pedir.php');
 }
 ?>

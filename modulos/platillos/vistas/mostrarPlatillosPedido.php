@@ -60,7 +60,11 @@ $_SESSION['pedidoMinimo'] = $restaurante->gastoEnvio;
 </div>
 <div id="pedidosgenera">
     <?php
-        echo "<div id='totalw' style='float:left;'>Total:</div> <div id='totalc' style='float:left;'>" . $total."</div>";
+        echo "<div id='totalw' style='float:left;'>Total:</div> <div id='totalc' style='float:left;'>" . $total."</div>";        
+    ?>
+</div>
+<div id="botonpedir">
+    <?php
         if(isset($pedidos) && $pedidos!=array())    
             echo "<br><div class='popuppedir' id='".$restaurante->idRestaurante."'><a href='#' rel='superbox[content]'>Pedir</a></div>";
     ?>

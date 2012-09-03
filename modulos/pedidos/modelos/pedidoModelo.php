@@ -89,6 +89,7 @@ function guardaPedido() {
     $datosFinales[1] = $cantidad;
     $datosFinales[2] = $especificaciones;
     $datosFinales[3] = $total;
+    $datosFinales[4] = $pedido->idRestaurante;
 
     unset($_SESSION['ingrediente']);
     if (isset($pedido->idIngrediente))
@@ -124,6 +125,7 @@ function generarPedido($pedido) {
     if (isset($_SESSION['email']) && isset($_GET['i'])) {
         if (isset($_GET['e']) && isset($_GET['e'])) {
             global $conex;
+            $errores = false;
             try {
                 $conex->beginTransaction();
                 //numReferencia se genera aleatoriamente tomando en cuenta el id del usuario (email) encriptado
@@ -145,6 +147,8 @@ function generarPedido($pedido) {
                 $val = $stmtP->execute();
                 if ($val)
                     $id = $conex->lastInsertId();
+                else
+                    $errores = true;
 
                 $insertPedidoPlatillo = "INSERT INTO pedidoplatillo(idPedido,idPlatillo,especificaciones,cantidad) VALUES(:idPedido,:idPlatillo,:especificaciones,:cantidad)";
                 if (isset($pedido)) {
@@ -163,6 +167,8 @@ function generarPedido($pedido) {
                                 $valPP = $stmtPP->execute();
                                 if ($valPP)
                                     $idPedidoPlatillo = $conex->lastInsertId();
+                                else
+                                    $errores = true;
                             }
                         }
                     }
@@ -189,16 +195,18 @@ function generarPedido($pedido) {
                     $conex->commit();
                     $_SESSION["'rest" . $idRestaurante . "'"] = null;
                 } else {
-                    print_r('Ocurrió un error y no se pudo realizar el pedido');
+                    //print_r('Ocurrió un error y no se pudo realizar el pedido');
                     if (!$valPI)
-                        print_r('Fallo el ultimo');
+                        //print_r('Fallo el ultimo');
                     if (!$valPP)
-                        print_r('Fallo el penultimo');
+                        //print_r('Fallo el penultimo');
+                    $errores = true;
                     $conex->rollBack();
                 }
                 //$_SESSION["'rest".$_GET['i']."'"] = null;
             } catch (Exception $e) {
-                print_r('Ocurrió un error y no se pudo realizar el pedido: ', $e->getMessage());
+                $errores = true;
+                //print_r('Ocurrió un error y no se pudo realizar el pedido: ', $e->getMessage());
                 $conex->rollBack();
             }
         } else {
@@ -207,6 +215,7 @@ function generarPedido($pedido) {
     } else {
         print_r('Favor de hacer login');
     }
+    return $errores;
 }
 
 function utf8replace($cadena) {
