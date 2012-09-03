@@ -52,7 +52,9 @@ $_SESSION['pedidoMinimo'] = $restaurante->gastoEnvio;
             }
         }
         echo "Total: " . $total;
-        echo "<br><a href='pedidos.php?a=pedir&i=".$restaurante->idRestaurante."'>Pedir</a>";
+        if(isset($pedidos) && $pedidos!=array())    
+            echo "<br><div class='popuppedir' id='".$restaurante->idRestaurante."'><a href='#' rel='superbox[content]'>Pedir</a></div>";
+            //echo "<br><div class='popuppedir' id='".$restaurante->idRestaurante."'><a href='pedidos.php?a=pedir&i=".$restaurante->idRestaurante."'>Pedir</a></div>";            
     }
     ?>
 </div>

@@ -136,9 +136,29 @@ function agregarPedido(){
     }
 }
 
+function pedir(id){
+    var txt = "<form id='pedidometodos' method='get' action='pedidos.php?a=pedir&i="+id+"'>";
+    //var txt="";
+    txt += "Metodo de entrega ";
+    txt += "<br> <input type='radio' name='e' value='0'/>A domicilio";
+    txt += "<br> <input type='radio' name='e' value='1'/>Ventanilla";
+    txt += "<br><br>Tipo de Pago ";
+    txt += "<br><input type='radio' name='p' value='0'/>Efectivo ";
+    txt += "<br><input type='radio' name='p' value='1'/>Paypal ";
+    txt += "<br><input type='hidden' name='a' value='pedir'/>";
+    txt += "<br><input type='hidden' name='i' value='"+id+"'/>";
+    //txt += "<br><br><a href='pedidos.php?a=pedir&i="+id+"&e="+$("input:radio:checked").val()+"&p="+$("input[name='pago']:checked").val()+"'>Enviar</a></div>";
+    txt += "<br><br><input type='submit' value='Enviar' />";
+    txt += "</form>";
+    $("#superbox-innerbox").html(txt);
+}
+
 $(document).ready(function(){
     $(".popup").click(function(){
         obtenerIngredientes(this.id);
+    });
+    $(".popuppedir").click(function(){
+        pedir(this.id);
     });
 });
 
