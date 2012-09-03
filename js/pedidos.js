@@ -123,9 +123,14 @@ function agregarPedido(){
                 "valores" : utf8replace(vals)
             }),
             dataType: "json",
-            success: function(json) {                 
+            success: function(json) {    
                 $.growlUI('', 'Agregado');
                 $("P.close A").click();
+                $("#agregados").append(json[1]+" ");
+                $("#agregados").append(json[0]+" ");
+                $("#agregados").append(json[3]+" ");
+                var total = parseInt($("#totalc").html());
+                $("#totalc").html(total+json[3]);
             },
             error: function (XMLHttpRequest, textStatus, errThrown) {
                 alert(textStatus); 

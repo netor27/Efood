@@ -51,14 +51,20 @@ $_SESSION['pedidoMinimo'] = $restaurante->gastoEnvio;
                 }
             }
         }
-        echo "Total: " . $total;
-        if(isset($pedidos) && $pedidos!=array())    
-            echo "<br><div class='popuppedir' id='".$restaurante->idRestaurante."'><a href='#' rel='superbox[content]'>Pedir</a></div>";
+        
             //echo "<br><div class='popuppedir' id='".$restaurante->idRestaurante."'><a href='pedidos.php?a=pedir&i=".$restaurante->idRestaurante."'>Pedir</a></div>";            
     }
     ?>
 </div>
-
+<div id="agregados">
+</div>
+<div id="pedidosgenera">
+    <?php
+        echo "<div id='totalw' style='float:left;'>Total:</div> <div id='totalc' style='float:left;'>" . $total."</div>";
+        if(isset($pedidos) && $pedidos!=array())    
+            echo "<br><div class='popuppedir' id='".$restaurante->idRestaurante."'><a href='#' rel='superbox[content]'>Pedir</a></div>";
+    ?>
+</div>
 <?php
 require_once('layout/footer.php');
 ?>
