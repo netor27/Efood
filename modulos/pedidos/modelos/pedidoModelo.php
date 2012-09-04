@@ -59,7 +59,7 @@ function guardaPedido() {
     $cantidad = $_POST['cantidad'];
     $especificaciones = $_POST['especificaciones'];
     $valores = $_POST['valores'];
-
+    
     $cadena = str_replace("+", "", $valores);
     $pares = explode("&", $cadena); //datos de la forma tamano=idtamano, salsa=idsalsa
     foreach ($pares as $key => $value)
@@ -78,6 +78,7 @@ function guardaPedido() {
         } else {
             $pedido = unserialize($_SESSION['ingrediente'][$_SESSION['idPlatillo']]['sin']);
         }
+        //print_r($pedido);
         //$pedido = unserialize($_SESSION['idPlatilloActual']);
         //$pedido = unserialize($_SESSION['ingrediente'][$_SESSION['idP']]);
         $total += $pedido->precio; //acumulamos los precios de cada grupo de ingredientes y lo vamos sumando

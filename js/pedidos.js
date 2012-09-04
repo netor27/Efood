@@ -111,7 +111,7 @@ function agregarPedido(){
     var cantidad = $("#cantidad").val();
     var especificaciones = $("#especificaciones").val();
     var vals = $('#pedido :radio').serialize();
-    vals += "=";
+    vals += "&";
     vals += $('#pedido :checkbox').serialize();
     if(cantidad!="" && cantidad!=null){
         $.ajax({
