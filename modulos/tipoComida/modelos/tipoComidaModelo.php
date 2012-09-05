@@ -6,6 +6,57 @@
  * @author neto
  */
 require_once 'bd/conx.php';
+require_once 'modulos/tipoComida/clases/tipoComida.php';
+
+function altaTipoComida($tipoComida){
+    global $conex;
+    $stmt = $conex->prepare("INSERT INTO tipocomida
+                            (nombre,imagen)
+                            VALUES(:nombre, :imagen)");
+
+    $stmt->bindParam(":nombre", $tipoComida->nombre);
+    $stmt->bindParam(":imagen", $tipoComida->imagen);   
+
+    $id = -1;
+    if ($stmt->execute()) {
+        $id = $conex->lastInsertId();
+    } else {
+        print_r($stmt->errorInfo());
+    }
+    return $id;
+}
+
+function bajaTipoComida($idTipoComida){
+     global $conex;
+    $stmt = $conex->prepare("DELETE FROM tipocomida
+                            WHERE idTipoComida = :idTipoComida");
+    $stmt->bindParam(":idTipoComida", $idTipoComida);
+    if ($stmt->execute())
+        return true;
+    else {
+        print_r($stmt->errorInfo());
+        return false;
+    }
+}
+
+function modificaTipoComida($tipoComida){
+    global $conex;
+    $stmt = $conex->prepare("UPDATE tipocomida
+                            SET nombre = :nombre,
+                                imagen = :imagen
+                                WHERE idTipoComida = :idTipoComida
+                                ");
+    $stmt->bindParam(":nombre", $tipoComida->nombre);
+    $stmt->bindParam(":imagen", $tipoComida->imagen);
+    $stmt->bindParam(":idTipoComida", $tipoComida->idTipoComida);
+
+    if ($stmt->execute()) {
+        return true;
+    } else {
+        print_r($stmt->errorInfo());
+        return false;
+    }
+}
 
 function getTipoComida($idTipoComida) {
     global $conex;
@@ -18,6 +69,7 @@ function getTipoComida($idTipoComida) {
         $tipoComida = new TipoComida();
         $tipoComida->idTipoComida = $row['idTipoComida'];
         $tipoComida->nombre = $row['nombre'];
+        $tipoComida->imagen = $row['imagen'];
         return $tipoComida;
     } else {
         print_r($stmt->errorInfo());
@@ -36,7 +88,8 @@ function getTiposComida() {
         foreach ($rows as $row) {
             $tipoComida = new TipoComida();
             $tipoComida->idTipoComida = $row['idTipoComida'];
-            $tipoComida->nombre = utf8_encode($row['nombre']);            
+            $tipoComida->nombre = utf8_encode($row['nombre']);
+            $tipoComida->imagen = $row['imagen'];
             $tiposComida[$i] = $tipoComida;
             $i++;
         }

@@ -45,7 +45,7 @@ body{
 #header_red_title{
     font-size: 24px;
     font-weight: bold;
-    color:red;
+    color:#ED3237;
     letter-spacing: 0.5px;    
 }
 
@@ -102,7 +102,7 @@ ul{
 
 a{  
     text-decoration: none;  
-    color: #f0201e; 
+    color: #ED3237; 
     font-weight: bold;  
 }
 a:visited{  

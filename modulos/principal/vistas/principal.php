@@ -10,11 +10,14 @@ require_once('layout/headers/headFin.php');
     <form action="pedidos.php?a=buscarColonia" method="POST">
         <div id="top_buscador" style="overflow:hidden;">
             <div class="left">
-                <img src="layout/imagenes/Home/Logo_Chef_93x22(2).png" alt="logoCheff">
+                <div id="logo_chef">                    
+                    <img id="cuerpo_chef" src="layout/imagenes/Home/Logo_Chef_93x22(2).png" alt="logoCheff"/>
+                    <img id="sombra_chef" src="layout/imagenes/Home/Sombra_Chef_93x22.png" alt="sombra"/>                    
+                </div>
             </div>
             <div class="left" id="top_buscador_center">
                 <span id="estoy_en">Estoy en:</span><br>
-                <input class="ui-corner-all" id="colonias" name="colonia" type="text" placeholder="Escribe tu colonia!"><br>
+                <input class="ui-corner-all" id="colonias" name="colonia" type="text" placeholder="¡Escribe tu colonia!"><br>
                 <input type="hidden" id="idColonia" name="idColonia">
                 <div id="bottom_center_buscador">
                     <span>Hoy se me antoja:</span><br>
@@ -23,47 +26,37 @@ require_once('layout/headers/headFin.php');
                 </div>
             </div>
             <div class="right">
-                <img src="layout/imagenes/Home/LoNuevo_242x86(2).png" alt="lo nuevo">
+                <div id="lo_nuevo">
+                    <img src="layout/imagenes/Home/LoNuevo_242x86(2).png" alt="lo nuevo"><br>
+                    <div id="lo_nuevo_texto">
+                        <span>¡Tu comida favorita</span><br>
+                        <span class="span_big">a Domicilio</span><br>
+                        <span>con un solo click!</span>
+                    </div>
+                </div>
+
             </div>
         </div>
         <div id="sliderContainer">
             <ul id="slider1" class="multiple">
-                <li class="imagen_slider">
-                    <div>
-                        <img src="layout/imagenes/Home/Hamburguesa_68x57.png" >
-                        <br>
-                        <input type="checkbox">
-                    </div>
-                </li>
-                <li class="imagen_slider">
-                    <div>
-                        <img src="layout/imagenes/Home/Pasta_62x48.png" >
-                        <br>
-                        <input type="checkbox">
-                    </div>
-                </li>
-                <li class="imagen_slider">
-                    <div>
-                        <img src="layout/imagenes/Home/Sandwich_109x46.png" >
-                        <br>
-                        <input type="checkbox">
-                    </div>
-                </li>
-                <li class="imagen_slider">
-                    <div>
-                        <img src="layout/imagenes/Home/Sushi_109x69.png" >
-                        <br>
-                        <input type="checkbox">
-                    </div>
-                </li>
-                <li class="imagen_slider">
-                    <div>
-                        <img src="layout/imagenes/Home/Tacos_143x86.png" >
-                        <br>
-                        <input type="checkbox">
-                    </div>
-                </li>
+                <?php
+                if (isset($tiposComida)) {
+                    foreach ($tiposComida as $tipo) {
+                        ?>
+                        <li class="imagen_slider">
+                            <div>
+                                <img src="<?php echo $tipo->imagen; ?>" >
+                                <br>
+                                <div id="<?php echo $tipo->idTipoComida; ?>" class="checkbox_antojo_clear">&nbsp;</div>
+                                <input type="hidden" id="antojo<?php echo $tipo->idTipoComida; ?>" name="antojos[]" value="-1"/>
+                            </div>
+                        </li>
+                        <?php
+                    }
+                }
+                ?>
             </ul>
+            <input id="antojos" type="hidden" name="antojos" />
         </div>
         <div id="bottom_buscador_container">
             <div id="bottom_buscador">

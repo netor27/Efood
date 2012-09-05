@@ -40,7 +40,6 @@ function altaRestaurante($restaurante) {
     $id = -1;
     if ($stmt->execute()) {
         $id = $conex->lastInsertId();
-        $id = $conex->lastInsertId();
         $stmt = $conex->prepare("INSERT into horariorestaurante (idRestaurante) values(:id)");
         $stmt->bindParam(":id", $id);
         $stmt->execute();
