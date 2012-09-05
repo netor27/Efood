@@ -2,7 +2,7 @@
 require_once('layout/headers/headInicio.php');
 require_once('layout/headers/headFin.php');
 ?>
-<h1>efood</h1>
+
 <h2>Ingredientes del grupo: <?php echo $grupoIngredientes->nombre; ?></h2>
 
 <h4>

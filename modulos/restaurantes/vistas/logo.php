@@ -2,7 +2,7 @@
 require_once('layout/headers/headInicio.php');
 require_once('layout/headers/headFin.php');
 ?>
-<h1>efood</h1>
+
 
 <?php
 if (isset($error)) {

@@ -1,0 +1,113 @@
+#buscadorContainer{    
+    margin-top: 10px;
+}
+
+#top_buscador_center{
+    margin-top: 50px;
+    margin-left: 75px;
+}
+
+#top_buscador_center span{
+    font-size: 17px;
+    color: #373435;
+    font-weight: bold;        
+}
+#estoy_en{
+    padding-left: 10px;    
+}
+
+#top_buscador_center input{
+    width: 360px;
+    -webkit-box-shadow:rgba(0, 0, 0, 0.046875) -3px 3px 0px 0px inset;
+    -moz-box-shadow:rgba(0, 0, 0, 0.046875) -3px 3px 0px 0px inset;
+    font-size: 17px;
+    color: #848688;
+    padding-left: 5px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    letter-spacing: 1px;
+}
+#top_buscador_center input:focus{    
+    background-color: #FFFFFF; 
+    color: #333;   
+}
+
+#bottom_center_buscador{
+    margin: 0 auto;
+    text-align: center;
+    padding-top: 20px;
+}
+
+#top_buscador_center span.texto_parentesis{
+    color:gray;
+    font-size:12px;
+}
+
+#sliderContainer{
+    position: relative;
+    overflow: hidden;
+    width: 960px;
+    height:147px;
+    background-image: url(../imagenes/Home/img_BarraTipoComida_960x123.png);
+    background-repeat: no-repeat; 
+    background-position: 5px 15px; 
+}
+.bx-prev {
+    position: absolute;
+    top: 0px;
+    left: -10px;
+    width: 41px;
+    height: 147px;
+    text-indent: -999999px;
+    background: url(../imagenes/Home/btn_TipoComidaIzq_41x147.png);
+}
+.bx-next {
+    position: absolute;
+    top: 0px;
+    right: 20px;
+    width: 41px;
+    height: 147px;
+    text-indent: -999999px;
+    background: url(../imagenes/Home/btn_TipoComidaDer_41x147.png);
+}
+
+#slider1{
+    width: 960px; height:150px;
+}
+
+.imagen_slider{
+    text-align: center;
+    list-style: none; 
+    width: 110px;
+    padding-top: 20px;
+}
+
+.imagen_slider div{
+    text-align: center;
+}
+
+
+#bottom_buscador{
+    margin: 0 auto;
+    width: 450px;
+    text-align: center;
+    overflow: hidden;
+}
+#bottom_buscador .preferencia{
+    width: 49%;
+    overflow: hidden;
+}
+#bottom_buscador span{
+    font-size: 17px;
+    color: #373435;
+    font-weight: bold;    
+}
+
+.preferencia_texto{
+    font-size:11px; 
+    width:50px; 
+    text-align: center;
+    color: #373435;
+    font-weight: bold;    
+    padding-right: 10px;
+}

@@ -3,7 +3,7 @@ require_once('layout/headers/headInicio.php');
 require_once('layout/headers/headFormaGrupoIngredientes.php');
 require_once('layout/headers/headFin.php');
 ?>
-<h1>efood</h1>
+
 <h2><?php echo $tipo; ?> Grupo de ingredientes</h2>
 <?php
 if (isset($error)) {

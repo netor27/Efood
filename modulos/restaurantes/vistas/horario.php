@@ -2,7 +2,7 @@
 require_once('layout/headers/headInicio.php');
 require_once('layout/headers/headFin.php');
 ?>
-<h1>efood</h1>
+
 <h2>Horario del restaurante: "<?php echo $restaurante->nombre; ?>"</h2>
 <?php
 if (isset($error)) {
