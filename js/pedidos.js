@@ -84,7 +84,7 @@ function obtenerIngredientes(id){
                 }
             }
             txt=txt+"<br><br>Especificaciones:<textarea rows=3 columns=20 name=\"especificaciones\" id=\"especificaciones\"></textarea><br>";
-            txt=txt+"<br><br>Cantidad:<input type='text' id='cantidad' name='cantidad'/><br>";
+            txt=txt+"<br><br>Cantidad:<input type='text' id='cantidad' name='cantidad' value='1'/><br>";
             txt=txt+"<input type='button' value='Agregar' id=\"agregarpedido\"/>"; 
             txt = txt + "</form>";
             $("#superbox-innerbox").html(txt);
@@ -145,9 +145,6 @@ function agregarPedido(){
 function pedir(id){
     var txt = "<form id='pedidometodos' method='get' action='pedidos.php?a=pedir&i="+id+"'>";
     //var txt="";
-    txt += "Metodo de entrega ";
-    txt += "<br> <input type='radio' name='e' value='0'/>A domicilio";
-    txt += "<br> <input type='radio' name='e' value='1'/>Ventanilla";
     txt += "<br><br>Tipo de Pago ";
     txt += "<br><input type='radio' name='p' value='0'/>Efectivo ";
     txt += "<br><input type='radio' name='p' value='1'/>Paypal ";
