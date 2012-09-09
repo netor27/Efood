@@ -34,6 +34,10 @@
     padding-left: 10px;    
 }
 
+#top_buscador{
+    height:200px;
+}
+
 #top_buscador_center input{
     width: 360px;
     -webkit-box-shadow:rgba(0, 0, 0, 0.046875) -3px 3px 0px 0px inset;
@@ -96,7 +100,7 @@
     position: relative;
     overflow: hidden;
     width: 960px;
-    height:147px;
+    height:167px;
     background-image: url(../imagenes/Home/img_BarraTipoComida_960x123.png);
     background-repeat: no-repeat; 
     background-position: 5px 15px; 
@@ -132,6 +136,7 @@
 
 .imagen_slider div{
     text-align: center;
+    padding-top: 25px;
 }
 
 
@@ -164,8 +169,8 @@
     background-image: url('../imagenes/Home/SelectTipoComida_13x12.png');
     background-repeat: no-repeat;
     display: inline-block;
-    width: 32px;
-    height: 29px;
+    width: 13px;
+    height: 12px;
     padding: 0px;
     margin: 0px;
     cursor: pointer;
@@ -175,9 +180,42 @@
     background-image: url('../imagenes/Home/SelectTipoComidaVacío_13x12.png');
     background-repeat: no-repeat;
     display: inline-block;
-    width: 32px;
-    height: 29px;
+    width: 13px;
+    height: 12px;
     padding: 0px;
     margin: 0px;
     cursor: pointer;
+}
+
+.checkbox_preferencia{
+    background-image: url('../imagenes/Home/SelectEntrega_32x29.png');
+    background-repeat: no-repeat;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    padding: 0px;
+    margin: 0px;
+    cursor: pointer;
+}
+
+.checkbox_preferencia_clear{
+    background-image: url('../imagenes/Home/SelectEntregaVacío_32x29.png');
+    background-repeat: no-repeat;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    padding: 0px;
+    margin: 0px;
+    cursor: pointer;
+}
+
+#sliderTextContainer{
+    text-align: center;
+    position: relative;
+    top:-50px;
+}
+#sliderTextContainer span{
+    color: #373435;
+    font-weight: bold;
+    font-size: 10px;
 }

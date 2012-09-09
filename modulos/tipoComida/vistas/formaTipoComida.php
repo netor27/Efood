@@ -21,7 +21,7 @@ if (isset($error)) {
             <input type="text" name="nombre" value="<?php echo $tipoComida->nombre; ?>">
         </li>
         <li>
-            <label>Sube una imágen de 110x110 pixeles</label>
+            <label>Sube una imágen de 70x70 pixeles</label>
             <?php
             if ($tipo == "editar") {
                 ?>

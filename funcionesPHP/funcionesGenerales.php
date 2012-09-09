@@ -123,6 +123,18 @@ function getTextoMetodoEntrega($metodoEntrega) {
     }
 }
 
+function getIdMetodoEntrega($domicilio, $recoger) {
+    if ($domicilio && $recoger) {
+        return 2;
+    } else if ($domicilio) {
+        return 1;
+    } else if ($recoger) {
+        return 0;
+    } else {
+        return 2;
+    }
+}
+
 function getTextoTipoGastoEnvio($tipoGasto) {
     switch ($tipoGasto) {
         case 0:
@@ -256,38 +268,46 @@ function validarAdministrador() {
 }
 
 function validarRestauranteLoggeadoId($idRestaurante) {
-    if(!isset($_SESSION['restauranteUsuario'])) {
+    if (!isset($_SESSION['restauranteUsuario'])) {
         return false;
-    }else{
+    } else {
         $res = $_SESSION['restauranteUsuario'];
         return $res->idRestaurante == $idRestaurante;
     }
 }
 
-function getTime24(){
-    date_default_timezone_set("Mexico/General") ; 
-    $hora = date('H:i:s',time()+1 - 3600*date('I') + (60*60)); 
+function getTime24() {
+    date_default_timezone_set("Mexico/General");
+    $hora = date('H:i:s', time() + 1 - 3600 * date('I') + (60 * 60));
     return $hora;
 }
 
-function getDay(){
-    date_default_timezone_set("Mexico/General") ; //conviene ponerlo desde principal.php
-    
+function getDay() {
+    date_default_timezone_set("Mexico/General"); //conviene ponerlo desde principal.php
+
     $fecha = date("d-m-Y");
     $fechats = strtotime($fecha); //a timestamp 
 
     $dia = "do";
     //el parametro w en la funcion date indica que queremos el dia de la semana 
     //lo devuelve en numero 0 domingo, 1 lunes,.... 
-    switch (date('w', $fechats)){ 
-        case 0: $dia = "do"; break; 
-        case 1: $dia = "lu"; break; 
-        case 2: $dia = "ma"; break; 
-        case 3: $dia = "mi"; break; 
-        case 4: $dia = "ju"; break; 
-        case 5: $dia = "vi"; break; 
-        case 6: $dia = "sa"; break; 
-    }  
+    switch (date('w', $fechats)) {
+        case 0: $dia = "do";
+            break;
+        case 1: $dia = "lu";
+            break;
+        case 2: $dia = "ma";
+            break;
+        case 3: $dia = "mi";
+            break;
+        case 4: $dia = "ju";
+            break;
+        case 5: $dia = "vi";
+            break;
+        case 6: $dia = "sa";
+            break;
+    }
     return $dia;
 }
+
 ?>

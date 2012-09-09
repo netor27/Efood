@@ -1,0 +1,25 @@
+form div{position:relative;} 
+
+/* setting the width and height of the SELECT element to match the replacing graphics */
+select.select{
+    position:relative;
+    z-index:10;
+    width:190px !important;
+    height:40px !important;
+    line-height:26px;
+}
+
+/* dynamically created SPAN, placed below the SELECT */
+span.select{
+    position:absolute;
+    bottom:0;
+    float:left;
+    left:0;
+    width:190px;
+    height:40px;
+    line-height:26px;
+    text-indent:10px;
+    background:url(../imagenes/resultadosBusqueda/selectBox_blanco_190x40.png) no-repeat 0 0;
+    cursor:default;
+    z-index:1;
+}
