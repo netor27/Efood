@@ -7,9 +7,9 @@ try {
     $usuario = 'root';
     $pswd = 'root';
 
-//    $host = 'efoodcommx.ipowermysql.com';
-//    $base = 'dbefood';
-//    $usuario = 'comida2012';
+//    $host = 'localhost';
+//    $base = 'efoodc5_dbefood';
+//    $usuario = 'efoodc5_comida';
 //    $pswd = 'Chef2012!';
 
 
