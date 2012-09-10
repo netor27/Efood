@@ -1,6 +1,6 @@
 <?php
 
-function buscarColonia() {
+function buscarRestauranteHome() {
     require_once('funcionesPHP/funcionesGenerales.php');
     require_once 'modulos/restaurantes/modelos/RestauranteModelo.php';
     require_once 'modulos/restaurantes/clases/Restaurante.php';
@@ -15,7 +15,7 @@ function buscarColonia() {
             }
         }
     }
-    
+
     $domicilio = true;
     $recoger = true;
 
@@ -34,6 +34,10 @@ function buscarColonia() {
 
     require_once 'modulos/tipoComida/modelos/tipoComidaModelo.php';
     $tiposDeComida = getTiposComida();
+    require_once 'modulos/colonias/modelos/ColoniaModelo.php';
+    $colonias = getColonias();
+
+
     require_once 'modulos/pedidos/vistas/resultadosBusqueda.php';
 }
 
@@ -42,12 +46,42 @@ function buscarRestaurante() {
     require_once 'modulos/restaurantes/modelos/RestauranteModelo.php';
     require_once 'modulos/restaurantes/clases/Restaurante.php';
 
-    $idRestaurante = $_POST['idRestaurante'];
-    $restaurante = getRestauranteHabilitado($idRestaurante);
-    echo "<table border=1>";
-    $restaurante->printRestaurantePedido();
-    echo "</table>";
+    $idColonia = $_POST['idColonia'];
+    $idTiposComida = null;    
+    if (isset($_POST['idTipoComida']) && is_numeric($_POST['idTipoComida'])) {
+        echo 'id ' . $_POST['idTipoComida'] . " ||";
+        $idTiposComida = array();
+        array_push($idTiposComida, $_POST['idTipoComida']);
+    }
+    if (isset($_POST['idMetodoEntrega']) && is_numeric($_POST['idMetodoEntrega'])) {
+        $metodoEntrega = $_POST['idMetodoEntrega'];
+    } else {
+        $metodoEntrega = 2;
+    }
+
+
+    $restaurantes = getRestaurantesColoniaTipoComidaMetodoEntrega($idColonia, $idTiposComida, $metodoEntrega);
+
+    require_once 'modulos/tipoComida/modelos/tipoComidaModelo.php';
+    $tiposDeComida = getTiposComida();
+    require_once 'modulos/colonias/modelos/ColoniaModelo.php';
+    $colonias = getColonias();
+
+
+    require_once 'modulos/pedidos/vistas/resultadosBusqueda.php';
 }
+
+//function buscarRestaurante() {
+//    require_once('funcionesPHP/funcionesGenerales.php');
+//    require_once 'modulos/restaurantes/modelos/RestauranteModelo.php';
+//    require_once 'modulos/restaurantes/clases/Restaurante.php';
+//
+//    $idRestaurante = $_POST['idRestaurante'];
+//    $restaurante = getRestauranteHabilitado($idRestaurante);
+//    echo "<table border=1>";
+//    $restaurante->printRestaurantePedido();
+//    echo "</table>";
+//}
 
 function menu() {
     require_once('funcionesPHP/funcionesGenerales.php');

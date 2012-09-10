@@ -1,31 +1,37 @@
 <?php
 require_once('layout/headers/headInicio.php');
 require_once('layout/headers/headResultadosBusqueda.php');
+require_once('layout/headers/headAutocompleteColonias.php');
 require_once('layout/headers/headFin.php');
 ?>
 
 <div id="buscadorContainer">
-    <form>
-        <input type="text"/>
-        <div>
-            <select class="select" title="Tipo de comida">
-                <option></option>
+    <form method="post" action="pedidos.php?a=buscarRestaurante">
+        <div class="formElement">
+            <input id="colonias" class="ui-corner-all textoBlanco" type="text" placeholder="¡Escribe tu colonia!"/>
+            <input type="hidden" id="idColonia" name="idColonia">
+        </div>
+        <div class="formElement">
+            <select class="selectBlanco" title="Tipo de comida" name="idTipoComida">
+                <option value=""></option>
                 <?php
                 foreach ($tiposDeComida as $tipo) {
-                    echo '<option value="'.$tipo->idTipoComida.'">'.$tipo->nombre.'</option>';
+                    echo '<option value="' . $tipo->idTipoComida . '">' . $tipo->nombre . '</option>';
                 }
                 ?>
             </select>
         </div>
-        <div>
-            <select class="select"  title="Tipo de entrega">
+        <div class="formElement">
+            <select class="selectBlanco"  title="Tipo de entrega" name="idMetodoEntrega">
                 <option></option>
-                <option>A domicilio</option>
-                <option>Pasar a recoger</option>                
-                <option>Ambos</option>
+                <option value="0">Pasar a recoger</option>                
+                <option value="1">A domicilio</option>                
+                <option value="2">Ambos</option>
             </select>
         </div>
-        <input type="submit">
+        <div class="formElement">
+            <input type="image" src="/layout/imagenes/resultadosBusqueda/btnBuscar_190x40.png">
+        </div>
     </form>
 </div>
 

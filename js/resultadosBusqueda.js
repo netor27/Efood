@@ -1,5 +1,5 @@
 $(document).ready(function(){	
-    $('select.select').each(function(){
+    $('select.selectBlanco').each(function(){
         var title = $(this).attr('title');
         if( $('option:selected', this).val() != ''  ) title = $('option:selected',this).text();
         $(this)
@@ -8,10 +8,15 @@ $(document).ready(function(){
             'opacity':0,
             '-khtml-appearance':'none'
         })
-        .after('<span class="select">' + title + '</span>')
-        .change(function(){
+        .after('<span class="selectBlanco">' + title + '</span>')
+        .change(function(){                        
             val = $('option:selected',this).text();
-            $(this).next().text(val);
+            if(val != ''){
+                $(this).next().text(val);
+            }else{
+                var title= $(this).attr('title');
+                $(this).next().text(title);
+            }
         })
     });
 });

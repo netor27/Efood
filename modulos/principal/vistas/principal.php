@@ -2,12 +2,12 @@
 require_once('layout/headers/headInicio.php');
 require_once('layout/headers/headIndex.php');
 require_once('layout/headers/headAutocompleteColonias.php');
-require_once('layout/headers/headAutocompleteRestaurantes.php');
+//require_once('layout/headers/headAutocompleteRestaurantes.php');
 require_once('layout/headers/headFin.php');
 ?>
 
 <div id="buscadorContainer" style="overflow:hidden;">
-    <form action="pedidos.php?a=buscarColonia" method="POST">
+    <form action="pedidos.php?a=buscarRestauranteHome" method="POST">
         <div id="top_buscador" style="overflow:hidden;">
             <div class="left">
                 <div id="logo_chef">                    

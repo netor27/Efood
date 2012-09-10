@@ -557,7 +557,6 @@ function getRestaurantesColoniaTipoComidaMetodoEntrega($idColonia, $tipoComida, 
         }
         $query = $query . " )";
     }
-    
     $stmt = $conex->prepare($query);
     $stmt->bindParam(":idColonia", $idColonia);
 
