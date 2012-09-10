@@ -398,7 +398,7 @@ function actualizarLogoSubmit() {
             if ($_FILES["logo"]["error"] > 0) {
                 echo "Error al subir el archivo: " . $_FILES["logo"]["error"] . "<br />";
             } else {
-                $fileName = "archivos/" . $_FILES["logo"]["name"] . "_" . $sufix;
+                $fileName = "archivos/" . $sufix . "_" . $_FILES["logo"]["name"];
                 if (file_exists($fileName)) {
                     unlink($fileName);
                 }

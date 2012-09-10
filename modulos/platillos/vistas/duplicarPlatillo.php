@@ -2,7 +2,7 @@
 require_once('layout/headers/headInicio.php');
 require_once('layout/headers/headFin.php');
 ?>
-<h1>efood</h1>
+
 <h2>Duplicar platillo</h2>
 <form method="post" action="platillos.php?a=duplicarSubmit">
     <input type="hidden" name="idRestaurante" value="<?php echo $idRestaurante; ?>">

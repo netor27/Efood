@@ -3,7 +3,7 @@ require_once('layout/headers/headInicio.php');
 require_once('layout/headers/headAutocompleteColonias.php');
 require_once('layout/headers/headFin.php');
 ?>
-<h1>efood</h1>
+
 <h2><?php echo $tipo; ?> restaurante</h2>
 <?php
 if (isset($error)) {

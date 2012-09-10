@@ -21,6 +21,15 @@
                 <div id="contenedorLogin" class="right">
                     <?php
                     require 'modulos/principal/vistas/login.php';
+
+                    if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 1) {
+                        ?>
+                        <br><br>
+                        <a href="usuarios.php"> Administración de usuarios</a>
+                        <br>
+                        <a href="restaurantes.php"> Administración de restaurantes</a>
+                        <?php
+                    }
                     ?>
                 </div>
                 <div id="menuHeader">

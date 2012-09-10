@@ -1,7 +1,7 @@
 li{list-style:none;}
 html{ height: 100%;}
 body{   
-    font-family: sans-serif, arial, verdana;    
+    font-family: Tahoma, Geneva, sans-serif;   
     font-size: 12px;  
     background-color: #FFFFFF; 
     margin:0px; 
@@ -22,9 +22,8 @@ body{
 #contenidoHeader{
     background: #FFFFFF url('../imagenes/Home/Fondo_Header_1120x120.png') repeat-x;
     padding-left: 18px;
-    padding-top: 20px;
-    height: 120px;
-    padding-bottom: 30px;
+    margin-top: 20px;
+    height: 120px;    
 }
 
 #headerLogo{
@@ -37,15 +36,17 @@ body{
 }
 
 #header_black_title{
-    font-size: 24px;
+    font-size: 22px;
     font-weight: bold;
-    color: #000000;
+    color: #373435;
+    letter-spacing: -1px;
 }
 
 #header_red_title{
-    font-size: 28px;
+    font-size: 24px;
     font-weight: bold;
-    color: #ff1010;
+    color:#ED3237;
+    letter-spacing: 0.5px;    
 }
 
 #contenedorLogin{
@@ -101,7 +102,7 @@ ul{
 
 a{  
     text-decoration: none;  
-    color: #f0201e; 
+    color: #ED3237; 
     font-weight: bold;  
 }
 a:visited{  
@@ -116,12 +117,12 @@ img{
     border: none;  
     padding: 0px 0px 0px 0px;  
 }
-h1{ margin:0;   padding:0px 0px 15px 0px;  color:#dc5f21;  font-weight:100;    font-size:33px; padding-top:5px;    }
-h2{ margin:0;   padding:0px 0px 12px 0px;;  color:#6ab7a5;  font-weight:100;    font-size:25px; padding-top:5px;    }
-h3{ margin:0;   padding:0px 0px  9px 0px;;  color:#52b7d2;  font-weight:100;    font-size:20px; padding-top:5px;    }
-h4{ margin:0;   padding:0px 0px  6px 0px;;  color:#dc5f21;  font-weight:100;    font-size:18px; padding-top:5px;    }
-h5{ margin:0;   padding:0px 0px  3px 0px;;  color:#30377a;  font-weight:100;    font-size:14px; padding-top:5px;    }
-h6{ margin:0;   padding:0px 0px  0px 0px;;  color:#30377a;  font-weight:100;    font-size:10px; padding-top:5px;    }
+h1{ margin:0;   padding:0px 0px 15px 0px;  color:black;  font-weight:100;    font-size:33px; padding-top:5px;    }
+h2{ margin:0;   padding:0px 0px 12px 0px;;  color:black;  font-weight:100;    font-size:25px; padding-top:5px;    }
+h3{ margin:0;   padding:0px 0px  9px 0px;;  color:black;  font-weight:100;    font-size:20px; padding-top:5px;    }
+h4{ margin:0;   padding:0px 0px  6px 0px;;  color:red;  font-weight:100;    font-size:18px; padding-top:5px;    }
+h5{ margin:0;   padding:0px 0px  3px 0px;;  color:black;  font-weight:100;    font-size:14px; padding-top:5px;    }
+h6{ margin:0;   padding:0px 0px  0px 0px;;  color:red;  font-weight:100;    font-size:10px; padding-top:5px;    }
 
 /* Transiciones en .3 segundos*/
 .ease3 {    -webkit-transition: all .3s ease;   -moz-transition: all .3s ease;  -o-transition: all .3s ease;    -ms-transition: all .3s ease;   transition: all .3s ease;   }

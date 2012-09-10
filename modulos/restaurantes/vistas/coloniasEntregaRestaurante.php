@@ -3,7 +3,7 @@ require_once('layout/headers/headInicio.php');
 require_once('layout/headers/headColoniasEntrega.php');
 require_once('layout/headers/headFin.php');
 ?>
-<h1>efood</h1>
+
 <h2>Colonias de entrega de:"<?php echo $restaurante->nombre; ?>"</h2>
 <?php
 if (isset($error)) {

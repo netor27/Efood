@@ -6,7 +6,7 @@ require_once('layout/headers/headValidate.php');
 require_once('layout/headers/headPedidos.php');
 require_once('layout/headers/headFin.php');
 ?>
-<h1>efood</h1>
+
 <h2>Platillos del restaurante <?php echo $restaurante->nombre; ?></h2>
 <?php
 echo "Pedido M&iacute;nimo: " . $restaurante->pedidoMinimo;

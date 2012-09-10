@@ -117,7 +117,8 @@ class Restaurante {
 
         echo '</tr>';
     }
-static function printRestaurantePedidoHeader() {
+
+    static function printRestaurantePedidoHeader() {
         echo '<tr>';
         echo '<th>Logo</th>';
         echo '<th>nombre</th>';
@@ -137,7 +138,7 @@ static function printRestaurantePedidoHeader() {
 
     function printRestaurantePedido() {
         echo '<tr>';
-        echo '<td><img src="'. $this->logo .'" alt="logo" width="150" height="100"></td>';
+        echo '<td><img src="' . $this->logo . '" alt="logo" width="150" height="100"></td>';
         echo '<td>' . $this->nombre . '</td>';
         echo '<td><a href="pedidos.php?a=menu&i=' . $this->idRestaurante . '">Ver Menú</a></td>';
         echo '<td><a href="restaurantes.php?a=horario&i=' . $this->idRestaurante . '">Horario</a></td>';
@@ -151,7 +152,8 @@ static function printRestaurantePedidoHeader() {
         echo '<td>' . $this->email . '</td>';
         echo '<td>' . getTextoMetodoEntrega($this->metodoEntrega) . '</td>';
         echo '</tr>';
-    }    
+    }
+
 }
 
 ?>

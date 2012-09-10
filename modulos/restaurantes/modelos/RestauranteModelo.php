@@ -40,7 +40,6 @@ function altaRestaurante($restaurante) {
     $id = -1;
     if ($stmt->execute()) {
         $id = $conex->lastInsertId();
-        $id = $conex->lastInsertId();
         $stmt = $conex->prepare("INSERT into horariorestaurante (idRestaurante) values(:id)");
         $stmt->bindParam(":id", $id);
         $stmt->execute();
@@ -485,6 +484,83 @@ function getRestaurantesColonia($idColonia) {
                             FROM  restaurante r,restaurantecolonia rc
                             WHERE rc.idColonia = :idColonia AND r.idRestaurante = rc.idRestaurante AND r.habilitado=1");
     $stmt->bindParam(":idColonia", $idColonia);
+    $restaurantes = array();
+    if ($stmt->execute()) {
+        require_once 'modulos/restaurantes/clases/Restaurante.php';
+        $rows = $stmt->fetchAll();
+        $i = 0;
+        foreach ($rows as $row) {
+            $restaurante = new Restaurante();
+            $restaurante->calle = utf8_encode($row['calle']);
+            $restaurante->descripcion = utf8_encode($row['descripcion']);
+            $restaurante->email = utf8_encode($row['email']);
+            $restaurante->formaPago = utf8_encode($row['formaPago']);
+            $restaurante->gastoEnvio = utf8_encode($row['gastoEnvio']);
+            $restaurante->idColonia = utf8_encode($row['idColonia']);
+            $restaurante->idRestaurante = utf8_encode($row['idRestaurante']);
+            $restaurante->logo = utf8_encode($row['logo']);
+            $restaurante->metodoEntrega = utf8_encode($row['metodoEntrega']);
+            $restaurante->nombre = utf8_encode($row['nombre']);
+            $restaurante->numero = utf8_encode($row['numero']);
+            $restaurante->numeroInt = utf8_encode($row['numeroInt']);
+            $restaurante->paginaWeb = utf8_encode($row['paginaWeb']);
+            $restaurante->password = utf8_encode($row['password']);
+            $restaurante->pedidoMinimo = utf8_encode($row['pedidoMinimo']);
+            $restaurante->razonSocial = utf8_encode($row['razonSocial']);
+            $restaurante->referencia = utf8_encode($row['referencia']);
+            $restaurante->rfc = utf8_encode($row['rfc']);
+            $restaurante->telefono = utf8_encode($row['telefono']);
+            $restaurante->usuario = utf8_encode($row['usuario']);
+            $restaurantes[$i] = $restaurante;
+            $i++;
+        }
+        return $restaurantes;
+    } else {
+        print_r($stmt->errorInfo());
+        return NULL;
+    }
+}
+
+//
+//SELECT idRestaurante
+//FROM  `restaurantetipocomida` 
+//WHERE (
+//idTipoComida =11
+//OR idTipoComida =21
+//OR idTipoComida =1
+//OR idTipoComida =211
+//
+
+function getRestaurantesColoniaTipoComidaMetodoEntrega($idColonia, $tipoComida, $metodoEntrega) {
+    global $conex;
+    $query = "SELECT r.*
+        FROM  restaurante r,restaurantecolonia rc
+        WHERE rc.idColonia = :idColonia 
+        AND r.idRestaurante = rc.idRestaurante 
+        AND r.habilitado = 1 ";
+    if (isset($metodoEntrega) && $metodoEntrega < 2) {
+        $query = $query . "AND r.metodoEntrega = " . $metodoEntrega;
+    }
+    if (isset($tipoComida) && sizeof($tipoComida) > 0) {
+        $query = $query . " AND r.idRestaurante IN 
+                            (SELECT idRestaurante 
+                             FROM restaurantetipocomida
+                             WHERE ";
+        $bandera = false;
+        foreach ($tipoComida as $tipo) {
+            if ($bandera)
+                $query = $query . " OR idTipoComida = " . $tipo;
+            else {
+                $query = $query . " idTipoComida = " . $tipo;
+                $bandera = true;
+            }
+        }
+        $query = $query . " )";
+    }
+    
+    $stmt = $conex->prepare($query);
+    $stmt->bindParam(":idColonia", $idColonia);
+
     $restaurantes = array();
     if ($stmt->execute()) {
         require_once 'modulos/restaurantes/clases/Restaurante.php';

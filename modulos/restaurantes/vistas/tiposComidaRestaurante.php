@@ -3,7 +3,7 @@ require_once('layout/headers/headInicio.php');
 require_once('layout/headers/headTiposComida.php');
 require_once('layout/headers/headFin.php');
 ?>
-<h1>efood</h1>
+
 <h2>Tipos de comida de:"<?php echo $restaurante->nombre; ?>"</h2>
 <?php
 if (isset($error)) {
