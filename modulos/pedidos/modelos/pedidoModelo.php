@@ -43,7 +43,7 @@ function getIngredientesPlatillo($idPlatillo) {
             if ($pedido->idIngrediente != NULL) {
                 $_SESSION['ingrediente'][$pedido->idPlatillo]["'" . $pedido->idIngrediente . "'"] = serialize($pedido);
             } else {
-                $_SESSION['ingrediente'][$pedido->idPlatillo]['sin'] = serialize($pedido);
+                $_SESSION['ingrediente'][$pedido->idPlatillo]["'gi" . $pedido->idGrupoIngredientes . "'"] = serialize($pedido);
             }
             //$_SESSION['platillo'][$pedido->idPlatillo] = serialize($pedido);
             //$_SESSION['idPlatilloActual'] = $pedido->idPlatillo;
@@ -76,7 +76,7 @@ function guardaPedido() {
         if (isset($valor[0]) && $valor[0] != NULL && $valor[0] != "") {
             $pedido = unserialize($_SESSION['ingrediente'][$_SESSION['idPlatillo']]["'" . $valor[1] . "'"]); //el valor en la posicion 1 sirve para discriminar porque es el tamaño del platillo
         } else {
-            $pedido = unserialize($_SESSION['ingrediente'][$_SESSION['idPlatillo']]['sin']);
+            $pedido = unserialize($_SESSION['ingrediente'][$_SESSION['idPlatillo']]["'gi" . $pedido->idGrupoIngredientes . "'"]);
         }
         //print_r($pedido);
         //$pedido = unserialize($_SESSION['idPlatilloActual']);
@@ -96,7 +96,7 @@ function guardaPedido() {
     if (isset($pedido->idIngrediente))
         $_SESSION['pedido'][$pedido->idPlatillo][$pedido->idIngrediente] = $datosFinales;
     else
-        $_SESSION['pedido'][$pedido->idPlatillo]['sin'] = $datosFinales;
+        $_SESSION['pedido'][$pedido->idPlatillo]["'gi" . $pedido->idGrupoIngredientes . "'"] = $datosFinales;
 
     array_push($_SESSION["'rest" . $pedido->idRestaurante . "'"], $_SESSION['pedido']);
     $_SESSION['pedido'] = null;
