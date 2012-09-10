@@ -131,6 +131,14 @@ function agregaAlPedido() {
     echo json_encode($json);
 }
 
+function eliminarDelPedido() {
+    require_once('modulos/pedidos/modelos/pedidoModelo.php');
+    require_once 'modulos/pedidos/clases/PlatilloElementos.php';
+    $id = $_GET['i'];
+    eliminaPlatilloPedido();
+    menu();
+}
+
 function pedir() {
     require_once('modulos/pedidos/modelos/pedidoModelo.php');
     require_once 'modulos/pedidos/clases/PlatilloElementos.php';

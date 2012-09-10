@@ -246,4 +246,8 @@ function utf8replace($cadena) {
     return $cadena;
 }
 
+function eliminarPlatilloPedido(){
+    $_SESSION['ingrediente'][$id] = null;
+}
+
 ?>
