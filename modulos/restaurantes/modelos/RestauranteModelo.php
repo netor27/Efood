@@ -533,10 +533,11 @@ function getRestaurantesColonia($idColonia) {
 
 function getRestaurantesColoniaTipoComidaMetodoEntrega($idColonia, $tipoComida, $metodoEntrega) {
     global $conex;
-    $query = "SELECT r.*
-        FROM  restaurante r,restaurantecolonia rc
+    $query = "SELECT r.* , h.*
+        FROM  restaurante r,restaurantecolonia rc, horariorestaurante h
         WHERE rc.idColonia = :idColonia 
         AND r.idRestaurante = rc.idRestaurante 
+        AND r.idRestaurante = h.idRestaurante
         AND r.habilitado = 1 ";
     if (isset($metodoEntrega) && $metodoEntrega < 2) {
         $query = $query . "AND r.metodoEntrega = " . $metodoEntrega;
@@ -557,16 +558,20 @@ function getRestaurantesColoniaTipoComidaMetodoEntrega($idColonia, $tipoComida, 
         }
         $query = $query . " )";
     }
+    
     $stmt = $conex->prepare($query);
     $stmt->bindParam(":idColonia", $idColonia);
 
     $restaurantes = array();
     if ($stmt->execute()) {
         require_once 'modulos/restaurantes/clases/Restaurante.php';
+        require_once 'modulos/restaurantes/clases/Horario.php';
         $rows = $stmt->fetchAll();
         $i = 0;
+        $horario = null;
         foreach ($rows as $row) {
             $restaurante = new Restaurante();
+            $restaurante->idRestaurante = $row['idRestaurante'];
             $restaurante->calle = utf8_encode($row['calle']);
             $restaurante->descripcion = utf8_encode($row['descripcion']);
             $restaurante->email = utf8_encode($row['email']);
@@ -587,6 +592,18 @@ function getRestaurantesColoniaTipoComidaMetodoEntrega($idColonia, $tipoComida, 
             $restaurante->rfc = utf8_encode($row['rfc']);
             $restaurante->telefono = utf8_encode($row['telefono']);
             $restaurante->usuario = utf8_encode($row['usuario']);
+            $restaurante->tipoGastoEnvio = $row['tipoGastoEnvio'];
+            $horario = new Horario();
+            $horario->doFin = $row['doFin'];$horario->doIni = $row['doIni'];
+            $horario->luFin = $row['luFin'];$horario->luIni = $row['luIni'];
+            $horario->maFin = $row['maFin'];$horario->maIni = $row['maIni'];
+            $horario->miFin = $row['miFin'];$horario->miIni = $row['miIni'];
+            $horario->juFin = $row['juFin'];$horario->juIni = $row['juIni'];
+            $horario->viFin = $row['viFin'];$horario->viIni = $row['viIni'];
+            $horario->saFin = $row['saFin'];$horario->saIni = $row['saIni'];
+            $restaurante->horario = $horario;
+            
+            $restaurante->tiposComida = getTipoComidaRestaurante($restaurante->idRestaurante);
             $restaurantes[$i] = $restaurante;
             $i++;
         }

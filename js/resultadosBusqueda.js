@@ -40,4 +40,25 @@ $(document).ready(function(){
             }
         })
     });
+    
+    $("#selectTipoComida").change(function() {
+        //filtrar por el tipo de comida
+        var id = $(this).val();
+        if(id == -1 || id == ""){
+            $(".restaurante").show();
+        }else{
+            $(".restaurante").hide();
+            $(".tipoComida"+id).show();
+        }
+    });
+    $("#selectMetodoEntrega").change(function() {
+        //filtrar por el tipo de entrega
+        var id = $(this).val();
+        if(id == -1){
+            $(".restaurante").show();
+        }else{
+            $(".restaurante").hide();
+            $(".tipoEntrega"+id).show();
+        }
+    });
 });

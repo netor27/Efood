@@ -49,7 +49,7 @@ function buscarRestaurante() {
     $idColonia = $_POST['idColonia'];
     $idTiposComida = null;    
     if (isset($_POST['idTipoComida']) && is_numeric($_POST['idTipoComida'])) {
-        echo 'id ' . $_POST['idTipoComida'] . " ||";
+        //echo 'id ' . $_POST['idTipoComida'] . " ||";
         $idTiposComida = array();
         array_push($idTiposComida, $_POST['idTipoComida']);
     }

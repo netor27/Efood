@@ -35,6 +35,8 @@ class Restaurante {
     public $habilitado;
     //No son parte de la bd
     public $nombreColonia;
+    public $horario;
+    public $tiposComida;
 
     static function printRestauranteHeader() {
         echo '<tr>';

@@ -44,8 +44,9 @@ require_once('layout/headers/headFin.php');
         <span id="filtroContainerTexto">Filtra tu comida</span>
         <form action="#" method="post">
             <div class="formElement">
-                <select class="selectAmarillo" title="Tipo de comida">
+                <select id="selectTipoComida" class="selectAmarillo" title="Tipo de comida">
                     <option value=""></option>
+                    <option value="-1">Mostrar todo</option>
                     <?php
                     foreach ($tiposDeComida as $tipo) {
                         echo '<option value="' . $tipo->idTipoComida . '">' . $tipo->nombre . '</option>';
@@ -54,15 +55,16 @@ require_once('layout/headers/headFin.php');
                 </select>
             </div>
             <div class="formElement">
-                <select class="selectAmarillo" title="Tipo de entrega">
+                <select id="selectMetodoEntrega" class="selectAmarillo" title="Tipo de entrega">
                     <option></option>
+                    <option value="-1">Mostrar todo</option>
                     <option value="0">Pasar a recoger</option>                
                     <option value="1">A domicilio</option>                
                     <option value="2">Ambos</option>
                 </select>
             </div>
             <div class="formElement">
-                <select class="selectAmarillo" title="Horarios">
+                <select  class="selectAmarillo" title="Horarios">
                     <option></option>
                 </select>
             </div>
@@ -84,15 +86,43 @@ require_once('layout/headers/headFin.php');
 </div>
 <div id="restaurantesContainer">
     <?php
+    $i = 0;
     foreach ($restaurantes as $restaurante) {
+        $aux = "";
+        if (isset($restaurante->tiposComida)) {
+            foreach ($restaurante->tiposComida as $tipoComida) {
+                $aux = $aux . " tipoComida" . $tipoComida->idTipoComida;
+            }
+        }
+        $aux = $aux . " tipoEntrega" . $restaurante->metodoEntrega;
         ?>
-        <div class="restaurante ui-corner-all">
-            <div class="restauranteHeader">
+        <div class="restaurante ui-corner-all <?php echo $aux; ?>">
+            <?php
+            if ($i % 2 == 0) {
+                ?>
+                <div class="restauranteHeader">
+                    <?php
+                } else {
+                    echo '<div class="restauranteHeaderPar">';
+                }
+                ?>
                 <div class="titulo">
                     <?php echo $restaurante->nombre; ?>
                 </div>
                 <div class="tiposComida">
-                    Tacos y Chilaquiles / Mexicana
+                    <?php
+                    $bandera = true;
+                    if (isset($restaurante->tiposComida)) {
+                        foreach ($restaurante->tiposComida as $tipoComida) {
+                            if ($bandera) {
+                                echo $tipoComida->nombre;
+                                $bandera = false;
+                            } else {
+                                echo " / " . $tipoComida->nombre;
+                            }
+                        }
+                    }
+                    ?>
                 </div>
             </div>
             <div class="restauranteBody">
@@ -105,48 +135,106 @@ require_once('layout/headers/headFin.php');
                     <div class="left datosRestaurante">
                         <div class="horario">
                             <img src="/layout/imagenes/resultadosBusqueda/reloj_20x20.png"/>
-                            <span>De 13:00 a 19:00 hrs.</span>
+                            <?php
+                            $inicio = "";
+                            $fin = "";
+                            switch (getDay()) {
+                                case "lu": $inicio = $restaurante->horario->luIni;
+                                    $fin = $restaurante->horario->luFin;
+                                    break;
+                                case "ma": $inicio = $restaurante->horario->maIni;
+                                    $fin = $restaurante->horario->maFin;
+                                    break;
+                                case "mi": $inicio = $restaurante->horario->miIni;
+                                    $fin = $restaurante->horario->miFin;
+                                    break;
+                                case "ju": $inicio = $restaurante->horario->juIni;
+                                    $fin = $restaurante->horario->juFin;
+                                    break;
+                                case "vi": $inicio = $restaurante->horario->viIni;
+                                    $fin = $restaurante->horario->viFin;
+                                    break;
+                                case "sa": $inicio = $restaurante->horario->saIni;
+                                    $fin = $restaurante->horario->saFin;
+                                    break;
+                                case "do": $inicio = $restaurante->horario->doIni;
+                                    $fin = $restaurante->horario->doFin;
+                                    break;
+                            }
+                            $inicio = quitarSegundosHora($inicio);
+                            $fin = quitarSegundosHora($fin);
+                            if ($inicio == "00:00" && $fin == "23:59") {
+                                echo "<span>Abierto todo el día</span>";
+                            } else if ($inicio == "00:00" && $fin == "00:00") {
+                                echo "<span>Cerrado</span>";
+                            } else {
+                                echo "<span>De " . $inicio . " a " . $fin . " hrs.</span>";
+                            }
+                            ?>
+
                         </div>
                         <div class="datos">
                             <span class="datosRed">Pedido mínimo</span>
                             <span>$ <?php echo $restaurante->pedidoMinimo; ?></span>
-                            <span class="datosRed">Gastos de Envío:</span>
-                            <span><?php echo $restaurante->gastoEnvio; ?></span>
+
+
+                            <?php
+                            switch ($restaurante->tipoGastoEnvio) {
+                                case 0:
+                                    //monto fijo
+                                    echo '<span class="datosRed">Gastos de Envío:</span>';
+                                    echo "<span>$ " . $restaurante->gastoEnvio . "</span>";
+                                    break;
+                                case 1:
+                                    //porcentaje
+                                    echo '<span class="datosRed">Gastos de Envío:</span>';
+                                    echo "<span> " . $restaurante->gastoEnvio . " %</span>";
+                                    break;
+                                case 2:
+                                    //compuesto
+                                    //echo '<br><span class="datosRed">Gastos de Envío:</span>';
+                                    //echo "<span> ".$restaurante->gastoEnvio ."</span>";
+                                    echo '<span class="datosRed">Gastos de Envío:</span>';
+                                    echo "<span>Compuesto</span>";
+                                    break;
+                            }
+                            ?>
                         </div>
                         <div class="tipoPago">
                             <?php
-                            if($restaurante->formaPago == 0){
+                            if ($restaurante->formaPago == 0) {
                                 echo 'efectivo';
                             }
-                            if($restaurante->formaPago == 1){
+                            if ($restaurante->formaPago == 1) {
                                 echo '<img src="/layout/imagenes/resultadosBusqueda/tipoPagos_190x20.png"/>';
                             }
-                            if($restaurante->formaPago == 2){
+                            if ($restaurante->formaPago == 2) {
                                 echo 'efectivo';
                                 echo '<img src="/layout/imagenes/resultadosBusqueda/tipoPagos_190x20.png"/>';
                             }
                             ?>
-                            
+
                         </div>
                     </div>
                     <div class="left metodoEntrega">
                         <?php
-                        if($restaurante->metodoEntrega == 1){
+                        if ($restaurante->metodoEntrega == 1) {
                             echo '<img src="/layout/imagenes/Home/img_Domicilio_86x39.png"/>';
                         }
-                        if($restaurante->metodoEntrega == 0){
+                        if ($restaurante->metodoEntrega == 0) {
                             echo '<img src="/layout/imagenes/Home/img_Recoger_64x40.png"/>';
                         }
-                        if($restaurante->metodoEntrega == 2){
+                        if ($restaurante->metodoEntrega == 2) {
                             echo '<img src="/layout/imagenes/Home/img_Domicilio_86x39.png"/>';
                             echo '<img src="/layout/imagenes/Home/img_Recoger_64x40.png"/>';
                         }
                         ?>
-                        
-                        
+
+
                     </div>
+                    <?php ?>
                     <div class="realizarPedido">
-                        <a href="#">
+                        <a href="pedidos.php?a=menu&i=<?php echo $restaurante->idRestaurante; ?> ">
                             <img src="/layout/imagenes/resultadosBusqueda/btnRealizarPedido_180x45.png"/>
                         </a>
                     </div>
@@ -154,6 +242,7 @@ require_once('layout/headers/headFin.php');
             </div>
         </div>
         <?php
+        $i++;
     }
     ?>
 </div>
