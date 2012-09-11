@@ -31,12 +31,12 @@ function buscarRestauranteHome() {
     $metodoEntrega = getIdMetodoEntrega($domicilio, $recoger);
 
     $restaurantes = getRestaurantesColoniaTipoComidaMetodoEntrega($idColonia, $idTiposComida, $metodoEntrega);
-
+    
     require_once 'modulos/tipoComida/modelos/tipoComidaModelo.php';
     $tiposDeComida = getTiposComida();
     require_once 'modulos/colonias/modelos/ColoniaModelo.php';
     $colonias = getColonias();
-
+    $colonia = getColonia($idColonia);
 
     require_once 'modulos/pedidos/vistas/resultadosBusqueda.php';
 }
@@ -66,8 +66,8 @@ function buscarRestaurante() {
     $tiposDeComida = getTiposComida();
     require_once 'modulos/colonias/modelos/ColoniaModelo.php';
     $colonias = getColonias();
-
-
+    $colonia = getColonia($idColonia);
+    
     require_once 'modulos/pedidos/vistas/resultadosBusqueda.php';
 }
 

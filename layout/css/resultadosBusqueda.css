@@ -34,6 +34,31 @@ input.textoBlanco{
     font-size: 14px;
 }
 
+select.selectAmarillo{
+    position:relative;
+    z-index:10;
+    width:152px !important;
+    height:28px !important;
+    line-height:26px;
+}
+
+span.selectAmarillo{
+    position:absolute;
+    bottom:0;
+    float:left;
+    left:0;
+    width:152px;
+    height:28px;
+    text-indent:10px;
+    background:url(../imagenes/resultadosBusqueda/selectBox_amarillo_152x28.png) no-repeat 0 0;
+    cursor:default;
+    z-index:1;
+    color: #373435;
+    font-size: 14px;
+    font-weight: bold;
+    line-height:28px;
+}
+
 #buscadorContainer{
     overflow: hidden;
     padding-top: 60px;
@@ -43,4 +68,128 @@ input.textoBlanco{
 .formElement{
     float:left;
     padding-right: 20px;
+}
+
+#numeroRestauranteContainer{
+    font-size: 20px;
+    padding-left: 50px;
+    padding-top: 20px;
+}
+
+#numeroRestauranteContainer .redText{
+    color:#ED3237;
+}
+#numeroRestauranteContainer .coloniaText{
+    color:#373435;
+}
+
+#filtrosContainer{
+    padding-top: 15px;
+    padding-left: 20px;
+}
+
+#filtroContainerTexto, #ordenaContainerTexto{
+    color:#373435;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 2;
+}
+
+#ordenaContainer{
+    margin-right: 160px;
+}
+
+
+#separadorContainer img{
+    margin-left:60px;
+    margin-top: 20px;
+}
+
+.restaurante{
+    margin: 0 auto;
+    width: 850px;
+    padding-top: 15px;
+}
+.restauranteHeader{
+    width: 850px;
+    height: 56px;
+    background:url(../imagenes/resultadosBusqueda/HeaderRojo_850x56.png) no-repeat 0 0;
+}
+
+.restauranteHeader .titulo{
+    color:#ffd525;
+    font-size:20px;
+    font-weight: bold;
+    margin-left: 20px;
+    padding-top: 15px;
+}
+.restaurante .tiposComida{
+    color:#ffffff;
+    font-size:10px;
+    margin-left: 20px;
+}
+
+.restauranteBody{
+    overflow: hidden;
+    height: 100px;
+    border-width:1px;
+    border-style:none solid solid;
+    border-color:rgb(209, 209, 209);
+    -webkit-box-shadow:rgb(209, 209, 209) 3px 3px 22px 0px;
+}
+
+
+
+.logoRestaurante{
+    width: 110px;
+    height: 100px;
+    float:left;
+    padding-right: 2px;
+    padding-left: 10px;
+}
+.separadorLogo{
+    float:left;
+    width: 6px;
+    height: 100px;
+    background:url(../imagenes/resultadosBusqueda/separadorLogotipo_6x1.png) repeat-y 0 0;
+}
+.contenidoRestaurante{
+    overflow: hidden;
+}
+.realizarPedido{
+    float:right;
+    margin-top: 30px;
+}
+
+.datosRestaurante{
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.horario span{
+    position: relative;
+    top: -5px;
+    color: #373435;
+    font-weight: bold;
+}
+
+.datos{
+    margin-top: 9px;
+}
+.datos span{
+    color: #373435;
+    font-weight: bold;
+}
+.datos span.datosRed{
+    color: #ED3237
+}
+.tipoPago{
+    margin-top: 10px;
+}
+.metodoEntrega{
+    margin-top: 25px;
+    margin-left: 25px;
+}
+.metodoEntrega img{
+    padding-left: 20px;
 }
