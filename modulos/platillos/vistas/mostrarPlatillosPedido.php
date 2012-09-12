@@ -66,7 +66,7 @@ $_SESSION['pedidoMinimo'] = $restaurante->gastoEnvio;
 <div id="botonpedir">
     <?php
         if(isset($pedidos) && $pedidos!=array())    
-            echo "<br><div class='popuppedir' id='".$restaurante->idRestaurante."'><a href='#' rel='superbox[content]'>Pedir</a></div>";
+            echo "<br><div class='popuppedir' id='".$restaurante->idRestaurante."'><a  rel='superbox[content]'>Pedir</a></div>";
     ?>
 </div>
 <?php

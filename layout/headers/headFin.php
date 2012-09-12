@@ -14,7 +14,7 @@
                     <span id="header_red_title" >Domicilio Online!</span>
                 </div>
                 <div class="left">
-                    <a href="#">
+                    <a >
                         <img alt="registrate, es gratis" src="layout/imagenes/Home/Regístrate_Gratis_111x76.png">
                     </a>
                 </div>

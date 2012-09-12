@@ -63,7 +63,7 @@ class Platillo {
         echo '<td>' . $this->descripcion . '</td>';
         echo '<td>' . $this->precioBase . '</td>';
         echo '<td>' . $this->hint . '</td>';
-        echo '<td><div class="popup" id="'.$this->idPlatillo.'"><a href="#" rel="superbox[content]">Agregar</a></div></td>';
+        echo '<td><div class="popup" id="'.$this->idPlatillo.'"><a  rel="superbox[content]">Agregar</a></div></td>';
        //echo '<td><div class="popup" id="'.$this->idPlatillo.'">Agregar</div></td>';
        // echo "<td><form method='POST' action='pedidos.php?a=obtenIngredientes'><input type='hidden' value=".$this->idPlatillo." name='platillo'/><input type='submit' value='enviar'/></form></td>";
         echo '</tr>';
