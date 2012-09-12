@@ -403,7 +403,10 @@ function actualizarLogoSubmit() {
                     unlink($fileName);
                 }
                 move_uploaded_file($_FILES["logo"]["tmp_name"], $fileName);
-
+                require_once 'funcionesPHP/CropImage.php';
+                if(cropImage($fileName, $fileName, 100, 100)){
+                    echo ' se hizo el crop correctamente';
+                }
                 $logoAnterior = $restaurante->logo;
                 echo $idRestaurante;
                 if (actualizaLogoRestaurante($idRestaurante, $fileName)) {

@@ -310,4 +310,10 @@ function getDay() {
     return $dia;
 }
 
+function quitarSegundosHora($hora){
+    $exploded = explode(":", $hora);
+    $hora = $exploded[0].":".$exploded[1];
+    return $hora;
+}
+
 ?>
