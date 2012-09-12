@@ -40,9 +40,10 @@ function getIngredientesPlatillo($idPlatillo) {
             $pedido->precio = $row['precio'];
             $caracteristicas[$i] = $pedido;
             $_SESSION['idPlatillo'] = $pedido->idPlatillo;
-            if ($pedido->idIngrediente != NULL) {
+            if ($pedido->idIngrediente != NULL && $pedido->idIngrediente!="") {
                 $_SESSION['ingrediente'][$pedido->idPlatillo]["'" . $pedido->idIngrediente . "'"] = serialize($pedido);
             } else {
+                $_SESSION['idgi'] = $pedido->idGrupoIngredientes;
                 $_SESSION['ingrediente'][$pedido->idPlatillo]["'gi" . $pedido->idGrupoIngredientes . "'"] = serialize($pedido);
             }
             //$_SESSION['platillo'][$pedido->idPlatillo] = serialize($pedido);
@@ -66,8 +67,7 @@ function guardaPedido() {
         $datos[$key] = explode("=", $value); //datos de la forma [0] tamano, [1] idtamano, [2] salsa, [3] idsalsa
 
 
-        
-//logica para que los valores se conviertan en los ids de la sesion $_SESSION['ingrediente'][id] para sacar los precios y demÃ¡s
+    //logica para que los valores se conviertan en los ids de la sesion $_SESSION['ingrediente'][id] para sacar los precios y demÃ¡s
     //luego seteamos las sesiones a null o le aplicamos el destroy con unset (no en este momento o pierdo todos los datos
     //para mostrarlos en posteriores consultas)
     $total = 0;
@@ -76,7 +76,7 @@ function guardaPedido() {
         if (isset($valor[0]) && $valor[0] != NULL && $valor[0] != "") {
             $pedido = unserialize($_SESSION['ingrediente'][$_SESSION['idPlatillo']]["'" . $valor[1] . "'"]); //el valor en la posicion 1 sirve para discriminar porque es el tamaño del platillo
         } else {
-            $pedido = unserialize($_SESSION['ingrediente'][$_SESSION['idPlatillo']]["'gi" . $pedido->idGrupoIngredientes . "'"]);
+            $pedido = unserialize($_SESSION['ingrediente'][$_SESSION['idPlatillo']]["'gi" . $_SESSION['idgi'] . "'"]);
         }
         //print_r($pedido);
         //$pedido = unserialize($_SESSION['idPlatilloActual']);
@@ -247,7 +247,7 @@ function utf8replace($cadena) {
 }
 
 function eliminarPlatilloPedido(){
-    $_SESSION['ingrediente'][$id] = null;
+    unset($_SESSION["'rest" .  $_GET['ir'] . "'"][0]);
 }
 
 ?>
