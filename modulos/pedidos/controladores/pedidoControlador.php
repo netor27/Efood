@@ -100,9 +100,9 @@ function agregaAlPedido() {
 function eliminarDelPedido() {
     require_once('modulos/pedidos/modelos/pedidoModelo.php');
     require_once 'modulos/pedidos/clases/PlatilloElementos.php';
-    $id = $_GET['i'];
-    eliminaPlatilloPedido();
-    menu();
+    $ir = $_GET['ir'];
+    eliminarPlatilloPedido();
+    require_once('modulos/platillos/vistas/mostrarPlatillosPedido.php');
 }
 
 function pedir() {
