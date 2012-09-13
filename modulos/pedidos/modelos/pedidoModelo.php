@@ -60,7 +60,8 @@ function guardaPedido() {
     $cantidad = $_POST['cantidad'];
     $especificaciones = $_POST['especificaciones'];
     $valores = $_POST['valores'];
-        $cadena = str_replace("+", "", $valores);
+    
+    $cadena = str_replace("+", "", $valores);
     $pares = explode("&", $cadena); //datos de la forma tamano=idtamano, salsa=idsalsa
     foreach ($pares as $key => $value)
         $datos[$key] = explode("=", $value); //datos de la forma [0] tamano, [1] idtamano, [2] salsa, [3] idsalsa
