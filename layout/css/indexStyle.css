@@ -177,7 +177,7 @@
 }
 
 .checkbox_antojo_clear{
-    background-image: url('../imagenes/Home/SelectTipoComidaVacío_13x12.png');
+    background-image: url('../imagenes/Home/SelectTipoComidaVacio_13x12.png');
     background-repeat: no-repeat;
     display: inline-block;
     width: 13px;
@@ -199,7 +199,7 @@
 }
 
 .checkbox_preferencia_clear{
-    background-image: url('../imagenes/Home/SelectEntregaVacío_32x29.png');
+    background-image: url('../imagenes/Home/SelectEntregaVacio_32x29.png');
     background-repeat: no-repeat;
     display: inline-block;
     width: 32px;
