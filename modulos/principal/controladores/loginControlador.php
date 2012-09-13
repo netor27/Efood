@@ -22,7 +22,7 @@ function login() {
             require_once 'modulos/usuarios/modelos/usuarioModelo.php';
             $usuarios = getUsuarios();
             if (isset($_POST['recuerdame']) && $_POST['recuerdame']==1) { //Guardamos la cookie para recordar
-                $tiempo = 3600; //tiempo que va a durar la cookie
+                $tiempo = 2592000; //tiempo que va a durar la cookie, 30 días
                 $clv = $password;
                 setcookie("email", $usuario, time() + $tiempo);
                 setcookie("clv", $clv, time() + $tiempo);
