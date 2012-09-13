@@ -1,4 +1,4 @@
-<?php
+     <?php
 require_once('layout/headers/headInicio.php');
 require_once('layout/headers/headSuperbox.php');
 require_once('layout/headers/headBlockUI.php');
@@ -9,10 +9,10 @@ require_once('layout/headers/headFin.php');
 
 <h2>Platillos del restaurante <?php echo $restaurante->nombre; ?></h2>
 <?php
-echo "Pedido M&iacute;nimo: " . $restaurante->pedidoMinimo;
+echo "Pedido M&iacute;nimo: $" . $restaurante->pedidoMinimo;
 $_SESSION['pedidoMinimo'] = $restaurante->pedidoMinimo;
-echo "<br>Gasto de Env&iacute;o: " . $restaurante->gastoEnvio;
-$_SESSION['pedidoMinimo'] = $restaurante->gastoEnvio;
+//echo "<br>Gasto de Env&iacute;o: " . $restaurante->gastoEnvio;
+$_SESSION['gastoEnvio'] = $restaurante->gastoEnvio;
 ?>
 <table border="1">
     <?php
@@ -35,19 +35,22 @@ $_SESSION['pedidoMinimo'] = $restaurante->gastoEnvio;
 <a href="index.php">Regresar</a>
 
 <div id="pedidos" name="pedidos">
-    <?php
+    <?php 
     $pedidos = obtenPedidos();
     $total = 0;
     if (isset($pedidos)) {
         foreach ($pedidos as $key => $value) {
             foreach($value as $clave=>$valor){
                 foreach($valor as $clv=>$val){
+                    echo '<div id="'.$clv.'">';
                     echo $val[1] . " "; //cantidad
                     echo $val[0] . " "; //nombre
                     //echo $val[2]; //especificaciones
                     echo $val[3] . " "; //total
+                    //echo '<div id="des'.$clv.'';
+                    echo '<a href="pedidos.php?a=eliminarDelPedido&ir='.$restaurante->idRestaurante.'">Eliminar</a>';
+                    echo "</div>";
                     $total+=$val[3];
-                    echo "<br>";
                 }
             }
         }
@@ -60,13 +63,22 @@ $_SESSION['pedidoMinimo'] = $restaurante->gastoEnvio;
 </div>
 <div id="pedidosgenera">
     <?php
-        echo "<div id='totalw' style='float:left;'>Total:</div> <div id='totalc' style='float:left;'>" . $total."</div>";        
+        echo "<br><div id='totalw' style='float:left;'>Subtotal: $</div> <div id='totalc' style='float:left;'>" . $total."</div><br>";  
+      
     ?>
 </div>
 <div id="botonpedir">
     <?php
-        if(isset($pedidos) && $pedidos!=array())    
-            echo "<br><div class='popuppedir' id='".$restaurante->idRestaurante."'><a  rel='superbox[content]'>Pedir</a></div>";
+        if(isset($pedidos) && $pedidos!=array())    {
+    ?>
+            A domicilio: $<?php echo $_SESSION['gastoEnvio']?> <input type="radio"/><br>
+            Lo paso a recoger:  $0<input type="radio"/><br>
+    <?php
+            echo "<br><div class='popuppedir' id='".$restaurante->idRestaurante."'><a href='#' rel='superbox
+[content]'>Pedir</a></div>";
+    ?>
+    <?php
+        }
     ?>
 </div>
 <?php
