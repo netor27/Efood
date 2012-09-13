@@ -30,7 +30,7 @@ require_once('layout/headers/headFin.php');
             </select>
         </div>
         <div class="formElement">
-            <input type="image" src="/layout/imagenes/resultadosBusqueda/btnBuscar_190x40.png">
+            <input type="image" src="layout/imagenes/resultadosBusqueda/btnBuscar_190x40.png">
         </div>
     </form>
 </div>
@@ -82,7 +82,7 @@ require_once('layout/headers/headFin.php');
     </div>
 </div>
 <div id="separadorContainer">
-    <img src="/layout/imagenes/resultadosBusqueda/separador_856x10.png"/>
+    <img src="layout/imagenes/resultadosBusqueda/separador_856x10.png"/>
 </div>
 <div id="restaurantesContainer">
     <?php
@@ -134,7 +134,7 @@ require_once('layout/headers/headFin.php');
                 <div class="contenidoRestaurante">
                     <div class="left datosRestaurante">
                         <div class="horario">
-                            <img src="/layout/imagenes/resultadosBusqueda/reloj_20x20.png"/>
+                            <img src="layout/imagenes/resultadosBusqueda/reloj_20x20.png"/>
                             <?php
                             $inicio = "";
                             $fin = "";
@@ -206,11 +206,11 @@ require_once('layout/headers/headFin.php');
                                 echo 'efectivo';
                             }
                             if ($restaurante->formaPago == 1) {
-                                echo '<img src="/layout/imagenes/resultadosBusqueda/tipoPagos_190x20.png"/>';
+                                echo '<img src="layout/imagenes/resultadosBusqueda/tipoPagos_190x20.png"/>';
                             }
                             if ($restaurante->formaPago == 2) {
                                 echo 'efectivo';
-                                echo '<img src="/layout/imagenes/resultadosBusqueda/tipoPagos_190x20.png"/>';
+                                echo '<img src="layout/imagenes/resultadosBusqueda/tipoPagos_190x20.png"/>';
                             }
                             ?>
 
@@ -219,14 +219,14 @@ require_once('layout/headers/headFin.php');
                     <div class="left metodoEntrega">
                         <?php
                         if ($restaurante->metodoEntrega == 1) {
-                            echo '<img src="/layout/imagenes/Home/img_Domicilio_86x39.png"/>';
+                            echo '<img src="layout/imagenes/Home/img_Domicilio_86x39.png"/>';
                         }
                         if ($restaurante->metodoEntrega == 0) {
-                            echo '<img src="/layout/imagenes/Home/img_Recoger_64x40.png"/>';
+                            echo '<img src="layout/imagenes/Home/img_Recoger_64x40.png"/>';
                         }
                         if ($restaurante->metodoEntrega == 2) {
-                            echo '<img src="/layout/imagenes/Home/img_Domicilio_86x39.png"/>';
-                            echo '<img src="/layout/imagenes/Home/img_Recoger_64x40.png"/>';
+                            echo '<img src="layout/imagenes/Home/img_Domicilio_86x39.png"/>';
+                            echo '<img src="layout/imagenes/Home/img_Recoger_64x40.png"/>';
                         }
                         ?>
 
@@ -235,7 +235,7 @@ require_once('layout/headers/headFin.php');
                     <?php ?>
                     <div class="realizarPedido">
                         <a href="pedidos.php?a=menu&i=<?php echo $restaurante->idRestaurante; ?> ">
-                            <img src="/layout/imagenes/resultadosBusqueda/btnRealizarPedido_180x45.png"/>
+                            <img src="layout/imagenes/resultadosBusqueda/btnRealizarPedido_180x45.png"/>
                         </a>
                     </div>
                 </div>
