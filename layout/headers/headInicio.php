@@ -3,7 +3,7 @@
     <head>
         <meta name="google" value="notranslate">
         <meta charset="utf-8" />
-        <link rel="SHORTCUT ICON" href="/layout/favicon_black.ico">
+        <link rel="SHORTCUT ICON" href="/layout/favicon.ico">
         <title>efood - A un click de tu comida</title>
         <script src="js/jquery-1.7.1.min.js"></script>	
         <script src="js/jquery-ui-1.8.18.custom.min.js"></script>	
