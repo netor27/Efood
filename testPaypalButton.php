@@ -14,6 +14,7 @@
     //                  que pedido se pago. Lo mejor sería poner el idPedido o algo así en esta variable
     //                  Máximo 256 caracteres, se valida dentro de la función
     //
+    $variable;
     $botonPaypal = encriptarInformacionBotonPago("Pedido a Chillis", "123456", "300", "123custom456");
     ?> 
     <HEAD>
