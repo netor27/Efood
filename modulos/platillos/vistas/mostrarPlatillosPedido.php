@@ -13,6 +13,8 @@ echo "Pedido M&iacute;nimo: $" . $restaurante->pedidoMinimo;
 $_SESSION['pedidoMinimo'] = $restaurante->pedidoMinimo;
 //echo "<br>Gasto de Env&iacute;o: " . $restaurante->gastoEnvio;
 $_SESSION['gastoEnvio'] = $restaurante->gastoEnvio;
+$gastoEnvio = $restaurante->gastoEnvio;
+$_SESSION['tipoGastoEnvio'] = $restaurante->tipoGastoEnvio;
 ?>
 <table border="1">
     <?php
@@ -34,6 +36,9 @@ $_SESSION['gastoEnvio'] = $restaurante->gastoEnvio;
 </table>
 <a href="index.php">Regresar</a>
 
+<div id="headPedido">
+    
+</div>
 <div id="pedidos" name="pedidos">
     <?php 
     $pedidos = obtenPedidos();
@@ -48,7 +53,7 @@ $_SESSION['gastoEnvio'] = $restaurante->gastoEnvio;
                     //echo $val[2]; //especificaciones
                     echo $val[3] . " "; //total
                     //echo '<div id="des'.$clv.'';
-                    echo '<a href="pedidos.php?a=eliminarDelPedido&ir='.$restaurante->idRestaurante.'">Eliminar</a>';
+                    echo '<a href="pedidos.php?a=eliminarDelPedido&ir='.$restaurante->idRestaurante.'&pc='.$key.'">Eliminar</a>';
                     echo "</div>";
                     $total+=$val[3];
                 }
@@ -63,19 +68,35 @@ $_SESSION['gastoEnvio'] = $restaurante->gastoEnvio;
 </div>
 <div id="pedidosgenera">
     <?php
+    if(isset($pedidos) && $pedidos!=array())
         echo "<br><div id='totalw' style='float:left;'>Subtotal: $</div> <div id='totalc' style='float:left;'>" . $total."</div><br>";  
-      
     ?>
 </div>
 <div id="botonpedir">
     <?php
         if(isset($pedidos) && $pedidos!=array())    {
     ?>
-            A domicilio: $<?php echo $_SESSION['gastoEnvio']?> <input type="radio"/><br>
-            Lo paso a recoger:  $0<input type="radio"/><br>
+            A domicilio: <?php 
+                            if($_SESSION['tipoGastoEnvio']==0)
+                                $cargoExtra = $gastoEnvio;
+                            else if($_SESSION['tipoGastoEnvio']==1)                
+                                $cargoExtra = ($total*($gastoEnvio/100));
+                            else if($_SESSION['tipoGastoEnvio']==2){
+                                $cadena = "$gastoEnvio";
+                                eval('$cargoExtra = ' . $cadena . ';');
+                            }
+                            echo "$".$cargoExtra;
+                        ?> 
+            <input type="radio" name="envio" value="0" checked/><br>
+            Lo paso a recoger:  $0<input type="radio" name="envio" value="1"/><br>
     <?php
-            echo "<br><div class='popuppedir' id='".$restaurante->idRestaurante."'><a href='#' rel='superbox
-[content]'>Pedir</a></div>";
+    if(($total > $_SESSION['pedidoMinimo']) && isset($pedidos) && $pedidos!=array()){
+        //$opcion = '<script language="javascript" type="text/javascript">document.write(document.getElementByName("envio"));<script/>';
+        
+        echo "<br><a href='#' id='pedirp'>Pedir</a>";
+    }
+    else
+        echo "El total de su compra no alcanza el pedido m&iacute;nimo";
     ?>
     <?php
         }

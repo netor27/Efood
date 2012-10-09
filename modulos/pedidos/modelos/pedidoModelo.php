@@ -40,7 +40,7 @@ function getIngredientesPlatillo($idPlatillo) {
             $pedido->precio = $row['precio'];
             $caracteristicas[$i] = $pedido;
             $_SESSION['idPlatillo'] = $pedido->idPlatillo;
-            if ($pedido->idIngrediente != NULL && $pedido->idIngrediente!="") {
+            if ($pedido->idIngrediente != NULL && $pedido->idIngrediente != "") {
                 $_SESSION['ingrediente'][$pedido->idPlatillo]["'" . $pedido->idIngrediente . "'"] = serialize($pedido);
             } else {
                 $_SESSION['idgi'] = $pedido->idGrupoIngredientes;
@@ -60,14 +60,17 @@ function guardaPedido() {
     $cantidad = $_POST['cantidad'];
     $especificaciones = $_POST['especificaciones'];
     $valores = $_POST['valores'];
-    
+
     $cadena = str_replace("+", "", $valores);
     $pares = explode("&", $cadena); //datos de la forma tamano=idtamano, salsa=idsalsa
     foreach ($pares as $key => $value)
         $datos[$key] = explode("=", $value); //datos de la forma [0] tamano, [1] idtamano, [2] salsa, [3] idsalsa
 
 
-    //logica para que los valores se conviertan en los ids de la sesion $_SESSION['ingrediente'][id] para sacar los precios y demÃ¡s
+
+
+        
+//logica para que los valores se conviertan en los ids de la sesion $_SESSION['ingrediente'][id] para sacar los precios y demÃ¡s
     //luego seteamos las sesiones a null o le aplicamos el destroy con unset (no en este momento o pierdo todos los datos
     //para mostrarlos en posteriores consultas)
     $total = 0;
@@ -91,6 +94,8 @@ function guardaPedido() {
     $datosFinales[2] = $especificaciones;
     $datosFinales[3] = $total;
     $datosFinales[4] = $pedido->idRestaurante;
+    $datosFinales[5] = $pedido->nombreGrupo;
+    $datosFinales[6] = $pedido->nombreIngrediente;
 
     unset($_SESSION['ingrediente']);
     if (isset($pedido->idIngrediente))
@@ -122,99 +127,163 @@ function getPedidos($idRestaurante) {
     return $pedidos;
 }
 
-function generarPedido($pedido) {
-    if (isset($_SESSION['email']) && isset($_GET['i'])) {
-        if (isset($_GET['e']) && isset($_GET['e'])) {
-            global $conex;
-            $errores = false;
-            try {
-                $conex->beginTransaction();
-                //numReferencia se genera aleatoriamente tomando en cuenta el id del usuario (email) encriptado
-                $numReferencia = md5($_SESSION['email']) . rand(0000000000, 9999999999) . chr(rand(ord("a"), ord("z")));
+function getDirecciones($idUsuario){
+    global $conex;
+    /* $query = "SELECT p.idPlatillo,p.idRestaurante,p.idCategoria,p.nombre as nombrePlatillo, p.descripcion, p.precioBase,p.hint,gi.idGrupoIngredientes, gi.nombre as nombreGrupo, gi.excluyente, gi.requerido, gi.idGrupoDepende, gi.idIngredienteDepende, i.idIngrediente, i.idGrupoIngredientes as idGrupoIngredientesI, i.nombre as nombreIngrediente, i.precio 
+      FROM platillo p, grupoingredientes gi, ingrediente i
+      WHERE p.idPlatillo = :id AND p.idPlatillo = gi.idPlatillo AND i.idGrupoIngredientes = gi.idGrupoIngredientes"; */
+    $query = "SELECT DISTINCT p.idPlatillo,p.idRestaurante,p.idCategoria,p.nombre as nombrePlatillo, p.descripcion, p.precioBase,p.hint,gi.idGrupoIngredientes, gi.nombre as nombreGrupo, gi.excluyente, gi.requerido, gi.idGrupoDepende, gi.idIngredienteDepende, i.idIngrediente, i.idGrupoIngredientes as idGrupoIngredientesI, i.nombre as nombreIngrediente, i.precio 
+        FROM platillo p
+        LEFT OUTER JOIN grupoingredientes gi ON p.idPlatillo = gi.idPlatillo
+        LEFT OUTER JOIN ingrediente i ON gi.idGrupoIngredientes = i.idGrupoIngredientes
+        WHERE p.idPlatillo = :id";
+    $stmt = $conex->prepare($query);
+    $stmt->bindParam(':id', $idPlatillo);
+    if ($stmt->execute()) {
+    }
+}
 
-                $val = false;
-                $valPP = false;
-                $valPI = false;
-                $idRestaurante = $_GET['i'];
-                $insertPedido = "INSERT INTO pedido(idRestaurante,idUsuario,idEstadoPedido,comentario,idMetodoEntrega,idTipoPago,numReferencia) VALUES(:idRestaurante,:idUsuario,:idEstadoPedido,:comentario,:idMetodoEntrega,:idTipoPago,:numReferencia)";
-                $stmtP = $conex->prepare($insertPedido);
-                $stmtP->bindParam(':idRestaurante', $idRestaurante);
-                $stmtP->bindParam(':idUsuario', $_SESSION['idUsuario']);
-                $stmtP->bindValue(':idEstadoPedido', 1);
-                $stmtP->bindValue(':comentario', "comentario");
-                $stmtP->bindValue(':idMetodoEntrega', $_GET['e']);
-                $stmtP->bindValue(':idTipoPago', $_GET['p']);
-                $stmtP->bindParam(':numReferencia', $numReferencia);
-                $val = $stmtP->execute();
-                if ($val)
-                    $id = $conex->lastInsertId();
-                else
-                    $errores = true;
-
-                $insertPedidoPlatillo = "INSERT INTO pedidoplatillo(idPedido,idPlatillo,especificaciones,cantidad) VALUES(:idPedido,:idPlatillo,:especificaciones,:cantidad)";
-                if (isset($pedido)) {
-                    foreach ($pedido as $key => $value) {
-                        foreach ($value as $clave => $valor) {
-                            foreach ($valor as $clv => $val) {
-                                //print_r($valor[1]); //cantidad
-                                //print_r($valor[0]); //nombre
-                                //print_r($valor[2]); //especificaciones
-                                //print_r($valor[3]); //total
-                                $stmtPP = $conex->prepare($insertPedidoPlatillo);
-                                $stmtPP->bindParam(':idPedido', $id);
-                                $stmtPP->bindParam(':idPlatillo', $clave);
-                                $stmtPP->bindParam(':especificaciones', $val[2]);
-                                $stmtPP->bindParam(':cantidad', $val[1]);
-                                $valPP = $stmtPP->execute();
-                                if ($valPP)
-                                    $idPedidoPlatillo = $conex->lastInsertId();
-                                else
-                                    $errores = true;
-                            }
-                        }
+function mostrarPedidoGenerado($pedido) {
+    $pedidoResumen = "";
+    $total = 0;
+    $cargoExtra = 0;
+    if (isset($_SESSION['email'])) {
+        if (isset($pedido)) {
+            $pedidoResumen .= "Detalles del pedido: <br><br>"; //nombre
+            foreach ($pedido as $value) {
+                foreach ($value as $valor) {
+                    foreach ($valor as $val) {
+                        $pedidoResumen .= "Nombre: " . $val[0] . "<br>"; //nombre
+                        $pedidoResumen .= "Especificaciones: " . $val[2] . "<br>"; //especificaciones
+                        $pedidoResumen .= "Cantidad: " . $val[1] . "<br>"; //cantidad
+                        $pedidoResumen .= "Precio: " . $val[3] . "<br><br>"; //total
+                        $total += $val[3];
                     }
                 }
-
-                $insertPedidoIngrediente = "INSERT INTO pedidoplatilloingrediente(idPedidoPlatillo,idIngrediente) VALUES(:idPedidoPlatillo,:idIngrediente)";
-                if (isset($pedido)) {
-                    foreach ($pedido as $key => $value) {
-                        foreach ($value as $clave => $valor) {
-                            foreach ($valor as $clv => $val) {
-                                $stmtPI = $conex->prepare($insertPedidoIngrediente);
-                                $stmtPI->bindParam(':idPedidoPlatillo', $idPedidoPlatillo);
-                                if ($clv > 0)
-                                    $stmtPI->bindParam(':idIngrediente', $clv);
-                                else
-                                    $stmtPI->bindValue(':idIngrediente', -1);
-                                $valPI = $stmtPI->execute();
-                            }
-                        }
-                    }
-                }
-
-                if ($valPI && $valPP && $val) {
-                    $conex->commit();
-                    $_SESSION["'rest" . $idRestaurante . "'"] = null;
-                } else {
-                    print_r('Ocurrió un error y no se pudo realizar el pedido');
-                    if (!$valPI)
-                        print_r('Fallo el ultimo');
-                    if (!$valPP)
-                        print_r('Fallo el penultimo');
-                    $errores = true;
-                    $conex->rollBack();
-                }
-                //$_SESSION["'rest".$_GET['i']."'"] = null;
-            } catch (Exception $e) {
-                $errores = true;
-                //print_r('Ocurrió un error y no se pudo realizar el pedido: ', $e->getMessage());
-                $conex->rollBack();
             }
-        } else {
-            print_r('Favor de llenar correctamente los campos');
+            $pedidoResumen .= "Subtotal: " . $total . "<br>";
+            $gastoEnvio = $_SESSION['gastoEnvio'];
+            if ($_GET['p'] == 0) {
+                $pedidoResumen .= "<br>Env&iacute;o a domicilio<br>";
+                if ($_SESSION['tipoGastoEnvio'] == 0)
+                    $cargoExtra = $total + $gastoEnvio;
+                else if ($_SESSION['tipoGastoEnvio'] == 1)
+                    $cargoExtra = ($total * ($gastoEnvio / 100)) + $total;
+                else if ($_SESSION['tipoGastoEnvio'] == 2) {
+                    $cadena = "$gastoEnvio";
+                    eval('$cargoExtra = ' . $cadena . ';');
+                    $cargoExtra += $total;
+                }
+            }else if($_GET['p'] == 1){
+                $pedidoResumen .= "<br>Recoger pedido<br>";
+                $cargoExtra = $total;
+            }
+            $_SESSION['precioTotal'] = $cargoExtra;
+            $pedidoResumen .= "Total: " . ($cargoExtra) . "<br><br>";
         }
     } else {
-        print_r('Favor de hacer login');
+        $pedidoResumen = "Favor de hacer login";
+    }
+
+    return $pedidoResumen;
+}
+
+function generarPedido($pedido) {
+    $errores = false;
+    if (isset($_SESSION['email']) && isset($_GET['i'])) {
+
+        //if (isset($_GET['e']) && isset($_GET['e'])) {
+        global $conex;
+        try {
+            $conex->beginTransaction();
+            //numReferencia se genera aleatoriamente tomando en cuenta el id del usuario (email) encriptado
+            $numReferencia = md5($_SESSION['email']) . rand(000, 999) . chr(rand(ord("a"), ord("z")));
+
+            $val = false;
+            $valPP = false;
+            $valPI = false;
+            $idRestaurante = $_GET['i'];
+            $insertPedido = "INSERT INTO pedido(idRestaurante,idUsuario,idEstadoPedido,comentario,idMetodoEntrega,idTipoPago,numReferencia) VALUES(:idRestaurante,:idUsuario,:idEstadoPedido,:comentario,:idMetodoEntrega,:idTipoPago,:numReferencia)";
+            $stmtP = $conex->prepare($insertPedido);
+            $stmtP->bindParam(':idRestaurante', $idRestaurante);
+            $stmtP->bindParam(':idUsuario', $_SESSION['idUsuario']);
+            $stmtP->bindValue(':idEstadoPedido', 1);
+            $stmtP->bindValue(':comentario', "comentario");
+            //$stmtP->bindValue(':idMetodoEntrega', $_GET['e']);
+            $stmtP->bindValue(':idMetodoEntrega', 1);
+            $stmtP->bindValue(':idTipoPago', $_GET['p']);
+            $stmtP->bindParam(':numReferencia', $numReferencia);
+            $val = $stmtP->execute();
+            if ($val)
+                $id = $conex->lastInsertId();
+            else
+                $errores = true;
+
+            $insertPedidoPlatillo = "INSERT INTO pedidoplatillo(idPedido,idPlatillo,especificaciones,cantidad) VALUES(:idPedido,:idPlatillo,:especificaciones,:cantidad)";
+            if (isset($pedido)) {
+                foreach ($pedido as $key => $value) {
+                    foreach ($value as $clave => $valor) {
+                        foreach ($valor as $clv => $val) {
+                            //print_r($valor[1]); //cantidad
+                            //print_r($valor[0]); //nombre
+                            //print_r($valor[2]); //especificaciones
+                            //print_r($valor[3]); //total
+                            $stmtPP = $conex->prepare($insertPedidoPlatillo);
+                            $stmtPP->bindParam(':idPedido', $id);
+                            $stmtPP->bindParam(':idPlatillo', $clave);
+                            $stmtPP->bindParam(':especificaciones', $val[2]);
+                            $stmtPP->bindParam(':cantidad', $val[1]);
+                            $valPP = $stmtPP->execute();
+                            if ($valPP)
+                                $idPedidoPlatillo = $conex->lastInsertId();
+                            else
+                                $errores = true;
+                        }
+                    }
+                }
+            }
+
+            $insertPedidoIngrediente = "INSERT INTO pedidoplatilloingrediente(idPedidoPlatillo,idIngrediente) VALUES(:idPedidoPlatillo,:idIngrediente)";
+            if (isset($pedido)) {
+                foreach ($pedido as $key => $value) {
+                    foreach ($value as $clave => $valor) {
+                        foreach ($valor as $clv => $val) {
+                            $stmtPI = $conex->prepare($insertPedidoIngrediente);
+                            $stmtPI->bindParam(':idPedidoPlatillo', $idPedidoPlatillo);
+                            if ($clv > 0)
+                                $stmtPI->bindParam(':idIngrediente', $clv);
+                            else
+                                $stmtPI->bindValue(':idIngrediente', -1);
+                            $valPI = $stmtPI->execute();
+                        }
+                    }
+                }
+            }
+
+            if ($valPI && $valPP && $val) {
+                $conex->commit();
+                //$_SESSION["'rest" . $idRestaurante . "'"] = null;
+            } else {
+                print_r('Ocurrió un error y no se pudo realizar el pedido');
+                if (!$valPI)
+                    print_r('Fallo el ultimo');
+                if (!$valPP)
+                    print_r('Fallo el penultimo');
+                $errores = true;
+                $conex->rollBack();
+            }
+            //$_SESSION["'rest".$_GET['i']."'"] = null;
+        } catch (Exception $e) {
+            $errores = true;
+            //print_r('Ocurrió un error y no se pudo realizar el pedido: ', $e->getMessage());
+            $conex->rollBack();
+        }
+        /* } else {
+          print_r('Favor de llenar correctamente los campos');
+          } */
+    } else {
+        $errores = false;
+        //print_r('Favor de hacer login');
     }
     return $errores;
 }
@@ -246,8 +315,9 @@ function utf8replace($cadena) {
     return $cadena;
 }
 
-function eliminarPlatilloPedido(){
-    unset($_SESSION["'rest" .  $_GET['ir'] . "'"][0]);
+function eliminarPlatilloPedido() {
+    unset($_SESSION["'rest" . $_GET['ir'] . "'"][$_GET['pc']]);
+    $_SESSION["'rest" . $_GET['ir'] . "'"] = array_values($_SESSION["'rest" . $_GET['ir'] . "'"]);
 }
 
 ?>

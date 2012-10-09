@@ -1,3 +1,10 @@
+$(document).ready(function(){
+    $("#pedirp").click(function(){
+        var tipoEnvio = $("input[name='envio']:checked").val();
+        var i = getUrlVars()["i"];
+        window.location.href = "pedidos.php?p="+tipoEnvio+"&a=pedir&i="+i;
+    });
+});
 function obtenerIngredientes(id){
     //Va a obtener la informaciÃ³n en ajax para no tener que refrescar la pÃ¡gina
     //El id del platillo lo obtenemos con el atributo de cada "liga"
@@ -105,6 +112,7 @@ function obtenerIngredientes(id){
 }
 
 var pedido=true;
+var cuenta=0;
 function agregarPedido(){
     //Va a guardar en la sesiÃ³n algunos valores que corresponden a la forma de pedido
     //Va a insertar en la tabla de pedidoplatillo
@@ -130,10 +138,13 @@ function agregarPedido(){
                 $("P.close A").click();
                 $("#agregados").append(json[1]+" ");
                 $("#agregados").append(json[0]+" ");
-                $("#agregados").append(json[3]+" <br>");
+                $("#agregados").append(json[3]);
+                $("#agregados").append(' <a href="pedidos.php?a=eliminarDelPedido&ir='+json[4]+'&pc='+cuenta+'">Eliminar</a><br>');
+                cuenta++;
                 var total = parseInt($("#totalc").html());
                 $("#totalc").html(total+json[3]);
-                $("#botonpedir").html("<br><div class='popuppedir' id='"+json[4]+"'><a href='#' rel='superbox[content]'>Pedir</a></div>");
+                $("#botonpedir").html("<br><a href='pedidos.php?p=0&a=pedir&i="+json[4]+"'>Pedir</a></div>");
+                  window.location = "pedidos.php?a=menu&i=3";
             },
             error: function (XMLHttpRequest, textStatus, errThrown) {
                 alert(textStatus); 
@@ -212,3 +223,11 @@ function utf8replace(cadena){
         cadena=cadena.replace('%3A','');	
 	return cadena;
 }
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+

@@ -48,36 +48,36 @@ class Platillo {
     }
     
      static function printPlatilloPedidoHeader() {
-        echo '<tr>';
+        /*echo '<tr>';
         echo '<th>nombre</th>';
         echo '<th>descripcion</th>';
         echo '<th>precioBase</th>';
         echo '<th>Hint</th>';
         echo '<th></th>';
-        echo '</tr>';
+        echo '</tr>';*/
     }
 
     function printPlatilloPedido() {
-        echo '<tr>';
-        echo '<td>' . $this->nombre . '</td>';
-        echo '<td>' . $this->descripcion . '</td>';
-        echo '<td>' . $this->precioBase . '</td>';
-        echo '<td>' . $this->hint . '</td>';
-        echo '<td><div class="popup" id="'.$this->idPlatillo.'"><a  rel="superbox[content]">Agregar</a></div></td>';
+        echo '<div id=ped"'.$this->idPlatillo.'">';
+        echo '' . $this->nombre . '';
+        echo '<p style="visibility:hidden;">' . $this->descripcion . '</p>';
+        echo '' . $this->precioBase . '';
+        //echo '' . $this->hint . '';
+        echo '<div class="popup" id="'.$this->idPlatillo.'"><a  rel="superbox[content]">Agregar</a></div>';
        //echo '<td><div class="popup" id="'.$this->idPlatillo.'">Agregar</div></td>';
        // echo "<td><form method='POST' action='pedidos.php?a=obtenIngredientes'><input type='hidden' value=".$this->idPlatillo." name='platillo'/><input type='submit' value='enviar'/></form></td>";
-        echo '</tr>';
+        echo '</div>';
     }
     
     function printPlatilloPedidoDeshabilitado() {
-        echo '<tr>';
-        echo '<td>' . $this->nombre . '</td>';
-        echo '<td>' . $this->descripcion . '</td>';
-        echo '<td>' . $this->precioBase . '</td>';
-        echo '<td>' . $this->hint . '</td>';
-        echo '<td></td>';
+        echo '<div id=ped"'.$this->idPlatillo.'">';
+        echo '' . $this->nombre . '';
+        echo '<div style="visibility:hidden;">' . $this->descripcion . '</div>';
+        echo '' . $this->precioBase . '';
+        //echo '' . $this->hint . '';
+        echo 'Fuera de horario';
        // echo "<td><form method='POST' action='pedidos.php?a=obtenIngredientes'><input type='hidden' value=".$this->idPlatillo." name='platillo'/><input type='submit' value='enviar'/></form></td>";
-        echo '</tr>';
+        echo '</div>';
     }
 
 }

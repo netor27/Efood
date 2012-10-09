@@ -99,6 +99,8 @@ function menu() {
     $diaFin = getDay() . 'Fin';
     if (getTime24() > $hora->$diaIni && getTime24() < $hora->$diaFin)
         $habilitado = true;
+    if($hora->$diaIni=='00:00:00' && $hora->$diaFin=='00:00:00')
+        $habilitado = true;
     //*******************************************************************************
     //Hace arreglo esa parte de la sesión para poder asignar platillos a diferentes restaurantes
     if (empty($_SESSION["'rest" . $restaurante->idRestaurante . "'"])) {
@@ -136,7 +138,8 @@ function eliminarDelPedido() {
     require_once 'modulos/pedidos/clases/PlatilloElementos.php';
     $ir = $_GET['ir'];
     eliminarPlatilloPedido();
-    require_once('modulos/platillos/vistas/mostrarPlatillosPedido.php');
+    header('Location: pedidos.php?a=menu&i='.$ir);
+    //require_once('modulos/platillos/vistas/mostrarPlatillosPedido.php');
 }
 
 function pedir() {
@@ -144,6 +147,7 @@ function pedir() {
     require_once 'modulos/pedidos/clases/PlatilloElementos.php';
     $idRestaurante = $_GET['i'];
     $pedidos = getPedidos($idRestaurante);
+    $pedidoGenerado = mostrarPedidoGenerado($pedidos);
     $errores = generarPedido($pedidos);
     require_once('modulos/pedidos/vistas/pedir.php');
 }
