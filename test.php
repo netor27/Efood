@@ -19,6 +19,7 @@
 $total = 100;
 $cadena = "($total * 0.05) + 2";
 $otraVariable = "Other";
+$cambio="cambio";
 $cargoExtra = 0;
 eval('$cargoExtra = ' . $cadena . ';');
 
