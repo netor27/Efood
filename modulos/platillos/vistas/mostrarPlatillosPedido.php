@@ -34,7 +34,7 @@ $_SESSION['tipoGastoEnvio'] = $restaurante->tipoGastoEnvio;
     }
     ?>
 </table>
-<a href="index.php">Regresar</a>
+<a href="pedidos.php?a=buscarRestauranteHome">Regresar</a>
 
 <div id="headPedido">
     

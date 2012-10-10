@@ -5,40 +5,49 @@ function buscarRestauranteHome() {
     require_once 'modulos/restaurantes/modelos/RestauranteModelo.php';
     require_once 'modulos/restaurantes/clases/Restaurante.php';
 
-    $idColonia = $_POST['idColonia'];
+    //valores necesarios
+    $idColonia = -1;
     $idTiposComida = array();
-    if (isset($_POST['antojos'])) {
+    $domicilio = false;
+    $recoger = false;
+
+    //Se va a guardar la busqueda en la sesión para poder regresar sin tener que mandar los datos por post
+    //si hay post, sacamos los datos de ahí, si no, de la session
+    $banderaValores = false;
+
+    if (isset($_POST['idColonia'])) {
+        $idColonia = $_POST['idColonia'];
         $rawAntojos = $_POST['antojos'];
+        $domicilio = !$_POST['preferenciaDomicilio'] == -1;
+        $recoger = !$_POST['preferenciaRecoger'] == -1;
         foreach ($rawAntojos as $antojo) {
             if ($antojo != -1) {
                 array_push($idTiposComida, $antojo);
             }
         }
-    }
 
-    $domicilio = true;
-    $recoger = true;
-
-    if (isset($_POST['preferenciaDomicilio'])) {
-        if ($_POST['preferenciaDomicilio'] == -1)
-            $domicilio = false;
+        $banderaValores = true;
+        $valores = array();
+        $valores['idColonia'] = $idColonia;
+        $valores['idTiposComida'] = $idTiposComida;
+        $valores['domicilio'] = $domicilio;
+        $valores['recoger'] = $recoger;
+        $_SESSION['busquedaRestauranteHome'] = $valores;
+        $_SESSION['idColoniaEntrega'] = $idColonia;
+    } else if (isset($_SESSION['busquedaRestauranteHome'])) {
+        $banderaValores = true;
+        $valores = $_SESSION['busquedaRestauranteHome'];
+        $idColonia = $valores['idColonia'];
+        $idTiposComida = $valores['idTiposComida'];
+        $domicilio = $valores['domicilio'];
+        $recoger = $valores['recoger'];
     }
-    if (isset($_POST['preferenciaRecoger'])) {
-        if ($_POST['preferenciaRecoger'] == -1)
-            $recoger = false;
-    }
-
     $metodoEntrega = getIdMetodoEntrega($domicilio, $recoger);
-
-    $restaurantes = getRestaurantesColoniaTipoComidaMetodoEntrega($idColonia, $idTiposComida, $metodoEntrega);
-    
-    require_once 'modulos/tipoComida/modelos/tipoComidaModelo.php';
-    $tiposDeComida = getTiposComida();
-    require_once 'modulos/colonias/modelos/ColoniaModelo.php';
-    $colonias = getColonias();
-    $colonia = getColonia($idColonia);
-
-    require_once 'modulos/pedidos/vistas/resultadosBusqueda.php';
+    if ($banderaValores) {
+        mostrarBusqueda($idColonia, $idTiposComida, $metodoEntrega);
+    } else {
+        goToIndex();
+    }
 }
 
 function buscarRestaurante() {
@@ -46,28 +55,55 @@ function buscarRestaurante() {
     require_once 'modulos/restaurantes/modelos/RestauranteModelo.php';
     require_once 'modulos/restaurantes/clases/Restaurante.php';
 
-    $idColonia = $_POST['idColonia'];
-    $idTiposComida = null;    
-    if (isset($_POST['idTipoComida']) && is_numeric($_POST['idTipoComida'])) {
-        //echo 'id ' . $_POST['idTipoComida'] . " ||";
-        $idTiposComida = array();
-        array_push($idTiposComida, $_POST['idTipoComida']);
+    //valores necesarios
+    $idColonia = -1;
+    $idTiposComida = array();
+    $domicilio = false;
+    $recoger = false;
+    //Se va a guardar la busqueda en la sesión para poder regresar sin tener que mandar los datos por post
+    //si hay post, sacamos los datos de ahí, si no, de la session
+    $banderaValores = false;
+
+    if (isset($_POST['idColonia'])) {
+        //hay post, obtenemos los datos de aquí y lo guardamos en la sesión
+        $idColonia = $_POST['idColonia'];
+        $idTiposComida = null;
+        if (isset($_POST['idTipoComida']) && is_numeric($_POST['idTipoComida'])) {
+            //echo 'id ' . $_POST['idTipoComida'] . " ||";
+            $idTiposComida = array();
+            array_push($idTiposComida, $_POST['idTipoComida']);
+        }
+        if (isset($_POST['idMetodoEntrega']) && is_numeric($_POST['idMetodoEntrega'])) {
+            $metodoEntrega = $_POST['idMetodoEntrega'];
+        } else {
+            $metodoEntrega = 2;
+        }
+    } else if (isset($_SESSION['busquedaRestauranteHome'])) {
+        //no hay post, obtenemos los datos de la sessión
+        $banderaValores = true;
+        $valores = $_SESSION['busquedaRestauranteHome'];
+        $idColonia = $valores['idColonia'];
+        $idTiposComida = $valores['idTiposComida'];
+        $domicilio = $valores['domicilio'];
+        $recoger = $valores['recoger'];
+        $metodoEntrega = getIdMetodoEntrega($domicilio, $recoger);
     }
-    if (isset($_POST['idMetodoEntrega']) && is_numeric($_POST['idMetodoEntrega'])) {
-        $metodoEntrega = $_POST['idMetodoEntrega'];
+    
+    if ($banderaValores) {
+        mostrarBusqueda($idColonia, $idTiposComida, $metodoEntrega);
     } else {
-        $metodoEntrega = 2;
+        goToIndex();
     }
+}
 
-
+function mostrarBusqueda($idColonia, $idTiposComida, $metodoEntrega) {
     $restaurantes = getRestaurantesColoniaTipoComidaMetodoEntrega($idColonia, $idTiposComida, $metodoEntrega);
-
     require_once 'modulos/tipoComida/modelos/tipoComidaModelo.php';
     $tiposDeComida = getTiposComida();
     require_once 'modulos/colonias/modelos/ColoniaModelo.php';
     $colonias = getColonias();
     $colonia = getColonia($idColonia);
-    
+
     require_once 'modulos/pedidos/vistas/resultadosBusqueda.php';
 }
 
@@ -99,7 +135,7 @@ function menu() {
     $diaFin = getDay() . 'Fin';
     if (getTime24() > $hora->$diaIni && getTime24() < $hora->$diaFin)
         $habilitado = true;
-    if($hora->$diaIni=='00:00:00' && $hora->$diaFin=='00:00:00')
+    if ($hora->$diaIni == '00:00:00' && $hora->$diaFin == '00:00:00')
         $habilitado = true;
     //*******************************************************************************
     //Hace arreglo esa parte de la sesión para poder asignar platillos a diferentes restaurantes
@@ -138,7 +174,7 @@ function eliminarDelPedido() {
     require_once 'modulos/pedidos/clases/PlatilloElementos.php';
     $ir = $_GET['ir'];
     eliminarPlatilloPedido();
-    header('Location: pedidos.php?a=menu&i='.$ir);
+    header('Location: pedidos.php?a=menu&i=' . $ir);
     //require_once('modulos/platillos/vistas/mostrarPlatillosPedido.php');
 }
 
