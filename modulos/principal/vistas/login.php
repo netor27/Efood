@@ -14,28 +14,28 @@ if (isset($_SESSION['email'])) {
 } else {
     ?>
     <form action="login.php?a=login" method="post" id="formaLogin">
-        <div class="inputElement left">
-            <label>Correo electrónico:</label><br>
-            <input type="text" name="usuario" id="usuario" class="ui-corner-all"/>
+        <div class="row-fluid">
+            <label class="span4">Correo electrónico:</label>
+            <input class="span8" type="text" name="usuario" id="usuario" />
         </div>
-        <div class="inputElement left">
-            <label>Contraseña:</label><br>
-            <input type="password" name="password" id="password" class="ui-corner-all"/><br>            
+        <div class="row-fluid">
+            <label class="span4">Contraseña:</label>
+            <input class="span8" type="password" name="password" id="password"/>
         </div>
-        <br>
-        <div class="inputElement left">
-            <input type="checkbox" name="recuerdame" id="recuerdame" value="1">No cerrar sesión<br>
-        </div>
-        <br>
-        <div class="inputButton right">
-            <input type="image" src="layout/imagenes/Home/btn_entrar_149x20.png" />
+        <div class="row-fluid">
+            <div class="span5">
+                 <input type="checkbox" name="recuerdame" id="recuerdame" value="1">No cerrar sesión
+            </div>
+            <div class="span5">
+                <input type="image" src="layout/imagenes/Home/btn_entrar_149x20.png" />
+            </div>
         </div>
         <input type="hidden" name="pagina" value="<?php echo $pagina; ?>">
     </form>
-    <div class="right" id="entrarConFacebook">
-        <span>O mejor</span>
-        <img src="layout/imagenes/Home/btn_EntraConFB_193x23.png" alt="entra con facebook">
-    </div>
+<!--        <div class="right" id="entrarConFacebook">
+            <span>O mejor</span>
+            <img src="layout/imagenes/Home/btn_EntraConFB_193x23.png" alt="entra con facebook">
+        </div>-->
     <?php
 }
 if (isset($msgLogin))
