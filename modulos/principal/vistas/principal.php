@@ -45,11 +45,11 @@ require_once('layout/headers/headFin.php');
                     if (isset($tiposComida)) {
                         foreach ($tiposComida as $tipo) {
                             ?>
-                            <li class="imagen_slider">
-                                <div class="imagen_slider_div">
+                            <li class="imagen_slider" style="margin:0px;">
+                                <div class="imagen_slider_div checkbox_antojo_container" id="<?php echo $tipo->idTipoComida; ?>">
                                     <img src="<?php echo $tipo->imagen; ?>" title="<?php echo urldecode($tipo->nombre); ?>">
                                     <br>
-                                    <div id="<?php echo $tipo->idTipoComida; ?>" class="checkbox_antojo_clear">&nbsp;</div>
+                                    <div id="checkbox_<?php echo $tipo->idTipoComida; ?>" class="checkbox_antojo_clear">&nbsp;</div>
                                     <input type="hidden" id="antojo<?php echo $tipo->idTipoComida; ?>" name="antojos[]" value="-1"/>
                                     <input type="hidden" id="antojo_nombre_<?php echo $tipo->idTipoComida; ?>" value="<?php echo urldecode($tipo->nombre); ?>"/>
                                 </div>

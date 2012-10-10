@@ -81,6 +81,8 @@ function formaTipoComidaSubmit() {
 }
 
 function subirImagenTipoComida($imagenAnterior) {
+    $width = 70; // 70 pixeles de ancho
+    $height = 70;// 70 pixeles de alto
     $result = array();
     if ((($_FILES["logo"]["type"] == "image/gif")
             || ($_FILES["logo"]["type"] == "image/jpeg")
@@ -96,7 +98,7 @@ function subirImagenTipoComida($imagenAnterior) {
             if (file_exists($fileName)) {
                 unlink($fileName);
             }
-            if (move_uploaded_file($_FILES["logo"]["tmp_name"], $fileName)) {
+            if (move_uploaded_file($_FILES["logo"]["tmp_name"], $fileName)) {            
                 if (file_exists($imagenAnterior)) {
                     unlink($imagenAnterior);
                 }

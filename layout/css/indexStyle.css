@@ -161,6 +161,10 @@
     padding-right: 10px;
 }
 
+.checkbox_antojo_container{
+    cursor: pointer;
+}
+
 .checkbox_antojo{
     background-image: url('../imagenes/Home/SelectTipoComida_13x12.png');
     background-repeat: no-repeat;
