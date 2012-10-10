@@ -6,35 +6,46 @@ function alta() {
 
 function altaSubmit() {
     require_once 'modulos/usuarios/clases/Usuario.php';
+    if (isset($_POST['terminos'])) {
+        $user = new Usuario();
+        $codigo = rand(0000000000, 9999999999);
+        $user->email = $_POST['email'];
+        $user->password = md5($_POST['password']);
+        $user->tipo = '0'; // cero es usuario comun, uno es administrador
+        $user->habilitado = md5($_POST['email']) . $codigo;
+        $passwordConfirmation = md5($_POST['passwordr']);
+        //$user->tipo = $_POST['tipo']; ??????????el tipo como se va a manejar, por admin?
+        //Si, que el tipo lo pongan desde phpmyadmin, si quieren agregar un tipo = 1 como administrador
 
-    $user = new Usuario();
-    $codigo = rand(0000000000, 9999999999);
-    $user->email = $_POST['email'];
-    $user->password = md5($_POST['password']);
-    $user->tipo = '0'; // cero es usuario comun, uno es administrador
-    $user->habilitado = md5($_POST['email']) . $codigo;
-    $passwordConfirmation = md5($_POST['passwordr']);
-    //$user->tipo = $_POST['tipo']; ??????????el tipo como se va a manejar, por admin?
-    //Si, que el tipo lo pongan desde phpmyadmin, si quieren agregar un tipo = 1 como administrador
-
-    if ($user->password == $passwordConfirmation) {
-        require_once 'modulos/usuarios/modelos/usuarioModelo.php';
-        $user->idUsuario = crearUsuario($user);
-        require_once 'modulos/mail/modelos/mailModelo.php';
-        $res = enviarEmailDeConfirmacion($user->email, $user->habilitado);
-        if ($user->idUsuario >= 0 && $res) {
-            $mensaje = 'Usuario Registrado';
-        } else {
-            $mensaje = 'Hubo un error durante el registro';
-            if ($user->idUsuario >= 0) {
-                eliminarUsuario($user->idUsuario);
+        if ($user->password == $passwordConfirmation) {
+            if (comprobar_email($user->email) != "") {
+                require_once 'modulos/usuarios/modelos/usuarioModelo.php';
+                $user->idUsuario = crearUsuario($user);
+                require_once 'modulos/mail/modelos/mailModelo.php';
+                $res = enviarEmailDeConfirmacion($user->email, $user->habilitado);
+                if ($user->idUsuario >= 0 && $res) {
+                    $mensaje = 'Usuario Registrado';
+                } else {
+                    $mensaje = 'Hubo un error durante el registro';
+                    if ($user->idUsuario >= 0) {
+                        eliminarUsuario($user->idUsuario);
+                    }
+                }
+            } else {
+                $mensaje = "No es un correo electrónico válido";
             }
+        } else {
+            $mensaje = 'Los passwords no coinciden';
         }
     } else {
-        $mensaje = 'Los passwords no coinciden';
+        $mensaje = 'Debes aceptar los términos y condiciones para poderte registrar';
     }
-    echo $mensaje;
-    echo '<br><a href="usuarios.php">Regresar</a>';
+    setSessionMessage($mensaje);
+    $pagina = "/";
+    if (isset($_POST['pagina'])) {
+        $pagina = $_POST['pagina'];
+    }
+    redirect($pagina);
 }
 
 function baja() {
