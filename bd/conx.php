@@ -5,7 +5,7 @@ try {
     $host = 'localhost';
     $base = 'dbefood';
     $usuario = 'root';
-    $pswd = 'root';
+    $pswd = '';
 
 //    $host = 'localhost';
 //    $base = 'efoodc5_dbefood';
