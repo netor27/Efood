@@ -30,8 +30,13 @@ function bajaGrupoIngredientes($idGrupoIngredientes) {
     global $conex;
     $stmt = $conex->prepare("DELETE FROM grupoingredientes WHERE idGrupoIngredientes = :id");
     $stmt->bindParam(':id', $idGrupoIngredientes);
-    $stmt->execute();
-    return $stmt->rowCount();
+    if($stmt->execute()){
+        return true;
+    }
+    else{
+        print_r($stmt->errorInfo());
+        return false;
+    }
 }
 
 function modificaGrupoIngredientes($grupoIngredientes) {

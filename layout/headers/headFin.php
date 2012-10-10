@@ -45,11 +45,16 @@
                 </div>
             </div>
 
-
-
             <?php
             $mensaje = getSessionMessage();
             if (isset($mensaje)) {
-                echo $mensaje;
+                ?>
+                <div class="row-fluid">
+                    <div class="span12">
+                            <?php echo $mensaje; ?>
+                        </div>
+                    </div>
+                </div>
+                <?php
             }
             ?>

@@ -64,7 +64,7 @@ class GrupoIngredientes {
         $grupoIngrediente = "'" . $this->nombre . "'";
         $texto = "'Se borrará el grupo de ingrediente'";
         $locacion = "'grupoIngredientes.php?a=borrar&i='";
-        echo '<td><a href="javascript:confirmation(' . $this->idPlatillo . ',' . $grupoIngrediente . ',' . $texto . ',' . $locacion . ')">Eliminar</a></td>';
+        echo '<td><a href="javascript:confirmation(' . $this->idGrupoIngredientes . ',' . $grupoIngrediente . ',' . $texto . ',' . $locacion . ')">Eliminar</a></td>';
 
         echo '</tr>';
     }

@@ -142,15 +142,15 @@ function borrar() {
     require_once ("modulos/platillos/modelos/platilloModelo.php");
     $idRestaurante = getIdRestauranteDePlatillo($idPlatillo);
     if (validarAdministrador() || validarRestauranteLoggeadoId($idRestaurante)) {
-
-        if (is_null(getGruposIngredientesQueDependenDeEsteGrupo($idGrupoIngredientes))) {
+        $gruposQueDependen = getGruposIngredientesQueDependenDeEsteGrupo($idGrupoIngredientes);
+        if (is_null($gruposQueDependen) || sizeof($gruposQueDependen) == 0) {
             if (bajaGrupoIngredientes($idGrupoIngredientes)) {
-                setSessionMessage("Se borró correctamente");
+                setSessionMessage("<div class='success'>Se borró correctamente</div>");
             } else {
-                setSessionMessage("Ocurrió un error al borrar");
+                setSessionMessage("<div class='error'>Ocurrió un error al borrar</div>");
             }
         } else {
-            setSessionMessage("No puedes borrar este grupo de ingredientes porque hay grupos que dependen de el.");
+            setSessionMessage("<div class='error'>No puedes borrar este grupo de ingredientes porque hay grupos que dependen de el.</div>");
         }
         redirect("grupoIngredientes.php?i=" . $idPlatillo);
     } else {
