@@ -16,7 +16,7 @@
                     </div>
                     <div class="left">
                         <a >
-                            <img alt="registrate, es gratis" src="layout/imagenes/Home/Regístrate_Gratis_111x76.png">
+                            <img alt="registrate, es gratis" src="layout/imagenes/Home/Registrate_Gratis_111x76.png">
                         </a>
                     </div>
 
