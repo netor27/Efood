@@ -207,7 +207,7 @@ function getRestaurantePorLogin($usuario, $pass) {
     $stmt->bindParam(":pass", $pass);
 
     $stmt->execute();
-    echo $stmt->rowCount();
+    //echo $stmt->rowCount();
     if ($stmt->rowCount() == 1) {
         $row = $stmt->fetch();
         require_once 'modulos/restaurantes/clases/Restaurante.php';

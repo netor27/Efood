@@ -27,7 +27,7 @@ function login() {
         $_SESSION['habilitado'] = null;
     } else {
         //login inválido
-        echo 'mal';
+        //echo 'mal';
         setSessionMessage("<h2 style='color:red;'>Nombre de usuario/contraseña inválido<h2>");
     }
     redirect($pagina);
