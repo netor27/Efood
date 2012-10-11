@@ -1,7 +1,10 @@
+#buscadorContainer{
+    
+}
+
 #logo_chef{
     width: 200px;
     height: 184px;
-
 }
 
 #logo_chef #sombra_chef{
@@ -31,7 +34,7 @@
 }
 
 #top_buscador{
-    
+    height: 190px;
 }
 
 #top_buscador_center input{
@@ -66,7 +69,6 @@
     text-align: center;
 }
 #lo_nuevo img, #lo_nuevo span, #lo_nuevo div{
-    float:left;
     text-align: center;
 }
 
@@ -74,13 +76,9 @@
     font-weight: bold;
     color:#ED3237;
     font-size: 14.5px;
-    text-align: center;
 }
 
 #lo_nuevo #lo_nuevo_texto{
-    position: relative;
-    top: -20px;
-    left: 40px;
     text-align: center;
 }
 
@@ -89,6 +87,7 @@
     font-size: 23.5px;
     text-align: center;
     font-weight: bold;
+    line-height: 12px;
 }
 
 
@@ -135,6 +134,9 @@
     padding-top: 25px;
 }
 
+#bottom_buscador_container{
+    margin-top: -30px;
+}
 
 #bottom_buscador{
     margin: 0 auto;

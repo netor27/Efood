@@ -8,21 +8,25 @@ function buscarRestauranteHome() {
     //valores necesarios
     $idColonia = -1;
     $idTiposComida = array();
-    $domicilio = false;
-    $recoger = false;
+    $domicilio = true;
+    $recoger = true;
 
     //Se va a guardar la busqueda en la sesión para poder regresar sin tener que mandar los datos por post
     //si hay post, sacamos los datos de ahí, si no, de la session
     $banderaValores = false;
 
-    if (isset($_POST['idColonia'])) {
-        $idColonia = $_POST['idColonia'];
-        $rawAntojos = $_POST['antojos'];
-        $domicilio = !$_POST['preferenciaDomicilio'] == -1;
-        $recoger = !$_POST['preferenciaRecoger'] == -1;
+    if (isset($_GET['idColonia'])) {
+        $idColonia = $_GET['idColonia'];
+        $rawAntojos = $_GET['antojos'];
+        if($_GET['preferenciaDomicilio'] == -1)
+            $domicilio = false;
+        if($_GET['preferenciaRecoger'] == -1)
+            $recoger = false;
         foreach ($rawAntojos as $antojo) {
             if ($antojo != -1) {
-                array_push($idTiposComida, $antojo);
+                if (!in_array($antojo, $idTiposComida)) {
+                    array_push($idTiposComida, $antojo);
+                }
             }
         }
 
@@ -64,18 +68,18 @@ function buscarRestaurante() {
     //si hay post, sacamos los datos de ahí, si no, de la session
     $banderaValores = false;
 
-    if (isset($_POST['idColonia'])) {
+    if (isset($_GET['idColonia'])) {
         //hay post, obtenemos los datos de aquí y lo guardamos en la sesión
         $banderaValores = true;
-        $idColonia = $_POST['idColonia'];
+        $idColonia = $_GET['idColonia'];
         $idTiposComida = null;
-        if (isset($_POST['idTipoComida']) && is_numeric($_POST['idTipoComida'])) {
+        if (isset($_GET['idTipoComida']) && is_numeric($_GET['idTipoComida'])) {
             //echo 'id ' . $_POST['idTipoComida'] . " ||";
             $idTiposComida = array();
-            array_push($idTiposComida, $_POST['idTipoComida']);
+            array_push($idTiposComida, $_GET['idTipoComida']);
         }
-        if (isset($_POST['idMetodoEntrega']) && is_numeric($_POST['idMetodoEntrega'])) {
-            $metodoEntrega = $_POST['idMetodoEntrega'];
+        if (isset($_GET['idMetodoEntrega']) && is_numeric($_GET['idMetodoEntrega'])) {
+            $metodoEntrega = $_GET['idMetodoEntrega'];
         } else {
             $metodoEntrega = 2;
         }
@@ -89,7 +93,7 @@ function buscarRestaurante() {
         $recoger = $valores['recoger'];
         $metodoEntrega = getIdMetodoEntrega($domicilio, $recoger);
     }
-    
+
     if ($banderaValores) {
         mostrarBusqueda($idColonia, $idTiposComida, $metodoEntrega);
     } else {
@@ -104,21 +108,11 @@ function mostrarBusqueda($idColonia, $idTiposComida, $metodoEntrega) {
     require_once 'modulos/colonias/modelos/ColoniaModelo.php';
     $colonias = getColonias();
     $colonia = getColonia($idColonia);
-
+    $idTipoComida = -1;
+    if (sizeof($idTiposComida) == 1)
+        $idTipoComida = $idTiposComida[0];
     require_once 'modulos/pedidos/vistas/resultadosBusqueda.php';
 }
-
-//function buscarRestaurante() {
-//    require_once('funcionesPHP/funcionesGenerales.php');
-//    require_once 'modulos/restaurantes/modelos/RestauranteModelo.php';
-//    require_once 'modulos/restaurantes/clases/Restaurante.php';
-//
-//    $idRestaurante = $_POST['idRestaurante'];
-//    $restaurante = getRestauranteHabilitado($idRestaurante);
-//    echo "<table border=1>";
-//    $restaurante->printRestaurantePedido();
-//    echo "</table>";
-//}
 
 function menu() {
     require_once('funcionesPHP/funcionesGenerales.php');
@@ -132,13 +126,10 @@ function menu() {
     $restaurante = getRestaurante($idRestaurante);          //obtenemos la información del restaurante por su id
     $platillos = getPlatillosDeRestaurante($idRestaurante); //obtenemos todos los platillos de ese restaurante
     //*********************VALIDACIÓN DEL HORARIO DEL RESTAURANTE********************
-    $hora = getHorario($idRestaurante);
-    $diaIni = getDay() . 'Ini';
-    $diaFin = getDay() . 'Fin';
-    if (getTime24() > $hora->$diaIni && getTime24() < $hora->$diaFin)
-        $habilitado = true;
-    if ($hora->$diaIni == '00:00:00' && $hora->$diaFin == '00:00:00')
-        $habilitado = true;
+    //Esto se movió a una función en funcionesPHP/funcionesGenerales.php
+    //
+    $habilitado = restauranteAbiertoAhorita($idRestaurante);
+    
     //*******************************************************************************
     //Hace arreglo esa parte de la sesión para poder asignar platillos a diferentes restaurantes
     if (empty($_SESSION["'rest" . $restaurante->idRestaurante . "'"])) {
@@ -150,7 +141,7 @@ function menu() {
     require_once 'modulos/colonias/modelos/ColoniaModelo.php';
     $colonias = getColonias();
     $colonia = getColonia($idColonia);
-    
+
     require_once('modulos/platillos/vistas/mostrarPlatillosPedido.php');
 }
 

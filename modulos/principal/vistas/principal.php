@@ -6,8 +6,9 @@ require_once('layout/headers/headAutocompleteColonias.php');
 require_once('layout/headers/headFin.php');
 ?>
 
-<div id="buscadorContainer" style="overflow:hidden;">
-    <form action="pedidos.php?a=buscarRestauranteHome" method="POST">
+<div class="row-fluid" id="buscadorContainer" style="overflow:hidden;">
+    <form action="pedidos.php" method="get">
+        <input type="hidden" name="a" value="buscarRestauranteHome">
         <div class="row-fluid" id="top_buscador" style="overflow:hidden;">
             <div class="span3" >
                 <div id="logo_chef">                    
@@ -28,14 +29,23 @@ require_once('layout/headers/headFin.php');
                 </div>
             </div>
             <div class="span3">
-                <div id="lo_nuevo">
-                    <img src="layout/imagenes/Home/LoNuevo_242x86(2).png" alt="lo nuevo"><br>
-                    <div id="lo_nuevo_texto">
-                        <span>¡Tu comida favorita</span><br>
-                        <span class="span_big">a Domicilio</span><br>
-                        <span>con un solo click!</span>
+                <div class="row-fluid">
+                    <div class="span12" id="lo_nuevo">
+                        <img src="layout/imagenes/Home/LoNuevo_242x86(2).png" alt="lo nuevo"><br>
+                        <div id="lo_nuevo_texto" >
+                            <div class="row-fluid">
+                                <span class="span12">¡Tu comida favorita</span>
+                            </div>                            
+                            <div class="row-fluid">
+                                <span class="span12 span_big">a Domicilio</span>
+                            </div>
+                            <div class="row-fluid">
+                                <span class="span12" style="margin-top: -9px;">con un solo click!</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
         <div class="row-fluid" id="sliderContainer">
@@ -50,7 +60,7 @@ require_once('layout/headers/headFin.php');
                                     <img src="<?php echo $tipo->imagen; ?>" title="<?php echo urldecode($tipo->nombre); ?>">
                                     <br>
                                     <div id="checkbox_<?php echo $tipo->idTipoComida; ?>" class="checkbox_antojo_clear">&nbsp;</div>
-                                    <input type="hidden" id="antojo<?php echo $tipo->idTipoComida; ?>" name="antojos[]" value="-1"/>
+                                    <input type="hidden" class="checkbox_vacio" id="antojo<?php echo $tipo->idTipoComida; ?>" name="antojos[]" value="-1"/>
                                     <input type="hidden" id="antojo_nombre_<?php echo $tipo->idTipoComida; ?>" value="<?php echo urldecode($tipo->nombre); ?>"/>
                                 </div>
                             </li>
@@ -61,28 +71,28 @@ require_once('layout/headers/headFin.php');
                 </ul>
             </div>
         </div>
-        <div class="row-fluid">
-            <div id="sliderTextContainer">
-                <img src="layout/imagenes/Home/img_sombra_133x9.png"/><br>
-                <span id="sliderText"></span>
-            </div>
+
+        <div id="sliderTextContainer">
+            <img src="layout/imagenes/Home/img_sombra_133x9.png"/><br>
+            <span id="sliderText"></span>
         </div>
+
         <div class="row-fluid">
             <div id="bottom_buscador_container">
                 <div id="bottom_buscador">
                     <span>Prefiero:</span>
                     <br><br>
                     <div class="left">
-                        <div class="left preferencia_texto" >A mí domicilio</div>
+                        <div class="left preferencia_texto" >A mi domicilio</div>
                         <img class="left" src="layout/imagenes/Home/img_Domicilio_86x39.png">
                         <div id="domicilio" class="checkbox_preferencia_clear">&nbsp;</div>
-                        <input type="hidden" id="preferencia_domicilio" name="preferenciaDomicilio" value="-1"/>
+                        <input class="checkbox_vacio" type="hidden" id="preferencia_domicilio" name="preferenciaDomicilio" value="-1"/>
                     </div>
                     <div class="right">
                         <div class="left preferencia_texto" >Lo paso a recoger</div>
                         <img class="left" src="layout/imagenes/Home/img_Recoger_64x40.png">
                         <div id="recoger" class="checkbox_preferencia_clear">&nbsp;</div>
-                        <input type="hidden" id="preferencia_recoger" name="preferenciaRecoger" value="-1"/>
+                        <input class="checkbox_vacio" type="hidden" id="preferencia_recoger" name="preferenciaRecoger" value="-1"/>
                     </div>
                     <br><br><br><br>
                     <div style="margin: 0 auto;">

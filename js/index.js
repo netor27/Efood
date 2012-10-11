@@ -5,6 +5,10 @@ $(function(){
         moveSlideQty: 1
     });
     
+    $(".checkbox_vacio").each(function(){
+       $(this).attr("value",-1); 
+    });
+    
     $(".checkbox_antojo_container").hover(
         function(){
             var id;

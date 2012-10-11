@@ -1,3 +1,7 @@
+var filtroTipoComida = -1;
+var filtroTipoEntrega = -1;
+var filtroHorario = -1;
+
 $(document).ready(function(){	
     $('select.selectBlanco').each(function(){
         var title = $(this).attr('title');
@@ -45,20 +49,56 @@ $(document).ready(function(){
         //filtrar por el tipo de comida
         var id = $(this).val();
         if(id == -1 || id == ""){
-            $(".restaurante").show();
+            filtroTipoComida = -1;
         }else{
-            $(".restaurante").hide();
-            $(".tipoComida"+id).show();
+            filtroTipoComida = id;
         }
+        filtrarRestaurantes();
     });
     $("#selectMetodoEntrega").change(function() {
         //filtrar por el tipo de entrega
         var id = $(this).val();
-        if(id == -1){
-            $(".restaurante").show();
+        if(id == -1 || id == ""){
+            filtroTipoEntrega = -1;
         }else{
-            $(".restaurante").hide();
-            $(".tipoEntrega"+id).show();
+            filtroTipoEntrega = id;
         }
+        filtrarRestaurantes();
+    });
+    $("#selectHorario").change(function() {
+        //filtrar por el tipo de entrega
+        var id = $(this).val();
+        if(id == -1 || id == ""){
+            filtroHorario = -1;
+        }else{
+            filtroHorario = id;
+        }
+        filtrarRestaurantes();
     });
 });
+
+function filtrarRestaurantes(){
+    console.log("tComida = "+filtroTipoComida+" tEntrega = " +filtroTipoEntrega+" tHorario = " + filtroHorario);
+    $(".restaurante").hide();
+    var auxHasClass = "";
+    if(filtroTipoComida != -1)
+        auxHasClass = auxHasClass + ".tipoComida"+filtroTipoComida;
+    if(filtroTipoEntrega != -1)
+        auxHasClass = auxHasClass + ".tipoEntrega"+filtroTipoEntrega;
+    if(filtroHorario != -1)
+        auxHasClass = auxHasClass + ".restauranteAbierto";
+    console.log("auxHasClass = " + auxHasClass);
+    if(auxHasClass == ""){
+        //no hay ningún filtro, mostrar todos
+        $(".restaurante").show();
+    }else{    
+        $(".restaurante").each(function(){
+            if($(this).is(auxHasClass)){
+                console.log("mostrar");
+                $(this).show();
+            }else{
+                console.log("NO mostrar");
+            }
+        });
+    }
+}

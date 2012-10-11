@@ -3,7 +3,7 @@ html{ height: 100%;}
 body{   
     font-family: Tahoma, Geneva, sans-serif;   
     font-size: 12px;  
-    background-color: #FFFFFF; 
+    background: #ffffff url(../imagenes/bg.jpg) repeat;
     margin:0px; 
     padding:0px; 
     border:0px none;  
@@ -21,13 +21,13 @@ body{
 
 #contenidoHeader{
     background: #FFFFFF url('../imagenes/Home/Fondo_Header_1120x120.png') repeat-x;
-    padding-left: 18px;
-    margin-top: 20px;
-    height: 120px;    
+    height: 105px;  
+    padding-top: 10px;
 }
 
 #headerLogo{
     margin-right: 35px;
+    margin-left:15px;
 }
 
 #headerTitles{
@@ -70,10 +70,8 @@ body{
 }
 
 #menuHeader{
-    position: relative;
-    top: -7px;
-    left: 250px;
-    height: 50px;
+    margin-top: 10px;
+    height: 0px;
 }
 
 #menuHeader img{

@@ -7,7 +7,7 @@
                 <div class="span8">
                     <div id="headerLogo" class="left">
                         <a href="/">
-                            <img src="layout/imagenes/Home/Logo_letras_203x99.png" alt="efood">
+                            <img src="layout/imagenes/Home/LogoEfood_205x100.png" alt="efood">
                         </a>
                     </div>
                     <div class="centerText left" id="headerTitles">
@@ -19,6 +19,13 @@
                             <img alt="registrate, es gratis" src="layout/imagenes/Home/Regístrate_Gratis_111x76.png">
                         </a>
                     </div>
+
+                    <div class="span6" id="menuHeader">
+                        <img src="layout/imagenes/Home/btn_MieFood_76x50.png">
+                        <img src="layout/imagenes/Home/btn_TengoHambre_76x50.png">
+                        <img src="layout/imagenes/Home/btn_Blog_76x50.png">
+                    </div>
+
                 </div>
                 <div class="span4">
                     <div id="contenedorLogin">
@@ -37,13 +44,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row-fluid">
-                <div id="menuHeader">
-                    <img src="layout/imagenes/Home/btn_MieFood_76x50.png">
-                    <img src="layout/imagenes/Home/btn_TengoHambre_76x50.png">
-                    <img src="layout/imagenes/Home/btn_Blog_76x50.png">
-                </div>
-            </div>
+
 
             <?php
             $mensaje = getSessionMessage();
@@ -51,10 +52,10 @@
                 ?>
                 <div class="row-fluid">
                     <div class="span12">
-                            <?php echo $mensaje; ?>
-                        </div>
+                        <?php echo $mensaje; ?>
                     </div>
                 </div>
-                <?php
-            }
-            ?>
+            </div>
+            <?php
+        }
+        ?>
