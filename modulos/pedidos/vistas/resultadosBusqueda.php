@@ -8,8 +8,8 @@ require_once('layout/headers/headFin.php');
 <div id="buscadorContainer">
     <form method="post" action="pedidos.php?a=buscarRestaurante">
         <div class="formElement">
-            <input id="colonias" class="ui-corner-all textoBlanco" type="text" placeholder="¡Escribe tu colonia!"/>
-            <input type="hidden" id="idColonia" name="idColonia">
+            <input id="colonias" class="ui-corner-all textoBlanco" type="text" placeholder="¡Escribe tu colonia!" value="<?php echo $colonia->nombre; ?>"/>
+            <input type="hidden" id="idColonia" name="idColonia" value="<?php echo $colonia->idColonia; ?>">
         </div>
         <div class="formElement">
             <select class="selectBlanco" title="Tipo de comida" name="idTipoComida">
@@ -234,7 +234,7 @@ require_once('layout/headers/headFin.php');
                     </div>
                     <?php ?>
                     <div class="realizarPedido">
-                        <a href="pedidos.php?a=menu&i=<?php echo $restaurante->idRestaurante; ?> ">
+                        <a href="pedidos.php?a=menu&i=<?php echo $restaurante->idRestaurante; ?>&ic=<?php echo $colonia->idColonia;?>">
                             <img src="layout/imagenes/resultadosBusqueda/btnRealizarPedido_180x45.png"/>
                         </a>
                     </div>

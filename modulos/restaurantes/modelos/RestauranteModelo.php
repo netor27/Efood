@@ -192,7 +192,8 @@ function getRestaurante($idRestaurante) {
         $restaurante->tipoGastoEnvio = $row['tipoGastoEnvio'];
         $restaurante->habilitado = $row['habilitado'];
         $restaurante->tipoComision = $row['tipoComision'];
-
+        $restaurante->horario = getHorario($idRestaurante);
+        $restaurante->tiposComida = getTipoComidaRestaurante($idRestaurante);
         return $restaurante;
     } else {
         return NULL;

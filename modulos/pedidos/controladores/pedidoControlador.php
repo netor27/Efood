@@ -126,6 +126,7 @@ function menu() {
     require_once('modulos/restaurantes/modelos/RestauranteModelo.php');
 
     $idRestaurante = $_GET['i']; //obtenemos el id del restaurante por get
+    $idColonia = $_GET['ic']; //colonia desde la que se hizo la búsqueda
     $habilitado = false;         //bandera que nos permite hacer las validaciones
 
     $restaurante = getRestaurante($idRestaurante);          //obtenemos la información del restaurante por su id
@@ -144,7 +145,12 @@ function menu() {
         $_SESSION["'rest" . $restaurante->idRestaurante . "'"] = array();
     }
     //***************************************************************************
-
+    require_once 'modulos/tipoComida/modelos/tipoComidaModelo.php';
+    $tiposDeComida = getTiposComida();
+    require_once 'modulos/colonias/modelos/ColoniaModelo.php';
+    $colonias = getColonias();
+    $colonia = getColonia($idColonia);
+    
     require_once('modulos/platillos/vistas/mostrarPlatillosPedido.php');
 }
 
