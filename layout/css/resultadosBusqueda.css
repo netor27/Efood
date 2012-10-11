@@ -6,6 +6,7 @@ select.selectBlanco{
     width:190px !important;
     height:40px !important;
     line-height:26px;
+    margin: 0px;
 }
 
 span.selectBlanco{
