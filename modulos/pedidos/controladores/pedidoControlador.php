@@ -66,6 +66,7 @@ function buscarRestaurante() {
 
     if (isset($_POST['idColonia'])) {
         //hay post, obtenemos los datos de aquí y lo guardamos en la sesión
+        $banderaValores = true;
         $idColonia = $_POST['idColonia'];
         $idTiposComida = null;
         if (isset($_POST['idTipoComida']) && is_numeric($_POST['idTipoComida'])) {
