@@ -123,6 +123,10 @@
     width: 960px; height:150px;
 }
 
+.bx-window{
+    margin-left: 3px;
+}
+
 .imagen_slider{
     text-align: center;
     list-style: none; 
