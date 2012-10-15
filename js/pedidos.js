@@ -20,6 +20,7 @@ function obtenerIngredientes(id){
             //txt=txt + json[x].idPlatillo;
             //txt=txt + json[x].idRestaurante;
             //txt=txt + json[x].idCategoria;
+            txt = txt + "<div id=\"scrolly\" style=\"height:400px; overflow-y:scroll;\">";
             txt = txt + "<form id=\"pedido\" name=\"pedido\">"; 
             txt=txt + "<h3>"+json[0].nombrePlatillo+"</h3>";
             if(json[0].descripcion!="" || json[0].descripcion!=null || json[0].descripcion!="null")
@@ -27,6 +28,7 @@ function obtenerIngredientes(id){
             txt=txt + "$"+json[0].precioBase+"<br><br>";
             var grupo = json[0].nombreGrupo;
             var checked = true;
+            var inhabilita = false;
             if(grupo!=null)
                 txt = txt + grupo +"<br>";
             for (x in json){
@@ -38,12 +40,14 @@ function obtenerIngredientes(id){
                             txt = txt + "<br><br>"+json[x].nombreGrupo+"<br>"; 
                             grupo = json[x].nombreGrupo;
                             checked = true;
+                            inhabilita = false;
                         }
                 
                 
-                        if(json[x].requerido==1){
+                        //ASTERISCO DE DATO REQUERIDO
+                        /*if(json[x].requerido==1){
                             txt=txt+"*";
-                        }
+                        }*/
                 
                     
                         var idDepende;
@@ -94,6 +98,7 @@ function obtenerIngredientes(id){
             txt=txt+"<br><br>Cantidad:<input type='text' id='cantidad' name='cantidad' value='1'/><br>";
             txt=txt+"<input type='button' value='Agregar' id=\"agregarpedido\"/>"; 
             txt = txt + "</form>";
+            txt = txt + "</div>";
             $("#superbox-innerbox").html(txt);
                 
             //habilito el click al botÃ³n que acabo de crear "agregarpedido"
@@ -104,6 +109,7 @@ function obtenerIngredientes(id){
             $(".hab").bind("click", function(event) {
                 eventos(this);                
             });
+            
         },
         error: function (XMLHttpRequest, textStatus, errThrown) {
             alert(textStatus); 

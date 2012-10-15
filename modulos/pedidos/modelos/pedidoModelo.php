@@ -96,6 +96,8 @@ function guardaPedido() {
     $datosFinales[4] = $pedido->idRestaurante;
     $datosFinales[5] = $pedido->nombreGrupo;
     $datosFinales[6] = $pedido->nombreIngrediente;
+    $datosFinales[7] = $valores;
+    $datosFinales[8] = $pedido->idIngrediente;
 
     unset($_SESSION['ingrediente']);
     if (isset($pedido->idIngrediente))
@@ -150,13 +152,20 @@ function mostrarPedidoGenerado($pedido) {
     if (isset($_SESSION['email'])) {
         if (isset($pedido)) {
             $pedidoResumen .= "Detalles del pedido: <br><br>"; //nombre
+            print_r($pedido);
             foreach ($pedido as $value) {
                 foreach ($value as $valor) {
                     foreach ($valor as $val) {
+                        $caracteristicas = preg_split('#=.&#', $val[7],-1);
                         $pedidoResumen .= "Nombre: " . $val[0] . "<br>"; //nombre
                         $pedidoResumen .= "Especificaciones: " . $val[2] . "<br>"; //especificaciones
                         $pedidoResumen .= "Cantidad: " . $val[1] . "<br>"; //cantidad
                         $pedidoResumen .= "Precio: " . $val[3] . "<br><br>"; //total
+                        $pedidoResumen .= "<span id=\"".$val[8]."\">";
+                         foreach($caracteristicas as $value){
+                             $pedidoResumen .= $value;
+                         }
+                        $pedidoResumen .= "</span><br>";
                         $total += $val[3];
                     }
                 }
