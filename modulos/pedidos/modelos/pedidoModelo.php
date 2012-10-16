@@ -68,9 +68,8 @@ function guardaPedido() {
 
 
 
-
         
-//logica para que los valores se conviertan en los ids de la sesion $_SESSION['ingrediente'][id] para sacar los precios y demÃ¡s
+    //logica para que los valores se conviertan en los ids de la sesion $_SESSION['ingrediente'][id] para sacar los precios y demÃ¡s
     //luego seteamos las sesiones a null o le aplicamos el destroy con unset (no en este momento o pierdo todos los datos
     //para mostrarlos en posteriores consultas)
     $total = 0;
@@ -96,7 +95,7 @@ function guardaPedido() {
     $datosFinales[4] = $pedido->idRestaurante;
     $datosFinales[5] = $pedido->nombreGrupo;
     $datosFinales[6] = $pedido->nombreIngrediente;
-    $datosFinales[7] = $valores;
+    $datosFinales[7] = utf8_encode($valores);
     $datosFinales[8] = $pedido->idIngrediente;
 
     unset($_SESSION['ingrediente']);
@@ -152,7 +151,6 @@ function mostrarPedidoGenerado($pedido) {
     if (isset($_SESSION['email'])) {
         if (isset($pedido)) {
             $pedidoResumen .= "Detalles del pedido: <br><br>"; //nombre
-            print_r($pedido);
             foreach ($pedido as $value) {
                 foreach ($value as $valor) {
                     foreach ($valor as $val) {
@@ -162,6 +160,7 @@ function mostrarPedidoGenerado($pedido) {
                         $pedidoResumen .= "Cantidad: " . $val[1] . "<br>"; //cantidad
                         $pedidoResumen .= "Precio: " . $val[3] . "<br><br>"; //total
                         $pedidoResumen .= "<span id=\"".$val[8]."\">";
+                        print_r($val[8]);
                          foreach($caracteristicas as $value){
                              $pedidoResumen .= $value;
                          }

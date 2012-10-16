@@ -58,12 +58,12 @@ class Platillo {
     }
 
     function printPlatilloPedido() {
-        echo '<div id=ped"'.$this->idPlatillo.'">';
+        echo '<div id="ped'.$this->idPlatillo.'" class="descripcionpedido">';
         echo '' . $this->nombre . '';
-        echo '<p style="visibility:hidden;">' . $this->descripcion . '</p>';
-        echo '' . $this->precioBase . '';
+        echo ' $' . $this->precioBase . '';
+        echo '<span class="popup" id="'.$this->idPlatillo.'" style="width:100px;"><a href="#" rel="superbox[content]">Agregar</a></span>';
+        echo '<span style="visibility:hidden; color:red;" id="des'.$this->idPlatillo.'">' . $this->descripcion . '</span>';
         //echo '' . $this->hint . '';
-        echo '<div class="popup" id="'.$this->idPlatillo.'"><a  rel="superbox[content]">Agregar</a></div>';
        //echo '<td><div class="popup" id="'.$this->idPlatillo.'">Agregar</div></td>';
        // echo "<td><form method='POST' action='pedidos.php?a=obtenIngredientes'><input type='hidden' value=".$this->idPlatillo." name='platillo'/><input type='submit' value='enviar'/></form></td>";
         echo '</div>';

@@ -2,7 +2,8 @@ $(document).ready(function(){
     $("#pedirp").click(function(){
         var tipoEnvio = $("input[name='envio']:checked").val();
         var i = getUrlVars()["i"];
-        window.location.href = "pedidos.php?p="+tipoEnvio+"&a=pedir&i="+i;
+        var ic = getUrlVars()["ic"];
+        window.location.href = "pedidos.php?p="+tipoEnvio+"&a=pedir&i="+i+"&ic="+ic;
     });
 });
 function obtenerIngredientes(id){
@@ -182,6 +183,16 @@ $(document).ready(function(){
     $(".popuppedir").click(function(){
         pedir(this.id);
     });
+    $('.descripcionpedido').mousemove(function(){
+        var id = this.id.substring(3,this.id.length);
+        //$("#des"+id).html();
+        $("#des"+id).css("visibility","visible");
+    });
+    $('.descripcionpedido').mouseout(function(){
+        var id = this.id.substring(3,this.id.length);
+        //$("#des"+id).html();
+        $("#des"+id).css("visibility","hidden");
+    });
 });
 
 function quitaAcentos(cadena){
@@ -228,6 +239,24 @@ function utf8replace(cadena){
 	cadena=cadena.replace('ü','u');	
         cadena=cadena.replace('%3A','');	
 	return cadena;
+}
+
+function tildes_unicode(str){
+    str = str.replace('á','\u00e1');
+    str = str.replace('é','\u00e9');
+    str = str.replace('í','\u00ed');
+    str = str.replace('ó','\u00f3');
+    str = str.replace('ú','\u00fa');
+
+    str = str.replace('Á','\u00c1');
+    str = str.replace('É','\u00c9');
+    str = str.replace('Í','\u00cd');
+    str = str.replace('Ó','\u00d3');
+    str = str.replace('Ú','\u00da');
+
+    str = str.replace('ñ','\u00f1');
+    str = str.replace('Ñ','\u00d1');
+    return str;
 }
 function getUrlVars() {
     var vars = {};
