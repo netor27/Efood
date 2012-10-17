@@ -29,7 +29,8 @@ function obtenerIngredientes(id){
             txt=txt + "$"+json[0].precioBase+"<br><br>";
             var grupo = json[0].nombreGrupo;
             var checked = true;
-            var inhabilita = false;
+            var idIngredienteClick = new Array();
+            var k=0;
             if(grupo!=null)
                 txt = txt + grupo +"<br>";
             for (x in json){
@@ -41,7 +42,6 @@ function obtenerIngredientes(id){
                             txt = txt + "<br><br>"+json[x].nombreGrupo+"<br>"; 
                             grupo = json[x].nombreGrupo;
                             checked = true;
-                            inhabilita = false;
                         }
                 
                 
@@ -63,6 +63,8 @@ function obtenerIngredientes(id){
                             if(checked && json[x].idIngredienteDepende==-1){
                                 txt=txt+"<input type=\"radio\" value=\""+json[x].idIngrediente+"\" name=\""+quitaAcentos(grupo)+"\" id=\""+idDepende+"\" checked=\"checked\" class=\"hab\" />";
                                 checked = false;
+                                idIngredienteClick[k] = "<input type=\"radio\" value=\""+json[x].idIngrediente+"\" name=\""+quitaAcentos(grupo)+"\" id=\""+idDepende+"\" checked=\"checked\" class=\"hab\" />";
+                                k++;
                             }
                             else if(checked && json[x].idIngredienteDepende!=-1){
                                 txt=txt+"<input type=\"radio\" value=\""+json[x].idIngrediente+"\" name=\""+quitaAcentos(grupo)+"\" id=\""+idDepende+"\" checked=\"checked\" class=\"d"+idDepende+"\" />";
@@ -111,6 +113,9 @@ function obtenerIngredientes(id){
                 eventos(this);                
             });
             
+            for(y in idIngredienteClick){
+                eventos(idIngredienteClick[y]);
+            }
         },
         error: function (XMLHttpRequest, textStatus, errThrown) {
             alert(textStatus); 
@@ -211,7 +216,7 @@ function eventos(e){
     $("input:radio").attr('disabled',true);
     $("input:checkbox").attr('disabled',true);
     $(".hab").removeAttr('disabled');
-    $(".d"+e.value).removeAttr('disabled');
+    $(".d"+$(e).attr('value')).removeAttr('disabled');
 }
 
 function utf8replace(cadena){
