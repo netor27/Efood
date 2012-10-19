@@ -156,7 +156,8 @@ function agregarPedido(){
                 var total = parseInt($("#totalc").html());
                 $("#totalc").html(total+json[3]);
                 $("#botonpedir").html("<br><a href='pedidos.php?p=0&a=pedir&i="+json[4]+"'>Pedir</a></div>");
-                  window.location = "pedidos.php?a=menu&i="+json[4];
+                var ic = getUrlVars()["ic"];
+                  window.location = "pedidos.php?a=menu&i="+json[4]+"&ic="+ic;
             },
             error: function (XMLHttpRequest, textStatus, errThrown) {
                 alert(textStatus); 
