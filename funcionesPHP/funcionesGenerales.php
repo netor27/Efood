@@ -23,54 +23,6 @@ function strleft($s1, $s2) {
     return substr($s1, 0, strpos($s1, $s2));
 }
 
-function tipoUsuario() {
-    require_once '/modulos/usuarios/clases/Usuario.php';
-
-    if (isset($_SESSION['usuario'])) {
-        $usuario = $_SESSION['usuario'];
-        if ($usuario->tipoUsuario == 1) {
-            return 'administrador';
-        } else if ($usuario->tipoUsuario == 0) {
-            return 'usuario';
-        }
-    } else {
-        return 'visitante';
-    }
-}
-
-function getUsuarioActual() {
-    if (isset($_SESSION['usuario'])) {
-        return $_SESSION['usuario'];
-    } else {
-        return NULL;
-    }
-}
-
-function validarUsuarioLoggeado() {
-    if (!isset($_SESSION['usuario'])) {
-        $pagina = getUrl();
-        $msgLogin = "Debes iniciar sesión para ver este contenido.";
-        require_once 'modulos/principal/vistas/login.php';
-        return false;
-    } else {
-        return true;
-    }
-}
-
-function validarUsuarioLoggeadoParaAjax() {
-    return isset($_SESSION['usuario']);
-}
-
-function validarUsuarioLoggeadoParaSubmits() {
-    return isset($_SESSION['usuario']);
-}
-
-function validarUsuarioLoggeadoMandarIndex() {
-    if (!isset($_SESSION['usuario'])) {
-        goToIndex();
-    }
-}
-
 function comprobar_email($email) {
     return filter_var($email, FILTER_VALIDATE_EMAIL);
 }

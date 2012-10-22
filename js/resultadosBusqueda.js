@@ -3,6 +3,14 @@ var filtroTipoEntrega = -1;
 var filtroHorario = -1;
 
 $(document).ready(function(){	
+    
+    $("#modalDialogNoHayRestaurantes").dialog({
+        autoOpen: true,
+        height: 380,
+        width: 500,
+        modal: true
+    });
+    
     $('select.selectBlanco').each(function(){
         var title = $(this).attr('title');
         if( $('option:selected', this).val() != ''  ) title = $('option:selected',this).text();

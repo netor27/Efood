@@ -19,7 +19,7 @@ class Usuario {
         echo '<td></td>';
         echo '</tr>';
     }
-
+    
     function printUsuario() {
         $habilitado = $this->habilitado!='1' ? 'No' : 'Si';
         echo '<tr>';  

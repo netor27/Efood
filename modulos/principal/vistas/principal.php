@@ -20,6 +20,15 @@ require_once('layout/headers/headFin.php');
                 <span id="estoy_en">Estoy en:</span><br>
                 <input class="ui-corner-all" id="colonias" name="colonia" type="text" placeholder="¡Escribe tu colonia!"><br>
                 <input type="hidden" id="idColonia" name="idColonia">
+                <?php
+                if (isset($_GET['coloniaNoReconocida'])) {
+                    ?>
+                    <div style="color:red;">
+                        ¡Oopps! No pudimos encontrar tu colonia. ¿Te aseguraste de seleccionarla de nuestra lista? Por favor ingrésala nuevamente y selecciona tu colonia de la lista desplegable. ¡Gracias!
+                    </div>
+                    <?php
+                }
+                ?>
                 <div id="bottom_center_buscador">
                     <span>Hoy se me antoja:</span>
                     <br>
@@ -60,7 +69,7 @@ require_once('layout/headers/headFin.php');
                                     <img src="<?php echo $tipo->imagen; ?>" title="<?php echo urldecode($tipo->nombre); ?>">
                                     <br>
                                     <div id="checkbox_<?php echo $tipo->idTipoComida; ?>" class="checkbox_antojo_clear">&nbsp;</div>
-                                    <input type="hidden" class="checkbox_vacio" id="antojo<?php echo $tipo->idTipoComida; ?>" name="antojos[]" value="-1"/>
+                                    <input type="hidden" class="checkbox_vacio" id="antojo<?php echo $tipo->idTipoComida; ?>" name="antojos[]" value="<?php echo $tipo->idTipoComida; ?>"/>
                                     <input type="hidden" id="antojo_nombre_<?php echo $tipo->idTipoComida; ?>" value="<?php echo urldecode($tipo->nombre); ?>"/>
                                 </div>
                             </li>
@@ -86,13 +95,13 @@ require_once('layout/headers/headFin.php');
                         <div class="left preferencia_texto" >A mi domicilio</div>
                         <img class="left" src="layout/imagenes/Home/img_Domicilio_86x39.png">
                         <div id="domicilio" class="checkbox_preferencia_clear">&nbsp;</div>
-                        <input class="checkbox_vacio" type="hidden" id="preferencia_domicilio" name="preferenciaDomicilio" value="-1"/>
+                        <input class="checkbox_vacio" type="hidden" id="preferencia_domicilio" name="preferenciaDomicilio" value="1"/>
                     </div>
                     <div class="right">
                         <div class="left preferencia_texto" >Lo paso a recoger</div>
                         <img class="left" src="layout/imagenes/Home/img_Recoger_64x40.png">
                         <div id="recoger" class="checkbox_preferencia_clear">&nbsp;</div>
-                        <input class="checkbox_vacio" type="hidden" id="preferencia_recoger" name="preferenciaRecoger" value="-1"/>
+                        <input class="checkbox_vacio" type="hidden" id="preferencia_recoger" name="preferenciaRecoger" value="1"/>
                     </div>
                     <br><br><br><br>
                     <div style="margin: 0 auto;">

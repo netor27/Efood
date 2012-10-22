@@ -11,46 +11,38 @@ function buscarRestauranteHome() {
     $domicilio = true;
     $recoger = true;
 
-    //Se va a guardar la busqueda en la sesión para poder regresar sin tener que mandar los datos por post
-    //si hay post, sacamos los datos de ahí, si no, de la session
-    $banderaValores = false;
-
-    if (isset($_GET['idColonia'])) {
+    if (isset($_GET['idColonia']) &&
+            is_numeric($_GET['idColonia']) &&
+            $_GET['idColonia'] > 0) {
         $idColonia = $_GET['idColonia'];
-        $rawAntojos = $_GET['antojos'];
-        if($_GET['preferenciaDomicilio'] == -1)
+
+        if (!isset($_GET['preferenciaDomicilio']))
             $domicilio = false;
-        if($_GET['preferenciaRecoger'] == -1)
+        if (!isset($_GET['preferenciaRecoger']))
             $recoger = false;
-        foreach ($rawAntojos as $antojo) {
-            if ($antojo != -1) {
-                if (!in_array($antojo, $idTiposComida)) {
-                    array_push($idTiposComida, $antojo);
+
+        if (isset($_GET['antojos'])) {
+            $rawAntojos = $_GET['antojos'];
+            foreach ($rawAntojos as $antojo) {
+                if ($antojo != -1) {
+                    if (!in_array($antojo, $idTiposComida)) {
+                        array_push($idTiposComida, $antojo);
+                    }
                 }
             }
         }
 
-        $banderaValores = true;
         $valores = array();
         $valores['idColonia'] = $idColonia;
         $valores['idTiposComida'] = $idTiposComida;
         $valores['domicilio'] = $domicilio;
         $valores['recoger'] = $recoger;
-        $_SESSION['busquedaRestauranteHome'] = $valores;
-        $_SESSION['idColoniaEntrega'] = $idColonia;
-    } else if (isset($_SESSION['busquedaRestauranteHome'])) {
-        $banderaValores = true;
-        $valores = $_SESSION['busquedaRestauranteHome'];
-        $idColonia = $valores['idColonia'];
-        $idTiposComida = $valores['idTiposComida'];
-        $domicilio = $valores['domicilio'];
-        $recoger = $valores['recoger'];
-    }
-    $metodoEntrega = getIdMetodoEntrega($domicilio, $recoger);
-    if ($banderaValores) {
+        $metodoEntrega = getIdMetodoEntrega($domicilio, $recoger);
+
         mostrarBusqueda($idColonia, $idTiposComida, $metodoEntrega);
     } else {
-        goToIndex();
+        $coloniaNoReconocida = true;
+        redirect("/?coloniaNoReconocida=true");
     }
 }
 
@@ -62,8 +54,6 @@ function buscarRestaurante() {
     //valores necesarios
     $idColonia = -1;
     $idTiposComida = array();
-    $domicilio = false;
-    $recoger = false;
     //Se va a guardar la busqueda en la sesión para poder regresar sin tener que mandar los datos por post
     //si hay post, sacamos los datos de ahí, si no, de la session
     $banderaValores = false;
@@ -83,18 +73,6 @@ function buscarRestaurante() {
         } else {
             $metodoEntrega = 2;
         }
-    } else if (isset($_SESSION['busquedaRestauranteHome'])) {
-        //no hay post, obtenemos los datos de la sessión
-        $banderaValores = true;
-        $valores = $_SESSION['busquedaRestauranteHome'];
-        $idColonia = $valores['idColonia'];
-        $idTiposComida = $valores['idTiposComida'];
-        $domicilio = $valores['domicilio'];
-        $recoger = $valores['recoger'];
-        $metodoEntrega = getIdMetodoEntrega($domicilio, $recoger);
-    }
-
-    if ($banderaValores) {
         mostrarBusqueda($idColonia, $idTiposComida, $metodoEntrega);
     } else {
         goToIndex();
@@ -129,7 +107,7 @@ function menu() {
     //Esto se movió a una función en funcionesPHP/funcionesGenerales.php
     //
     $habilitado = restauranteAbiertoAhorita($idRestaurante);
-    
+
     //*******************************************************************************
     //Hace arreglo esa parte de la sesión para poder asignar platillos a diferentes restaurantes
     if (empty($_SESSION["'rest" . $restaurante->idRestaurante . "'"])) {
@@ -184,6 +162,40 @@ function pedir() {
     $pedidoGenerado = mostrarPedidoGenerado($pedidos);
     $errores = generarPedido($pedidos);
     require_once('modulos/pedidos/vistas/pedir.php');
+}
+
+function usuarioSolicitudRestaurante() {
+    if (isset($_POST['nombre']) && isset($_POST['idColonia'])) {
+        $msg = "";
+
+        require_once 'modulos/colonias/modelos/coloniaModelo.php';
+        $colonia = getColonia($_POST['idColonia']);
+        if (isset($_SESSION['email'])) {
+            $msg = "El usuario con email = " . $_SESSION['email'];
+        } else {
+            $msg = "Un usuario no registrado";
+        }
+        $msg .= " solicitó que se agregara un restaurante.";
+        $msg .= "<table>" .
+                "<tr><td>Nombre</td><td>" . $_POST['nombre'] . "</td></tr>" .
+                "<tr><td>Id Colonia</td><td>" . $colonia->idColonia . "</td></tr>" .
+                "<tr><td>Nombre Colonia</td><td>" . $colonia->nombre . "</td></tr>";
+
+        if (isset($_POST['telefono']))
+            $msg .="<tr><td>Teléfono</td><td>" . $_POST['telefono'] . "</td></tr>";;
+
+        if (isset($_POST['telefono']))
+            $msg .="<tr><td>Dirección</td><td>" . $_POST['direccion'] . "</td></tr>";;
+
+        $msg .="</table>";
+        require_once 'modulos/mail/modelos/mailModelo.php';
+        if (enviarEmailDeSolicitudAgregarRestaurante($msg)) {
+            setSessionMessage("<h2 class='success'>¡Gracias por tu apoyo!</h2><h3>Agregarémos este restaurante lo antes posible</h3>");
+        } else {
+            setSessionMessage("<h2 class='error'>Ocurrió un error al enviar tus datos</h2>");
+        }
+    }
+    goToIndex();
 }
 
 ?>

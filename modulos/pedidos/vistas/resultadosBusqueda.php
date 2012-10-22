@@ -5,6 +5,46 @@ require_once('layout/headers/headAutocompleteColonias.php');
 require_once('layout/headers/headFin.php');
 ?>
 
+<?php
+if (sizeof($restaurantes) <= 0) {
+    ?>
+    <div id="modalDialogNoHayRestaurantes" title="Ohh-ohh... Ya nos cachaste...">
+        <div class="row-fluid"><div class="span12"></div></div>
+        <div class="row-fluid">
+            <div class="span12">
+                <p>
+                    La verdad todavía no tenemos restaurantes registrados en cada rincón del país, 
+                    pero deja los datos del restaurante que te gustaría ver aquí y lo registramos de volada.
+                </p>
+            </div>
+        </div>
+        <form action="pedidos.php?a=usuarioSolicitudRestaurante" method="post">
+            <div class="row-fluid">
+                <label class="span4">Nombre:</label>
+                <input class="span8" type="text" name="nombre"> 
+            </div>
+            <div class="row-fluid">
+                <label class="span4">Teléfono: (Opcional)</label>
+                <input class="span8" type="text" name="telefono">
+            </div>
+            <div class="row-fluid">
+                <label class="span4">Dirección:  (Opcional)</label>
+                <input class="span8" type="text" name="direccion">
+            </div>
+            <div class="row-fluid"><div class="span12"></div></div>
+            <div class="row-fluid">
+                <div class="span5 offset4">
+                    <input type="image" src="layout/imagenes/btnEnviarDatos.png">
+                </div>
+            </div>
+            <input type="hidden" name="idColonia" value="<?php echo $idColonia; ?>">
+        </form>
+    </div>
+
+    <?php
+}
+?>
+
 <div id="buscadorContainer" class="row-fluid">
     <form method="get" action="pedidos.php">
         <input type="hidden" name="a" value="buscarRestaurante">
@@ -127,10 +167,10 @@ require_once('layout/headers/headFin.php');
                 $aux = $aux . " tipoEntrega0 tipoEntrega1 tipoEntrega2";
                 break;
         }
-        
-        if(restauranteAbiertoAhorita($restaurante->idRestaurante)){
+
+        if (restauranteAbiertoAhorita($restaurante->idRestaurante)) {
             $aux = $aux . " restauranteAbierto";
-        }else{
+        } else {
             $aux = $aux . " restauranteCerrado";
         }
         ?>
@@ -257,23 +297,23 @@ require_once('layout/headers/headFin.php');
                             </div>
                         </div>
                         <div class="span4 metodoEntrega">
-                            
+
                             <div class="row-fluid">
                                 <?php
                                 if ($restaurante->metodoEntrega != 0) {
                                     ?>
-                                <div class="span5">
-                                    <h5>Domicilio</h5>
-                                    <img src="layout/imagenes/Home/img_Domicilio_86x39.png"/>                                    
-                                </div>                                    
+                                    <div class="span5">
+                                        <h5>Domicilio</h5>
+                                        <img src="layout/imagenes/Home/img_Domicilio_86x39.png"/>                                    
+                                    </div>                                    
                                     <?php
                                 }
                                 if ($restaurante->metodoEntrega != 1) {
                                     ?>
-                                <div class="span5 offset1">
-                                    <h5>Recoger</h5>
-                                    <img src="layout/imagenes/Home/img_Recoger_64x40.png"/>                                    
-                                </div>                                    
+                                    <div class="span5 offset1">
+                                        <h5>Recoger</h5>
+                                        <img src="layout/imagenes/Home/img_Recoger_64x40.png"/>                                    
+                                    </div>                                    
                                     <?php
                                 }
                                 ?>

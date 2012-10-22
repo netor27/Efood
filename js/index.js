@@ -6,7 +6,7 @@ $(function(){
     });
     
     $(".checkbox_vacio").each(function(){
-       $(this).attr("value",-1); 
+       $(this).attr("disabled",true); 
     });
     
     $(".checkbox_antojo_container").hover(
@@ -27,11 +27,11 @@ $(function(){
         if ($(check).hasClass("checkbox_antojo")){
             $(check).removeClass("checkbox_antojo");
             $(check).addClass("checkbox_antojo_clear");            
-            $("#antojo"+id).attr("value", -1);
+            $("#antojo"+id).attr("disabled", true);
         } else {
             $(check).removeClass("checkbox_antojo_clear");
             $(check).addClass("checkbox_antojo");
-            $("#antojo"+id).attr("value", id);
+            $("#antojo"+id).attr("disabled", false);
         }
     });
     
@@ -41,11 +41,11 @@ $(function(){
         if ($(this).hasClass("checkbox_preferencia")){
             $(this).removeClass("checkbox_preferencia");
             $(this).addClass("checkbox_preferencia_clear");            
-            $("#preferencia_"+id).attr("value", -1);
+            $("#preferencia_"+id).attr("disabled", true);
         } else {
             $(this).removeClass("checkbox_preferencia_clear");
             $(this).addClass("checkbox_preferencia");
-            $("#preferencia_"+id).attr("value", 1);
+            $("#preferencia_"+id).attr("disabled", false);
         }
     });   
     
@@ -53,12 +53,12 @@ $(function(){
         if ($(this).hasClass("checkbox_preferencia")){
             $(this).removeClass("checkbox_preferencia");
             $(this).addClass("checkbox_preferencia_clear");            
-            $("#preferencia_"+id).attr("value", -1);
+            $("#preferencia_"+id).attr("disabled", true);
         }
         if ($(this).hasClass("checkbox_antojo")){
             $(this).removeClass("checkbox_antojo");
             $(this).addClass("checkbox_antojo_clear");            
-            $("#antojo"+id).attr("value", -1);
+            $("#antojo"+id).attr("disabled", true);
         } 
     });
 });

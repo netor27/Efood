@@ -50,12 +50,17 @@
             $mensaje = getSessionMessage();
             if (isset($mensaje)) {
                 ?>
-                <div class="row-fluid">
-                    <div class="span12">
-                        <?php echo $mensaje; ?>
-                    </div>
+                <div id="modalDialogSessionMessage">
+                    <?php echo $mensaje; ?>
                 </div>
-            </div>
-            <?php
-        }
-        ?>
+                <script>
+                        $("#modalDialogSessionMessage").dialog({
+                            autoOpen: true,
+                            height: 380,
+                            width: 600,
+                            modal: true
+                        });
+                </script>
+                <?php
+            }
+            ?>
