@@ -219,8 +219,7 @@ function quitaAcentos(cadena){
         str = str=="Ã¤"?"a":str=="Ã«"?"e":str=="Ã¯"?"i":str=="Ã¶"?"o":str=="Ã¼"?"u":str;
         str = str=="Ã„"?"A":str=="Ã‹"?"E":str=="Ã"?"I":str=="Ã–"?"O":str=="Ãœ"?"U":str;
         return (str);
-    })
-    return output;
+    });
 }
 
 function eventos(e){
