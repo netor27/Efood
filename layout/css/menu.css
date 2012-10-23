@@ -1,0 +1,135 @@
+#menu{
+    margin-left: 10px;
+    -webkit-box-shadow:rgba(59, 59, 59, 0.701961) 0px 0px 70px -12px;
+    -moz-box-shadow:rgba(59, 59, 59, 0.701961) 0px 0px 70px -12px;
+    box-shadow: rgba(59, 59, 59, 0.701961) 0px 0px 70px -12px;
+}
+
+.separadorLogo{
+    height: 150px;
+}
+
+.platilloNon{
+    border-bottom-left-radius: 13px;
+    border-top-left-radius: 13px;
+}
+.platilloPar{
+    border-bottom-right-radius: 13px;
+    border-top-right-radius: 13px;
+}
+
+.popupPlatillo{
+    cursor: pointer;
+}
+
+.popupPlatillo:hover{
+    background: #ffd525;
+}
+
+.filaPar{
+    background: #e1eef9;
+    height: 37px;
+}
+
+.filaNon{
+    background: #FFFFFF;
+    height: 37px;
+}
+
+#opinionesContenido{
+    display:none;
+}
+
+#informacionContenido{
+    display:none;
+}
+
+.menuTexto{
+    font-size:12px;
+    font-weight:bold;
+    line-height:35px;
+}
+
+.tooltipClass{
+    margin: 0px;
+    padding: 0px;
+    max-width: 200px;
+}
+
+.tooltipHeader{
+    background: #ffd525;
+    background-image:-webkit-linear-gradient(0,rgb(255,212,38) 60%,rgb(230,155,94) 99%);
+    background-image:-moz-linear-gradient(0,rgb(255,212,38) 60%,rgb(230,155,94) 99%);
+    background-image:-o-linear-gradient(0,rgb(255,212,38) 60%,rgb(230,155,94) 99%);
+    background-image:-ms-linear-gradient(0,rgb(255,212,38) 60%,rgb(230,155,94) 99%);
+
+    padding: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    font-weight: bold;
+}
+
+.tooltipText{
+    padding: 10px;
+}
+
+.detallesCadroAmarillo{
+    background: #ffd525;
+    padding-left: 5px;
+    padding-top:5px;
+}
+
+.detallesNombre{
+    font-weight: bolder;
+    font-size: 20px;
+}
+
+.detallesPrecio{
+    font-weight: bolder;
+    font-size: 15px;
+    padding-top: 7px;
+    padding-bottom: 5px;
+}
+
+.detallesDescripcion{
+    font-weight: bolder;
+    font-size: 15px;
+}
+.detallesGrupo{
+    color: #C00;
+    font-size: 15px;
+    font-weight: bolder;
+    padding-top: 12px;
+}
+
+.ingredienteNombre{
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.ingrediente input{
+    margin: 0px;
+    vertical-align: inherit;
+    margin-right: 5px;
+}
+
+.especificaciones{
+    font-size: 15px;
+    padding-top: 14px;
+    padding-bottom: 10px;
+    font-weight: bold;
+}
+
+.especificacionesTexto{
+    padding-bottom: 15px;
+}
+
+.cantidad span{
+    font-size: 15px;
+    font-weight: bold;
+    padding-right: 10px;
+}
+
+.cantidad input{
+
+}

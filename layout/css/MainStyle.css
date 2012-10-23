@@ -1,7 +1,7 @@
 li{list-style:none;}
 html{ height: 100%;}
 body{   
-    font-family: Tahoma, Geneva, sans-serif;   
+    font-family: Tahoma, Geneva, sans-serif !important;   
     font-size: 12px;  
     background: #ffffff url(../imagenes/bg.jpg) repeat;
     margin:0px; 

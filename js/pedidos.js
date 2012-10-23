@@ -4,12 +4,11 @@ $(document).ready(function(){
         var i = getUrlVars()["i"];
         var ic = getUrlVars()["ic"];
         window.location.href = "pedidos.php?p="+tipoEnvio+"&a=pedir&i="+i+"&ic="+ic;
-    });
-    
+    });    
     $("#modalDialogIngredientes").dialog({
         autoOpen: false,
         height: 600,
-        width: 600,
+        width: 320,
         modal: true
     });
     $(".popupPlatillo").click(function(){
@@ -18,17 +17,41 @@ $(document).ready(function(){
     $(".popuppedir").click(function(){
         pedir(this.id);
     });
-    $('.descripcionpedido').mousemove(function(){
-        var id = this.id.substring(3,this.id.length);
-        //$("#des"+id).html();
-        $("#des"+id).css("visibility","visible");
+    $('#btnMostrarMenu').click(function(){
+        $('#menuContenido').show();
+        $('#opinionesContenido').hide();
+        $('#informacionContenido').hide();
     });
-    $('.descripcionpedido').mouseout(function(){
-        var id = this.id.substring(3,this.id.length);
-        //$("#des"+id).html();
-        $("#des"+id).css("visibility","hidden");
+    $('#btnMostrarOpiniones').click(function(){
+        $('#opinionesContenido').show();
+        $('#menuContenido').hide();
+        $('#informacionContenido').hide();
+    });
+    $('#btnMostrarInformacion').click(function(){
+        $('#informacionContenido').show();
+        $('#opinionesContenido').hide();
+        $('#menuContenido').hide();
     });
     
+    $( ".popupPlatillo" ).tooltip({
+        items: ".popupPlatillo",
+        tooltipClass: "tooltipClass",
+        content: function(){
+            var element = $( this );
+            var titulo = "<span class='tooltipNombre'>"+ element.attr( "nombre" ) + " <span class='tooltipPrecio'>$" + element.attr( "precio" ) + "</span>";
+            var texto = element.attr("texto");
+            var dom;
+            dom = '<div class="tooltipHeader">'+titulo+'</div>';
+            dom += '<div class="tooltipText">'+texto+'</div>';
+            return dom;            
+        }, 
+        position:{ 
+            my: "left bottom-10",
+            at: "center top",
+            collision: "none none"
+        },
+        show: "fade"
+    });
 });
 function obtenerIngredientes(id){
     //Va a obtener la informaciÃ³n en ajax para no tener que refrescar la pÃ¡gina
@@ -45,35 +68,46 @@ function obtenerIngredientes(id){
             //txt=txt + json[x].idPlatillo;
             //txt=txt + json[x].idRestaurante;
             //txt=txt + json[x].idCategoria;
+            //txt = txt + "<div class='row-fluid'></div>";
             txt = txt + "<form id=\"pedido\" name=\"pedido\">"; 
-            txt=txt + "<h3>"+json[0].nombrePlatillo+"</h3>";
+            txt = txt + "<div class='row-fluid'><div class='detallesNombre'>"+json[0].nombrePlatillo+"</div></div>";            
+            txt = txt + "<div class='row-fluid'><div class='detallesPrecio'>$ "+json[0].precioBase+".00</div></div>";
             if(json[0].descripcion!="" || json[0].descripcion!=null || json[0].descripcion!="null")
-                txt=txt + json[0].descripcion+"<br>";
-            txt=txt + "$"+json[0].precioBase+"<br><br>";
+                txt = txt + "<div class='row-fluid'><div class='detallesDescripcion'>" + json[0].descripcion+"</div></div>";
+            
             var grupo = json[0].nombreGrupo;
             var checked = true;
             var idIngredienteClick = new Array();
             var k=0;
-            if(grupo!=null)
-                txt = txt + grupo +"<br>";
+            
+            if(grupo!=null){
+                txt = txt + "<div class='grupoContainer'>";
+                //txt = txt + "<div class='row-fluid'><div class='span12'></div></div>";//para dejar una linea en blanco
+                txt = txt + "<div class='row-fluid'><div class='detallesGrupo'>"+grupo+"</div></div>";                
+            }
+            txt = txt + "<div class='ui-corner-all detallesCadroAmarillo row-fluid'>";
+            var contador = 0;
             for (x in json){
                 if(json[x].nombreGrupo != null){
                     //txt=txt + json[x].hint;
                     //txt=txt + json[x].idGrupoIngredientes;
                     if(json[x].nombreIngrediente!=null){
                         if(grupo!=json[x].nombreGrupo){
-                            txt = txt + "<br><br>"+json[x].nombreGrupo+"<br>"; 
+                            if(contador % 2 == 1)
+                                txt = txt + "</div>";//cerramos la fila
+                            txt = txt + "</div></div>"; //cerramos el cuadro amarillo                            
+                            txt = txt + "<div class='grupoContainer'>";
+                            //txt = txt + "<div class='row-fluid'><div class='span12'></div></div>";//para dejar una linea en blanco
+                            txt = txt + "<div class='row-fluid'><div class='detallesGrupo'>"+json[x].nombreGrupo+"</div></div>";//ponemos el nombre del grupo
+                            txt = txt + "<div class='ui-corner-all detallesCadroAmarillo row-fluid'>";//abrimos el siguiente cuadro amarillo
                             grupo = json[x].nombreGrupo;
                             checked = true;
+                            contador = 0;
                         }
-                
-                
                         //ASTERISCO DE DATO REQUERIDO
                         /*if(json[x].requerido==1){
                             txt=txt+"*";
-                        }*/
-                
-                    
+                        }*/    
                         var idDepende;
                         if(json[x].idIngredienteDepende==-1){
                             //idDepende = json[x].idIngrediente;
@@ -81,9 +115,14 @@ function obtenerIngredientes(id){
                         }else{
                             idDepende = json[x].idIngredienteDepende;
                         }
-                            
+                        if(contador % 2 == 0){
+                            //es el del lado izquierdo, empezamos una fila
+                            txt = txt + "<div class='row-fluid'>";
+                        }
+                        txt = txt + "<div class='span6 ingrediente'>";
+                        
                         if(json[x].excluyente==1){
-                            if(checked && json[x].idIngredienteDepende==-1){
+                            if(checked && json[x].idIngredienteDepende==-1){                                
                                 txt=txt+"<input type=\"radio\" value=\""+json[x].idIngrediente+"\" name=\""+quitaAcentos(grupo)+"\" id=\""+idDepende+"\" checked=\"checked\" class=\"hab\" />";
                                 checked = false;
                                 idIngredienteClick[k] = "<input type=\"radio\" value=\""+json[x].idIngrediente+"\" name=\""+quitaAcentos(grupo)+"\" id=\""+idDepende+"\" checked=\"checked\" class=\"hab\" />";
@@ -92,48 +131,64 @@ function obtenerIngredientes(id){
                             else if(checked && json[x].idIngredienteDepende!=-1){
                                 txt=txt+"<input type=\"radio\" value=\""+json[x].idIngrediente+"\" name=\""+quitaAcentos(grupo)+"\" id=\""+idDepende+"\" checked=\"checked\" class=\"d"+idDepende+"\" />";
                                 checked = false;
-                            }else if(json[x].idIngredienteDepende==-1)
+                            }else if(json[x].idIngredienteDepende==-1){
                                 txt=txt+"<input type=\"radio\" value=\""+json[x].idIngrediente+"\" name=\""+quitaAcentos(grupo)+"\" id=\""+idDepende+"\" class=\"hab\" />";
-                            else
+                            }
+                            else{
                                 txt=txt+"<input type=\"radio\" value=\""+json[x].idIngrediente+"\" name=\""+quitaAcentos(grupo)+"\" id=\""+idDepende+"\" class=\"d"+idDepende+"\" />";
+                            }
                         }else{
                             if(checked && json[x].idIngredienteDepende==-1){
                                 txt=txt+"<input type=\"checkbox\" value=\""+json[x].idIngrediente+"\" name=\""+quitaAcentos(grupo)+"\" id=\""+idDepende+"\" checked=\"checked\" class=\"hab\" />";
                                 checked = false;
-                            }
-                            else if(checked && json[x].idIngredienteDepende!=-1){
+                            }else if(checked && json[x].idIngredienteDepende!=-1){
                                 txt=txt+"<input type=\"checkbox\" value=\""+json[x].idIngrediente+"\" name=\""+quitaAcentos(grupo)+"\" id=\""+idDepende+"\" checked=\"checked\" class=\"d"+idDepende+"\" />";
                                 checked = false;
-                            }else if(json[x].idIngredienteDepende==-1)
+                            }else if(json[x].idIngredienteDepende==-1){
                                 txt=txt+"<input type=\"checkbox\" value=\""+json[x].idIngrediente+"\" name=\""+quitaAcentos(grupo)+"\" id=\""+idDepende+"\" class=\"hab\" />";
-                            else
+                                
+                            }
+                            else{
                                 txt=txt+"<input type=\"checkbox\" value=\""+json[x].idIngrediente+"\" name=\""+quitaAcentos(grupo)+"\" id=\""+idDepende+"\" class=\"d"+idDepende+"\" />";
+                            }
                         //txt=txt+"<input type=\"checkbox\" value=\""+json[x].idIngrediente+"\" name=\""+json[x].idIngrediente+"\" id=\""+idDepende+"\" class=\"hab\"/>";
                         }
-                        txt=txt + json[x].nombreIngrediente;
+                        txt = txt + "<span class='ingredienteNombre'>" +  json[x].nombreIngrediente + "</span>";
                         //txt=txt + json[x].idGrupoDepende+"<br>";
                         //txt=txt + json[x].idIngredienteDepende+"<br>";
                         //txt=txt + json[x].idIngrediente;
                         if(json[x].precio!=0){
-                            txt=txt + "&nbsp;(+$"+json[x].precio+")";
+                            txt=txt + "&nbsp;(+"+json[x].precio+".00)";
                         }
+                        if(contador % 2 != 0){
+                            //es el del lado derecho, cerramos la fila
+                            txt = txt + "</div>";
+                        }
+                        txt = txt + "</div>";
                     }
                 }
+                contador++;
             }
-            txt=txt+"<br><br>Especificaciones:<textarea rows=3 columns=20 name=\"especificaciones\" id=\"especificaciones\"></textarea><br>";
-            txt=txt+"<br><br>Cantidad:<input type='text' id='cantidad' name='cantidad' value='1'/><br>";
-            txt=txt+"<input type='button' value='Agregar' id=\"agregarpedido\"/>"; 
+            if(contador % 2 == 1)
+                txt = txt + "</div>";
+            txt = txt + "</div></div>";//cerramos el ultimo cuadro amarillo
+            //txt = txt + "<div class='row-fluid'><div class='span12'></div></div>";//para dejar una linea en blanco
+            txt = txt + "<div class='row-fluid especificaciones'>Especificaciones:</div>";
+            txt = txt + "<div class='row-fluid especificacionesTexto'><textarea class='span10 offset1' rows='2' name=\"especificaciones\" id=\"especificaciones\"></textarea></div>";   
+            txt = txt + "<div class='row-fluid'>";
+            txt = txt + "   <div class='span5 cantidad'><span>Cantidad:</span><input class='span3' type='text' id='cantidad' name='cantidad' value='1'/></div>";
+            txt = txt + "   <div class='span5 '><input type='image' id=\"agregarpedido\" src='layout/imagenes/Menu/btnAnadirPedido.png'></div>";
+            txt = txt + "</div>";            
             txt = txt + "</form>";
             txt = txt + "</div>";
-            
-            
-            console.log(json[0].nombrePlatillo);
+                        
             $("#modalDialogIngredientes").html(txt);
             $("#modalDialogIngredientes").dialog({
                 autoOpen: true,
-                height: 600,
-                width: 600,
-                modal: true
+                height: "auto",
+                width: 320,
+                modal: true,
+                resizable: false
             });
             //habilito el click al boton que acabo de crear "agregarpedido"
             $("#agregarpedido").bind("click", function(event) {
@@ -227,6 +282,12 @@ function eventos(e){
     $("input:checkbox").attr('disabled',true);
     $(".hab").removeAttr('disabled');
     $(".d"+$(e).attr('value')).removeAttr('disabled');
+    
+    $(".grupoContainer").hide();
+    //$("input:radio").hide();
+    //$("input:checkbox").hide();
+    $(".hab").parents(".grupoContainer").show();
+    $(".d"+$(e).attr('value')).parents(".grupoContainer").show();
 }
 
 function utf8replace(cadena){
@@ -281,4 +342,3 @@ function getUrlVars() {
     });
     return vars;
 }
-

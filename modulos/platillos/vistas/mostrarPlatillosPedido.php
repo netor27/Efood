@@ -4,7 +4,7 @@ require_once('layout/headers/headPedidos.php');
 require_once('layout/headers/headAutocompleteColonias.php');
 require_once('layout/headers/headFin.php');
 ?>
-<div id="modalDialogIngredientes" title="Selecciona los ingredientes">
+<div id="modalDialogIngredientes" title="Aquí es al gusto">
 </div>
 <div id="buscadorContainer" class="row-fluid">
     <form method="get" action="pedidos.php">
@@ -108,53 +108,52 @@ if (restauranteAbiertoAhorita($restaurante->idRestaurante)) {
                             echo "Del. " . $restaurante->delegacion->nombre . ", " . $restaurante->delegacion->entidad;
                             ?>
                         </p>
-                    </div>
-                    <div class="horario row-fluid">
-                        <img src="layout/imagenes/resultadosBusqueda/reloj_20x20.png"/>
-                        <?php
-                        $inicio = "";
-                        $fin = "";
-                        switch (getDay()) {
-                            case "lu": $inicio = $restaurante->horario->luIni;
-                                $fin = $restaurante->horario->luFin;
-                                break;
-                            case "ma": $inicio = $restaurante->horario->maIni;
-                                $fin = $restaurante->horario->maFin;
-                                break;
-                            case "mi": $inicio = $restaurante->horario->miIni;
-                                $fin = $restaurante->horario->miFin;
-                                break;
-                            case "ju": $inicio = $restaurante->horario->juIni;
-                                $fin = $restaurante->horario->juFin;
-                                break;
-                            case "vi": $inicio = $restaurante->horario->viIni;
-                                $fin = $restaurante->horario->viFin;
-                                break;
-                            case "sa": $inicio = $restaurante->horario->saIni;
-                                $fin = $restaurante->horario->saFin;
-                                break;
-                            case "do": $inicio = $restaurante->horario->doIni;
-                                $fin = $restaurante->horario->doFin;
-                                break;
-                        }
-                        $inicio = quitarSegundosHora($inicio);
-                        $fin = quitarSegundosHora($fin);
-                        if ($inicio == "00:00" && $fin == "23:59") {
-                            echo "<span>Abierto todo el día</span>";
-                        } else if ($inicio == "00:00" && $fin == "00:00") {
-                            echo "<span>Cerrado</span>";
-                        } else {
-                            echo "<span>De " . $inicio . " a " . $fin . " hrs.</span>";
-                        }
-                        ?>
-                    </div>
-                    <!--<div class="datos row-fluid">
-                        <div class="span6">
-                            <span class="datosRed">Pedido mínimo:</span>
-                            <span>$<?php //echo $restaurante->pedidoMinimo; ?></span>
-                        </div>
-                        <div class="span6">
+                        <p>
+                            <img src="layout/imagenes/resultadosBusqueda/reloj_20x20.png"/>
                             <?php
+                            $inicio = "";
+                            $fin = "";
+                            switch (getDay()) {
+                                case "lu": $inicio = $restaurante->horario->luIni;
+                                    $fin = $restaurante->horario->luFin;
+                                    break;
+                                case "ma": $inicio = $restaurante->horario->maIni;
+                                    $fin = $restaurante->horario->maFin;
+                                    break;
+                                case "mi": $inicio = $restaurante->horario->miIni;
+                                    $fin = $restaurante->horario->miFin;
+                                    break;
+                                case "ju": $inicio = $restaurante->horario->juIni;
+                                    $fin = $restaurante->horario->juFin;
+                                    break;
+                                case "vi": $inicio = $restaurante->horario->viIni;
+                                    $fin = $restaurante->horario->viFin;
+                                    break;
+                                case "sa": $inicio = $restaurante->horario->saIni;
+                                    $fin = $restaurante->horario->saFin;
+                                    break;
+                                case "do": $inicio = $restaurante->horario->doIni;
+                                    $fin = $restaurante->horario->doFin;
+                                    break;
+                            }
+                            $inicio = quitarSegundosHora($inicio);
+                            $fin = quitarSegundosHora($fin);
+                            if ($inicio == "00:00" && $fin == "23:59") {
+                                echo "<span>Abierto todo el día</span>";
+                            } else if ($inicio == "00:00" && $fin == "00:00") {
+                                echo "<span>Cerrado</span>";
+                            } else {
+                                echo "<span>De " . $inicio . " a " . $fin . " hrs.</span>";
+                            }
+                            ?>
+                        </p>
+                        <!--<div class="datos row-fluid">
+                            <div class="span6">
+                                <span class="datosRed">Pedido mínimo:</span>
+                                <span>$<?php //echo $restaurante->pedidoMinimo;              ?></span>
+                            </div>
+                            <div class="span6">
+                        <?php
 //                            switch ($restaurante->tipoGastoEnvio) {
 //                                case 0:
 //                                    //monto fijo
@@ -174,23 +173,24 @@ if (restauranteAbiertoAhorita($restaurante->idRestaurante)) {
 //                                    echo "<span>Compuesto</span>";
 //                                    break;
 //                            }
-                            ?>
-                        </div>
-                    </div>-->
-                    <div class="tipoPago row-fluid">
-                        <?php
-                        if ($restaurante->formaPago == 0) {
-                            echo 'efectivo';
-                        }
-                        if ($restaurante->formaPago == 1) {
-                            echo '<img src="layout/imagenes/resultadosBusqueda/tipoPagos_190x20.png"/>';
-                        }
-                        if ($restaurante->formaPago == 2) {
-                            echo 'efectivo';
-                            echo '<img src="layout/imagenes/resultadosBusqueda/tipoPagos_190x20.png"/>';
-                        }
                         ?>
+                            </div>
+                        </div>-->
+                        <p>
+                            <?php
+                            if ($restaurante->formaPago == 0) {
+                                echo 'efectivo';
+                            }
+                            if ($restaurante->formaPago == 1) {
+                                echo '<img src="layout/imagenes/resultadosBusqueda/tipoPagos_190x20.png"/>';
+                            }
+                            if ($restaurante->formaPago == 2) {
+                                echo 'efectivo';
+                                echo '<img src="layout/imagenes/resultadosBusqueda/tipoPagos_190x20.png"/>';
+                            }
+                            ?>
 
+                        </p>
                     </div>
                 </div>
                 <div class="span4 metodoEntrega">
@@ -235,23 +235,71 @@ $_SESSION['tipoGastoEnvio'] = $restaurante->tipoGastoEnvio;
 ?>
 <div class="row-fluid"><div class="span12"></div></div>
 <div class="row-fluid">
-    <div class="span8">
-        <?php
-        require_once 'modulos/platillos/clases/Platillo.php';
-        if (isset($platillos)) {
-            if ($habilitado) {
-                //el restaurante esta abierto, hay que validar cada platillo con su horario
-                foreach ($platillos as $platillo) {
-                    $platillo->printPlatilloPedido();
-                }
-            } else {
-                //el restaurante esta cerrado, no se puede pedir ningún platillo
-                foreach ($platillos as $platillo) {
-                    $platillo->printPlatilloPedidoDeshabilitado();
+    <div id="menu" class="span8">     
+        <div class="row-fluid">
+            <div class="span3 offset2">
+                <a id="btnMostrarMenu">
+                    <img src="layout/imagenes/Menu/btnMenu.png">
+                </a>
+            </div>
+            <div class="span3">
+                <a id="btnMostrarOpiniones">
+                    <img src="layout/imagenes/Menu/btnOpiniones.png">
+                </a>
+            </div>
+            <div class="span3">
+                <a id="btnMostrarInformacion">
+                    <img src="layout/imagenes/Menu/btnInformacion.png">
+                </a>
+            </div>
+        </div>
+        <div class="row-fluid"><div class="span12"></div></div>
+        <div class="row-fluid" id="menuContenido">
+            <?php
+            require_once 'modulos/platillos/clases/Platillo.php';
+            $contador = 0;
+            $filaPar = false;
+            $tipoPlatillo = "";
+            $tipoFila = "";
+            if (isset($platillos)) {
+                if ($habilitado) {
+                    //el restaurante esta abierto, hay que validar cada platillo con su horario
+                    foreach ($platillos as $platillo) {
+                        if ($contador % 2 == 0) {
+                            //inicia un renglón           
+                            echo '<div class="row-fluid">';
+                            $tipoPlatillo = "platilloPar";
+                            $filaPar = !$filaPar;
+                            if ($filaPar) {
+                                $tipoFila = "filaPar";
+                            } else {
+                                $tipoFila = "filaNon";
+                            }
+                        } else {
+                            $tipoPlatillo = "platilloNon";
+                        }
+
+                        $platillo->printPlatilloPedido($tipoPlatillo, $tipoFila);
+                        if ($contador % 2 == 1) {
+                            echo '</div>'; //termina el renglón
+                        }
+                        $contador++;
+                    }
+                } else {
+                    //el restaurante esta cerrado, no se puede pedir ningún platillo
+                    foreach ($platillos as $platillo) {
+                        $platillo->printPlatilloPedidoDeshabilitado();
+                    }
                 }
             }
-        }
-        ?>
+            ?>
+        </div>
+        <div class="row-fluid" id="opinionesContenido">
+            Aquí van las opiniones
+        </div>
+        <div class="row-fluid" id="informacionContenido">
+            Aquí va la información
+        </div>
     </div>
     <div class="span4">
         <div id="pedidos" name="pedidos">
@@ -317,6 +365,8 @@ $_SESSION['tipoGastoEnvio'] = $restaurante->tipoGastoEnvio;
         </div>
     </div>
 </div>
+<div class="row-fluid"><div class="span12"></div></div>
+<div class="row-fluid"><div class="span12"></div></div>
 <?php
 require_once('layout/footer.php');
 ?>
