@@ -151,7 +151,7 @@ if (restauranteAbiertoAhorita($restaurante->idRestaurante)) {
                     <!--<div class="datos row-fluid">
                         <div class="span6">
                             <span class="datosRed">Pedido mínimo:</span>
-                            <span>$<?php echo $restaurante->pedidoMinimo; ?></span>
+                            <span>$<?php //echo $restaurante->pedidoMinimo; ?></span>
                         </div>
                         <div class="span6">
                             <?php
