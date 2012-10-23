@@ -5,6 +5,30 @@ $(document).ready(function(){
         var ic = getUrlVars()["ic"];
         window.location.href = "pedidos.php?p="+tipoEnvio+"&a=pedir&i="+i+"&ic="+ic;
     });
+    
+    $("#modalDialogIngredientes").dialog({
+        autoOpen: false,
+        height: 600,
+        width: 600,
+        modal: true
+    });
+    $(".popupPlatillo").click(function(){
+        obtenerIngredientes(this.id);
+    });
+    $(".popuppedir").click(function(){
+        pedir(this.id);
+    });
+    $('.descripcionpedido').mousemove(function(){
+        var id = this.id.substring(3,this.id.length);
+        //$("#des"+id).html();
+        $("#des"+id).css("visibility","visible");
+    });
+    $('.descripcionpedido').mouseout(function(){
+        var id = this.id.substring(3,this.id.length);
+        //$("#des"+id).html();
+        $("#des"+id).css("visibility","hidden");
+    });
+    
 });
 function obtenerIngredientes(id){
     //Va a obtener la informaciÃ³n en ajax para no tener que refrescar la pÃ¡gina
@@ -21,7 +45,6 @@ function obtenerIngredientes(id){
             //txt=txt + json[x].idPlatillo;
             //txt=txt + json[x].idRestaurante;
             //txt=txt + json[x].idCategoria;
-            txt = txt + "<div id=\"scrolly\" style=\"height:400px; overflow-y:scroll;\">";
             txt = txt + "<form id=\"pedido\" name=\"pedido\">"; 
             txt=txt + "<h3>"+json[0].nombrePlatillo+"</h3>";
             if(json[0].descripcion!="" || json[0].descripcion!=null || json[0].descripcion!="null")
@@ -102,9 +125,17 @@ function obtenerIngredientes(id){
             txt=txt+"<input type='button' value='Agregar' id=\"agregarpedido\"/>"; 
             txt = txt + "</form>";
             txt = txt + "</div>";
-            $("#superbox-innerbox").html(txt);
-                
-            //habilito el click al botÃ³n que acabo de crear "agregarpedido"
+            
+            
+            console.log(json[0].nombrePlatillo);
+            $("#modalDialogIngredientes").html(txt);
+            $("#modalDialogIngredientes").dialog({
+                autoOpen: true,
+                height: 600,
+                width: 600,
+                modal: true
+            });
+            //habilito el click al boton que acabo de crear "agregarpedido"
             $("#agregarpedido").bind("click", function(event) {
                 agregarPedido();
             });
@@ -126,7 +157,7 @@ function obtenerIngredientes(id){
 var pedido=true;
 var cuenta=0;
 function agregarPedido(){
-    //Va a guardar en la sesiÃ³n algunos valores que corresponden a la forma de pedido
+    //Va a guardar en la sesion algunos valores que corresponden a la forma de pedido
     //Va a insertar en la tabla de pedidoplatillo
     var cantidad = $("#cantidad").val();
     var especificaciones = $("#especificaciones").val();
@@ -147,16 +178,15 @@ function agregarPedido(){
             dataType: "json",
             success: function(json) {    
                 var ic = getUrlVars()["ic"];
-                $.growlUI('', 'Agregado');
-                $("P.close A").click();
-                $("#agregados").append(json[1]+" ");
-                $("#agregados").append(json[0]+" ");
-                $("#agregados").append(json[3]);
-                $("#agregados").append(' <a href="pedidos.php?a=eliminarDelPedido&ir='+json[4]+'&pc='+cuenta+'&ic='+ic+'">Eliminar</a><br>');
-                cuenta++;
-                var total = parseInt($("#totalc").html());
-                $("#totalc").html(total+json[3]);
-                $("#botonpedir").html("<br><a href='pedidos.php?p=0&a=pedir&i="+json[4]+"'>Pedir</a></div>");                
+                
+                //$("#agregados").append(json[1]+" ");
+                //$("#agregados").append(json[0]+" ");
+                //$("#agregados").append(json[3]);
+                //$("#agregados").append(' <a href="pedidos.php?a=eliminarDelPedido&ir='+json[4]+'&pc='+cuenta+'&ic='+ic+'">Eliminar</a><br>');
+                //cuenta++;
+                //var total = parseInt($("#totalc").html());
+                //$("#totalc").html(total+json[3]);
+                //$("#botonpedir").html("<br><a href='pedidos.php?p=0&a=pedir&i="+json[4]+"'>Pedir</a></div>");                
                 window.location = "pedidos.php?a=menu&i="+json[4]+"&ic="+ic;
             },
             error: function (XMLHttpRequest, textStatus, errThrown) {
@@ -168,38 +198,19 @@ function agregarPedido(){
     }
 }
 
-function pedir(id){
-    var txt = "<form id='pedidometodos' method='get' action='pedidos.php?a=pedir&i="+id+"'>";
-    //var txt="";
-    txt += "<br><br>Tipo de Pago ";
-    txt += "<br><input type='radio' name='p' value='0'/>Efectivo ";
-    txt += "<br><input type='radio' name='p' value='1'/>Paypal ";
-    txt += "<br><input type='hidden' name='a' value='pedir'/>";
-    txt += "<br><input type='hidden' name='i' value='"+id+"'/>";
-    //txt += "<br><br><a href='pedidos.php?a=pedir&i="+id+"&e="+$("input:radio:checked").val()+"&p="+$("input[name='pago']:checked").val()+"'>Enviar</a></div>";
-    txt += "<br><br><input type='submit' value='Enviar' />";
-    txt += "</form>";
-    $("#superbox-innerbox").html(txt);
-}
-
-$(document).ready(function(){
-    $(".popup").click(function(){
-        obtenerIngredientes(this.id);
-    });
-    $(".popuppedir").click(function(){
-        pedir(this.id);
-    });
-    $('.descripcionpedido').mousemove(function(){
-        var id = this.id.substring(3,this.id.length);
-        //$("#des"+id).html();
-        $("#des"+id).css("visibility","visible");
-    });
-    $('.descripcionpedido').mouseout(function(){
-        var id = this.id.substring(3,this.id.length);
-        //$("#des"+id).html();
-        $("#des"+id).css("visibility","hidden");
-    });
-});
+//function pedir(id){
+//    var txt = "<form id='pedidometodos' method='get' action='pedidos.php?a=pedir&i="+id+"'>";
+//    //var txt="";
+//    txt += "<br><br>Tipo de Pago ";
+//    txt += "<br><input type='radio' name='p' value='0'/>Efectivo ";
+//    txt += "<br><input type='radio' name='p' value='1'/>Paypal ";
+//    txt += "<br><input type='hidden' name='a' value='pedir'/>";
+//    txt += "<br><input type='hidden' name='i' value='"+id+"'/>";
+//    //txt += "<br><br><a href='pedidos.php?a=pedir&i="+id+"&e="+$("input:radio:checked").val()+"&p="+$("input[name='pago']:checked").val()+"'>Enviar</a></div>";
+//    txt += "<br><br><input type='submit' value='Enviar' />";
+//    txt += "</form>";
+//    $("#superbox-innerbox").html(txt);
+//}
 
 function quitaAcentos(cadena){
     return output = cadena.replace(/Ã¡|Ã©|Ã­|Ã³|Ãº|Ã±|Ã¤|Ã«|Ã¯|Ã¶|Ã¼/ig,function (str,offset,s) {
@@ -264,6 +275,7 @@ function tildes_unicode(str){
     str = str.replace('Ñ','\u00d1');
     return str;
 }
+
 function getUrlVars() {
     var vars = {};
     var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
