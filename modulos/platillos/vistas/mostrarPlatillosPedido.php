@@ -93,6 +93,22 @@ if (restauranteAbiertoAhorita($restaurante->idRestaurante)) {
         <div class="contenidoRestaurante span7">
             <div class="row-fluid">
                 <div class=" span8 datosRestaurante">
+                    <div class="row-fluid">
+                        <p>
+                            <?php
+                            echo $restaurante->calle . " ";
+                            echo $restaurante->numero;
+                            if ($restaurante->numeroInt != "")
+                                echo " interior " . $restaurante->numeroInt;
+                            echo ", " . $restaurante->nombreColonia;
+                            ?>
+                        </p>
+                        <p>
+                            <?php
+                            echo "Del. " . $restaurante->delegacion->nombre . ", " . $restaurante->delegacion->entidad;
+                            ?>
+                        </p>
+                    </div>
                     <div class="horario row-fluid">
                         <img src="layout/imagenes/resultadosBusqueda/reloj_20x20.png"/>
                         <?php
@@ -131,37 +147,36 @@ if (restauranteAbiertoAhorita($restaurante->idRestaurante)) {
                             echo "<span>De " . $inicio . " a " . $fin . " hrs.</span>";
                         }
                         ?>
-
                     </div>
-                    <div class="datos row-fluid">
+                    <!--<div class="datos row-fluid">
                         <div class="span6">
                             <span class="datosRed">Pedido mínimo:</span>
                             <span>$<?php echo $restaurante->pedidoMinimo; ?></span>
                         </div>
                         <div class="span6">
                             <?php
-                            switch ($restaurante->tipoGastoEnvio) {
-                                case 0:
-                                    //monto fijo
-                                    echo '<span class="datosRed">Gastos de Envío:</span>';
-                                    echo "<span> $" . $restaurante->gastoEnvio . "</span>";
-                                    break;
-                                case 1:
-                                    //porcentaje
-                                    echo '<span class="datosRed">Gastos de Envío:</span>';
-                                    echo "<span> " . $restaurante->gastoEnvio . " %</span>";
-                                    break;
-                                case 2:
-                                    //compuesto
-                                    //echo '<br><span class="datosRed">Gastos de Envío:</span>';
-                                    //echo "<span> ".$restaurante->gastoEnvio ."</span>";
-                                    echo '<span class="datosRed">Gastos de Envío: </span>';
-                                    echo "<span>Compuesto</span>";
-                                    break;
-                            }
+//                            switch ($restaurante->tipoGastoEnvio) {
+//                                case 0:
+//                                    //monto fijo
+//                                    echo '<span class="datosRed">Gastos de Envío:</span>';
+//                                    echo "<span> $" . $restaurante->gastoEnvio . "</span>";
+//                                    break;
+//                                case 1:
+//                                    //porcentaje
+//                                    echo '<span class="datosRed">Gastos de Envío:</span>';
+//                                    echo "<span> " . $restaurante->gastoEnvio . " %</span>";
+//                                    break;
+//                                case 2:
+//                                    //compuesto
+//                                    //echo '<br><span class="datosRed">Gastos de Envío:</span>';
+//                                    //echo "<span> ".$restaurante->gastoEnvio ."</span>";
+//                                    echo '<span class="datosRed">Gastos de Envío: </span>';
+//                                    echo "<span>Compuesto</span>";
+//                                    break;
+//                            }
                             ?>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="tipoPago row-fluid">
                         <?php
                         if ($restaurante->formaPago == 0) {
@@ -211,98 +226,96 @@ if (restauranteAbiertoAhorita($restaurante->idRestaurante)) {
     </div>
 </div>
 
-<h2>Platillos del restaurante <?php echo $restaurante->nombre; ?></h2>
 <?php
-echo "Pedido M&iacute;nimo: $" . $restaurante->pedidoMinimo;
 $_SESSION['pedidoMinimo'] = $restaurante->pedidoMinimo;
 //echo "<br>Gasto de Env&iacute;o: " . $restaurante->gastoEnvio;
 $_SESSION['gastoEnvio'] = $restaurante->gastoEnvio;
 $gastoEnvio = $restaurante->gastoEnvio;
 $_SESSION['tipoGastoEnvio'] = $restaurante->tipoGastoEnvio;
 ?>
-<table border="1">
-    <?php
-    require_once 'modulos/platillos/clases/Platillo.php';
-    Platillo::printPlatilloPedidoHeader();
-    if (isset($platillos)) {
-        if ($habilitado) {
-            foreach ($platillos as $platillo) {
-                $platillo->printPlatilloPedido();
-            }
-        } else {
-            foreach ($platillos as $platillo) {
-                $platillo->printPlatilloPedidoDeshabilitado();
-            }
-        }
-    }
-    ?>
-</table>
-
-<div id="headPedido">
-
-</div>
-<div id="pedidos" name="pedidos">
-    <?php
-    $pedidos = obtenPedidos();
-    $total = 0;
-    if (isset($pedidos)) {
-        foreach ($pedidos as $key => $value) {
-            foreach ($value as $clave => $valor) {
-                foreach ($valor as $clv => $val) {
-                    echo '<div id="' . $clv . '">';
-                    echo $val[1] . " "; //cantidad
-                    echo $val[0] . " "; //nombre
-                    //echo $val[2]; //especificaciones
-                    echo $val[3] . " "; //total
-                    //echo '<div id="des'.$clv.'';
-                    echo '<a href="pedidos.php?a=eliminarDelPedido&ir=' . $restaurante->idRestaurante . '&pc=' . $key . '&ic='.$idColonia.'">Eliminar</a>';
-                    echo "</div>";
-                    $total+=$val[3];
+<div class="row-fluid"><div class="span12"></div></div>
+<div class="row-fluid">
+    <div class="span8">
+        <?php
+        require_once 'modulos/platillos/clases/Platillo.php';
+        if (isset($platillos)) {
+            if ($habilitado) {
+                //el restaurante esta abierto, hay que validar cada platillo con su horario
+                foreach ($platillos as $platillo) {
+                    $platillo->printPlatilloPedido();
+                }
+            } else {
+                //el restaurante esta cerrado, no se puede pedir ningún platillo
+                foreach ($platillos as $platillo) {
+                    $platillo->printPlatilloPedidoDeshabilitado();
                 }
             }
         }
-
-        //echo "<br><div class='popuppedir' id='".$restaurante->idRestaurante."'><a href='pedidos.php?a=pedir&i=".$restaurante->idRestaurante."'>Pedir</a></div>";            
-    }
-    ?>
-</div>
-<div id="agregados">
-</div>
-<div id="pedidosgenera">
-    <?php
-    if (isset($pedidos) && $pedidos != array())
-        echo "<br><div id='totalw' style='float:left;'>Subtotal: $</div> <div id='totalc' style='float:left;'>" . $total . "</div><br>";
-    ?>
-</div>
-<div id="botonpedir">
-    <?php
-    if (isset($pedidos) && $pedidos != array()) {
         ?>
-        A domicilio: <?php
-    if ($_SESSION['tipoGastoEnvio'] == 0)
-        $cargoExtra = $gastoEnvio;
-    else if ($_SESSION['tipoGastoEnvio'] == 1)
-        $cargoExtra = ($total * ($gastoEnvio / 100));
-    else if ($_SESSION['tipoGastoEnvio'] == 2) {
-        $cadena = "$gastoEnvio";
-        eval('$cargoExtra = ' . $cadena . ';');
-    }
-    echo "$" . $cargoExtra;
-        ?> 
-        <input type="radio" name="envio" value="0" checked/><br>
-        Lo paso a recoger:  $0<input type="radio" name="envio" value="1"/><br>
-        <?php
-        if (($total > $_SESSION['pedidoMinimo']) && isset($pedidos) && $pedidos != array()) {
-            //$opcion = '<script language="javascript" type="text/javascript">document.write(document.getElementByName("envio"));<script/>';
+    </div>
+    <div class="span4">
+        <div id="pedidos" name="pedidos">
+            <?php
+            $pedidos = obtenPedidos();
+            $total = 0;
+            if (isset($pedidos)) {
+                foreach ($pedidos as $key => $value) {
+                    foreach ($value as $clave => $valor) {
+                        foreach ($valor as $clv => $val) {
+                            echo '<div id="' . $clv . '">';
+                            echo $val[1] . " "; //cantidad
+                            echo $val[0] . " "; //nombre
+                            //echo $val[2]; //especificaciones
+                            echo $val[3] . " "; //total
+                            //echo '<div id="des'.$clv.'';
+                            echo '<a href="pedidos.php?a=eliminarDelPedido&ir=' . $restaurante->idRestaurante . '&pc=' . $key . '&ic=' . $idColonia . '">Eliminar</a>';
+                            echo "</div>";
+                            $total+=$val[3];
+                        }
+                    }
+                }
+            }
+            ?>
+        </div>
+        <div id="agregados">
+        </div>
+        <div id="pedidosgenera">
+            <?php
+            if (isset($pedidos) && $pedidos != array())
+                echo "<br><div id='totalw' style='float:left;'>Subtotal: $</div> <div id='totalc' style='float:left;'>" . $total . "</div><br>";
+            ?>
+        </div>
+        <div id="botonpedir">
+            <?php
+            if (isset($pedidos) && $pedidos != array()) {
+                ?>
+                A domicilio: <?php
+            if ($_SESSION['tipoGastoEnvio'] == 0)
+                $cargoExtra = $gastoEnvio;
+            else if ($_SESSION['tipoGastoEnvio'] == 1)
+                $cargoExtra = ($total * ($gastoEnvio / 100));
+            else if ($_SESSION['tipoGastoEnvio'] == 2) {
+                $cadena = "$gastoEnvio";
+                eval('$cargoExtra = ' . $cadena . ';');
+            }
+            echo "$" . $cargoExtra;
+                ?> 
+                <input type="radio" name="envio" value="0" checked/><br>
+                Lo paso a recoger:  $0<input type="radio" name="envio" value="1"/><br>
+                <?php
+                if (($total > $_SESSION['pedidoMinimo']) && isset($pedidos) && $pedidos != array()) {
+                    //$opcion = '<script language="javascript" type="text/javascript">document.write(document.getElementByName("envio"));<script/>';
 
-            echo "<br><a href='#' id='pedirp'>Pedir</a>";
-        }
-        else
-            echo "El total de su compra no alcanza el pedido m&iacute;nimo";
-        ?>
-        <?php
-    }
-    ?>
+                    echo "<br><a href='#' id='pedirp'>Pedir</a>";
+                }
+                else
+                    echo "El total de su compra no alcanza el pedido m&iacute;nimo";
+                ?>
+                <?php
+            }
+            ?>
+        </div>
+    </div>
 </div>
 <?php
 require_once('layout/footer.php');

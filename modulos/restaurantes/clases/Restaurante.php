@@ -37,6 +37,7 @@ class Restaurante {
     public $nombreColonia;
     public $horario;
     public $tiposComida;
+    public $delegacion;
 
     static function printRestauranteHeader() {
         echo '<tr>';

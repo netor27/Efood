@@ -178,7 +178,6 @@ function agregarPedido(){
             dataType: "json",
             success: function(json) {    
                 var ic = getUrlVars()["ic"];
-                
                 //$("#agregados").append(json[1]+" ");
                 //$("#agregados").append(json[0]+" ");
                 //$("#agregados").append(json[3]);

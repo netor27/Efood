@@ -119,7 +119,10 @@ function menu() {
     require_once 'modulos/colonias/modelos/ColoniaModelo.php';
     $colonias = getColonias();
     $colonia = getColonia($idColonia);
-
+    $coloniaRestaurante = getColonia($restaurante->idColonia);
+    $restaurante->nombreColonia = $coloniaRestaurante->nombre;
+    require_once 'modulos/colonias/modelos/DelegacionModelo.php';
+    $restaurante->delegacion = getDelegacion($coloniaRestaurante->idDelegacion);
     require_once('modulos/platillos/vistas/mostrarPlatillosPedido.php');
 }
 

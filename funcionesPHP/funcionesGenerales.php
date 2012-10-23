@@ -270,6 +270,7 @@ function quitarSegundosHora($hora){
 
 function restauranteAbiertoAhorita($idRestaurante){
     $habilitado = false;
+    require_once 'modulos/restaurantes/modelos/RestauranteModelo.php';
     $hora = getHorario($idRestaurante);
     $diaIni = getDay() . 'Ini';
     $diaFin = getDay() . 'Fin';
