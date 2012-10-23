@@ -61,7 +61,7 @@ class Platillo {
         echo '<div id="ped'.$this->idPlatillo.'" class="descripcionpedido">';
         echo '' . $this->nombre . '';
         echo ' $' . $this->precioBase . '';
-        echo '<span class="popupPlatillo" id="'.$this->idPlatillo.'"><a>Agregar</a></span>';
+        echo '<span class="popup" id="'.$this->idPlatillo.'" style="width:100px;"><a href="#" rel="superbox[content]">Agregar</a></span>';
         echo '<span style="visibility:hidden; color:red;" id="des'.$this->idPlatillo.'">' . $this->descripcion . '</span>';
         //echo '' . $this->hint . '';
        //echo '<td><div class="popup" id="'.$this->idPlatillo.'">Agregar</div></td>';
@@ -70,12 +70,12 @@ class Platillo {
     }
     
     function printPlatilloPedidoDeshabilitado() {
-        echo '<div id=ped"'.$this->idPlatillo.'">';
+        echo '<div id="ped'.$this->idPlatillo.'" class="descripcionpedido">';
         echo '' . $this->nombre . '';
-        echo '<div style="visibility:hidden;">' . $this->descripcion . '</div>';
-        echo '' . $this->precioBase . '';
+        echo ' $' . $this->precioBase . '';
         //echo '' . $this->hint . '';
         echo 'Fuera de horario';
+        echo '<span style="visibility:hidden; color:red;" id="des'.$this->idPlatillo.'">' . $this->descripcion . '</span>';
        // echo "<td><form method='POST' action='pedidos.php?a=obtenIngredientes'><input type='hidden' value=".$this->idPlatillo." name='platillo'/><input type='submit' value='enviar'/></form></td>";
         echo '</div>';
     }
