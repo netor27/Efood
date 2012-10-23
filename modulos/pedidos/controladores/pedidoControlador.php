@@ -149,9 +149,10 @@ function eliminarDelPedido() {
     require_once('modulos/pedidos/modelos/pedidoModelo.php');
     require_once 'modulos/pedidos/clases/PlatilloElementos.php';
     $ir = $_GET['ir'];
+    $idColonia = $_GET['ic'];
     eliminarPlatilloPedido();
-    header('Location: pedidos.php?a=menu&i=' . $ir);
-    //require_once('modulos/platillos/vistas/mostrarPlatillosPedido.php');
+    redirect('pedidos.php?a=menu&i=' . $ir.'&ic='.$idColonia);
+    
 }
 
 function pedir() {

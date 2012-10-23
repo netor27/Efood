@@ -85,7 +85,7 @@ function obtenerIngredientes(id){
                                 txt=txt+"<input type=\"checkbox\" value=\""+json[x].idIngrediente+"\" name=\""+quitaAcentos(grupo)+"\" id=\""+idDepende+"\" class=\"hab\" />";
                             else
                                 txt=txt+"<input type=\"checkbox\" value=\""+json[x].idIngrediente+"\" name=\""+quitaAcentos(grupo)+"\" id=\""+idDepende+"\" class=\"d"+idDepende+"\" />";
-                            //txt=txt+"<input type=\"checkbox\" value=\""+json[x].idIngrediente+"\" name=\""+json[x].idIngrediente+"\" id=\""+idDepende+"\" class=\"hab\"/>";
+                        //txt=txt+"<input type=\"checkbox\" value=\""+json[x].idIngrediente+"\" name=\""+json[x].idIngrediente+"\" id=\""+idDepende+"\" class=\"hab\"/>";
                         }
                         txt=txt + json[x].nombreIngrediente;
                         //txt=txt + json[x].idGrupoDepende+"<br>";
@@ -146,18 +146,18 @@ function agregarPedido(){
             }),
             dataType: "json",
             success: function(json) {    
+                var ic = getUrlVars()["ic"];
                 $.growlUI('', 'Agregado');
                 $("P.close A").click();
                 $("#agregados").append(json[1]+" ");
                 $("#agregados").append(json[0]+" ");
                 $("#agregados").append(json[3]);
-                $("#agregados").append(' <a href="pedidos.php?a=eliminarDelPedido&ir='+json[4]+'&pc='+cuenta+'">Eliminar</a><br>');
+                $("#agregados").append(' <a href="pedidos.php?a=eliminarDelPedido&ir='+json[4]+'&pc='+cuenta+'&ic='+ic+'">Eliminar</a><br>');
                 cuenta++;
                 var total = parseInt($("#totalc").html());
                 $("#totalc").html(total+json[3]);
-                $("#botonpedir").html("<br><a href='pedidos.php?p=0&a=pedir&i="+json[4]+"'>Pedir</a></div>");
-                var ic = getUrlVars()["ic"];
-                  window.location = "pedidos.php?a=menu&i="+json[4]+"&ic="+ic;
+                $("#botonpedir").html("<br><a href='pedidos.php?p=0&a=pedir&i="+json[4]+"'>Pedir</a></div>");                
+                window.location = "pedidos.php?a=menu&i="+json[4]+"&ic="+ic;
             },
             error: function (XMLHttpRequest, textStatus, errThrown) {
                 alert(textStatus); 
@@ -221,30 +221,30 @@ function eventos(e){
 }
 
 function utf8replace(cadena){
-	cadena=cadena.replace('&#193;','A');
-	cadena=cadena.replace('&#201;','E');
-	cadena=cadena.replace('&#205;','I');
-	cadena=cadena.replace('&#211;','O');
-	cadena=cadena.replace('&#218;','U');
-	cadena=cadena.replace('&#209;','N');
-	cadena=cadena.replace('Ä','A');
-	cadena=cadena.replace('Ë','E');
-	cadena=cadena.replace('Ï','I');
-	cadena=cadena.replace('Ö','O');
-	cadena=cadena.replace('Ü','U');	
-        cadena=cadena.replace('&#225;','a');
-	cadena=cadena.replace('&#233;','e');
-	cadena=cadena.replace('&#237;','i');
-	cadena=cadena.replace('&#243;','o');
-	cadena=cadena.replace('&#250;','u');
-	cadena=cadena.replace('&#241;','n');
-	cadena=cadena.replace('ä','a');
-	cadena=cadena.replace('ë','e');
-	cadena=cadena.replace('ï','i');
-	cadena=cadena.replace('ö','o');
-	cadena=cadena.replace('ü','u');	
-        cadena=cadena.replace('%3A','');	
-	return cadena;
+    cadena=cadena.replace('&#193;','A');
+    cadena=cadena.replace('&#201;','E');
+    cadena=cadena.replace('&#205;','I');
+    cadena=cadena.replace('&#211;','O');
+    cadena=cadena.replace('&#218;','U');
+    cadena=cadena.replace('&#209;','N');
+    cadena=cadena.replace('Ä','A');
+    cadena=cadena.replace('Ë','E');
+    cadena=cadena.replace('Ï','I');
+    cadena=cadena.replace('Ö','O');
+    cadena=cadena.replace('Ü','U');	
+    cadena=cadena.replace('&#225;','a');
+    cadena=cadena.replace('&#233;','e');
+    cadena=cadena.replace('&#237;','i');
+    cadena=cadena.replace('&#243;','o');
+    cadena=cadena.replace('&#250;','u');
+    cadena=cadena.replace('&#241;','n');
+    cadena=cadena.replace('ä','a');
+    cadena=cadena.replace('ë','e');
+    cadena=cadena.replace('ï','i');
+    cadena=cadena.replace('ö','o');
+    cadena=cadena.replace('ü','u');	
+    cadena=cadena.replace('%3A','');	
+    return cadena;
 }
 
 function tildes_unicode(str){

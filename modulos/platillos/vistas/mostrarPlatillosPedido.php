@@ -239,7 +239,6 @@ $_SESSION['tipoGastoEnvio'] = $restaurante->tipoGastoEnvio;
     }
     ?>
 </table>
-<a href="pedidos.php?a=buscarRestauranteHome">Regresar</a>
 
 <div id="headPedido">
 
@@ -258,7 +257,7 @@ $_SESSION['tipoGastoEnvio'] = $restaurante->tipoGastoEnvio;
                     //echo $val[2]; //especificaciones
                     echo $val[3] . " "; //total
                     //echo '<div id="des'.$clv.'';
-                    echo '<a href="pedidos.php?a=eliminarDelPedido&ir=' . $restaurante->idRestaurante . '&pc=' . $key . '">Eliminar</a>';
+                    echo '<a href="pedidos.php?a=eliminarDelPedido&ir=' . $restaurante->idRestaurante . '&pc=' . $key . '&ic='.$idColonia.'">Eliminar</a>';
                     echo "</div>";
                     $total+=$val[3];
                 }

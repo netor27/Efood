@@ -25,24 +25,26 @@ class IpnMensaje {
     }
 
     function toString() {
-        $res = "Mensaje recibido " + date("d/m/Y  H:i:s");
-        $res.=" /n txn_type => " . $this->txn_type;
-        $res.=" /n txn_id => " . $this->txn_id;
-        $res.=" /n receirver_email =>" . $this->receiver_email;
-        $res.=" /n item_name =>" . $this->item_name;
-        $res.=" /n item_number =>" . $this->item_number;
-        $res.=" /n payment_status =>" . $this->payment_status;
-        $res.=" /n parent_txt_id =>" . $this->parent_txt_id;
-        $res.=" /n mc_gross (cantidad depositada)=>" . $this->mc_gross;
-        $res.=" /n mc_fee (comision) =>" . $this->mc_fee;
-        $res.=" /n mc_currency =>" . $this->mc_currency;
-        $res.=" /n first_name =>" . $this->first_name;
-        $res.=" /n last_name =>" . $this->last_name;
-        $res.=" /n payer_email =>" . $this->payer_email;        
-        $res.=" /n payment_date =>" . $this->payment_date;
-        $res.=" /n test_ipn =>" . $this->test_ipn;
-        $res.=" /n custom =>" . $this->custom;
-        $res.=" /n/n/n/n Complete post/n/n/n " . $this->complete_post;
+        $res = "";
+        $res.="<table border='1'>";
+        $res.="<tr><td>txn_type</td><td>" . $this->txn_type . "</td></tr>";
+        $res.=" <tr><td> txn_id </td><td> " . $this->txn_id . "</td></tr>";
+        $res.=" <tr><td> receirver_email </td><td>" . $this->receiver_email . "</td></tr>";
+        $res.=" <tr><td> item_name </td><td>" . $this->item_name . "</td></tr>";
+        $res.=" <tr><td> item_number </td><td>" . $this->item_number . "</td></tr>";
+        $res.=" <tr><td> payment_status </td><td>" . $this->payment_status . "</td></tr>";
+        $res.=" <tr><td> parent_txt_id </td><td>" . $this->parent_txt_id . "</td></tr>";
+        $res.=" <tr><td> mc_gross (cantidad depositada)</td><td>" . $this->mc_gross . "</td></tr>";
+        $res.=" <tr><td> mc_fee (comision) </td><td>" . $this->mc_fee . "</td></tr>";
+        $res.=" <tr><td> mc_currency </td><td>" . $this->mc_currency . "</td></tr>";
+        $res.=" <tr><td> first_name </td><td>" . $this->first_name . "</td></tr>";
+        $res.=" <tr><td> last_name </td><td>" . $this->last_name . "</td></tr>";
+        $res.=" <tr><td> payer_email </td><td>" . $this->payer_email . "</td></tr>";
+        $res.=" <tr><td> payment_date </td><td>" . $this->payment_date . "</td></tr>";
+        $res.=" <tr><td> test_ipn </td><td>" . $this->test_ipn . "</td></tr>";
+        $res.=" <tr><td> custom </td><td>" . $this->custom . "</td></tr>";
+        $res.="</table><br><br><br>";
+        $res.="Complete post<br><br> " . $this->complete_post;        
         return $res;
     }
 

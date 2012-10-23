@@ -88,27 +88,27 @@ if (strcmp($res, "VERIFIED") == 0) {
             $mensaje = "ERROR al agregar a la bd errorInfo => " . implode(", ", $id);
         } else {
             if ($id < 0) {
-                $mensaje = "ERROR al agregar a la bd \n\n\n";
+                $mensaje = "ERROR al agregar a la bd <br><br><br>";
             } else {
-                $mensaje = "Se agregó correctamente el mensaje\n\n\n";
+                $mensaje = "Se agregó correctamente el mensaje<br><br>";
                 require_once 'modulos/pagos/controladores/ipnControlador.php';
                 analizarIpnMensaje($ipnMensaje);
             }
         }
     }
     $subject = "IPN Paypal Valido";
-    $emailtext = $mensaje . "/n/n/n" . $ipnMensaje->toString();
+    $emailtext = $mensaje . "<br>" . $ipnMensaje->toString();
 } else if (strcmp($res, "INVALID") == 0) {
     // El mensaje que llego no es válido, INVESTIGAR
     $emailtext = "";
     foreach ($_POST as $key => $value) {
-        $emailtext .= $key . " = " . $value . "/n";
+        $emailtext .= $key . " = " . $value . "<br>";
     }
-    $msg = "Se recibio un IPN de paypal invalido. /n estos son los datos:/n/n";
+    $msg = "Se recibio un IPN de paypal invalido. <br> estos son los datos:<br><br>";
 
     $subject = "IPN Paypal Invalido";
-    $emailtext = $msg . "/n/n" . $emailtext;
+    $emailtext = $msg . "<br><br>" . $emailtext;
 }
-
-mail($email, $subject, $emailtext);
+require_once 'modulos/mail/modelos/mailModelo.php';
+enviaMailSMTP($subject, $emailtext, "no-reply@efood.com.mx", $email);
 ?>
