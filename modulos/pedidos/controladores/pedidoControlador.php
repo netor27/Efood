@@ -154,8 +154,7 @@ function eliminarDelPedido() {
     $ir = $_GET['ir'];
     $idColonia = $_GET['ic'];
     eliminarPlatilloPedido();
-    redirect('pedidos.php?a=menu&i=' . $ir.'&ic='.$idColonia);
-    
+    redirect('pedidos.php?a=menu&i=' . $ir . '&ic=' . $idColonia);
 }
 
 function pedir() {
@@ -173,7 +172,13 @@ function usuarioSolicitudRestaurante() {
         $msg = "";
 
         require_once 'modulos/colonias/modelos/coloniaModelo.php';
-        $colonia = getColonia($_POST['idColonia']);
+        if ($_POST['idColonia'] >= 0) {
+            $colonia = getColonia($_POST['idColonia']);
+        }else{
+            $colonia = new Colonia();
+            $colonia->idColonia = -1;
+            $colonia->nombre = "No hay colonia de búsqueda, fue una recomendación";
+        }
         if (isset($_SESSION['email'])) {
             $msg = "El usuario con email = " . $_SESSION['email'];
         } else {

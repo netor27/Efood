@@ -9,7 +9,8 @@ $(document).ready(function(){
         autoOpen: false,
         height: 600,
         width: 320,
-        modal: true
+        modal: true,
+        resizable:false 
     });
     $(".popupPlatillo").click(function(){
         obtenerIngredientes(this.id);

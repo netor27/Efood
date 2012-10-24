@@ -6,6 +6,7 @@
  * @author neto
  */
 require_once 'bd/conx.php';
+require_once 'modulos/colonias/clases/Colonia.php';
 
 function altaColonia($colonia) {
     global $conex;
@@ -42,8 +43,7 @@ function getColonia($idColonia) {
                             WHERE idColonia = :idColonia");
     $stmt->bindParam(":idColonia", $idColonia);
     if ($stmt->execute()) {
-        $row = $stmt->fetch();
-        require_once 'modulos/colonias/clases/Colonia.php';
+        $row = $stmt->fetch();        
         $colonia = new Colonia();
         $colonia->idColonia = $row['idColonia'];
         $colonia->idDelegacion = $row['idDelegacion'];
@@ -62,7 +62,6 @@ function getColonias() {
     if ($stmt->execute()) {
         $rows = $stmt->fetchAll();
         $colonias = array();
-        require_once 'modulos/colonias/clases/Colonia.php';
         $i = 0;
         foreach ($rows as $row) {
             $colonia = new Colonia();

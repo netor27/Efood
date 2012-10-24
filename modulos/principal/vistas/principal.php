@@ -112,10 +112,6 @@ require_once('layout/headers/headFin.php');
         </div>
     </form>
 </div>
-
-<h2 class="left">
-    <a href="adminRestaurante.php">Login de restaurantes</a
-</h2>
 <?php
 require_once('layout/footer.php');
 ?>

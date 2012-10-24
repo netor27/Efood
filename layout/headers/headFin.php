@@ -5,47 +5,78 @@
             <!-- Contenido header -->
             <div id="contenidoHeader" class="row-fluid">
                 <div class="span8">
-                    <div id="headerLogo" class="left">
+                    <div id="headerLogo" class="span5">
                         <a href="/">
-                            <img src="layout/imagenes/Home/LogoEfood_205x100.png" alt="efood">
+                            <img class="span10 offset1" src="layout/imagenes/Home/LogoEfood_205x100.png" alt="efood">
                         </a>
                     </div>
-                    <div class="centerText left" id="headerTitles">
-                        <span id="header_black_title">¡Ordena Comida a</span><br>
-                        <span id="header_red_title" >Domicilio Online!</span>
-                    </div>
-                    <div class="left">
-                        <a >
-                            <img alt="registrate, es gratis" src="layout/imagenes/Home/Registrate_Gratis_111x76.png">
-                        </a>
-                    </div>
+                    <div class="span7" id="headerTitles">
+                        <div class="header_title centerText span9">
+                            <span id="header_black_title">¡Ordena Comida a</span>
+                            <span id="header_red_title" >Domicilio Online!</span>
+                        </div>
+                        <div class="span3">
+                            <a class="entrarBtn">
+                                <?php
+                                if (isset($_SESSION['email'])) {
+                                    ?>
+                                    <a href="#">
+                                        <img class="registrateImg" alt="registrate, es gratis" src="layout/imagenes/Home/btnInvitarAmigo.png">
+                                    </a>
+                                    <?php
+                                } else {
+                                    ?>
+                                    <a class="entrarBtn">
+                                        <img class="registrateImg" alt="registrate, es gratis" src="layout/imagenes/Home/Registrate_Gratis_111x76.png">
+                                    </a>
+                                    <?php
+                                }
+                                ?>
 
-                    <div class="span6" id="menuHeader">
-                        <img src="layout/imagenes/Home/btn_MieFood_76x50.png">
-                        <img src="layout/imagenes/Home/btn_TengoHambre_76x50.png">
-                        <img src="layout/imagenes/Home/btn_Blog_76x50.png">
+                        </div>
                     </div>
-
                 </div>
                 <div class="span4">
                     <div id="contenedorLogin">
+                        <div class="row-fluid">
+                            <div class="span12 headerLinksContainer">
+                                <a class="btnRecomendar">Recomienda un restaurante</a>
+                                <a href="#">FAQ</a>
+                                <?php
+                                if (isset($_SESSION['email'])) {
+                                    ?>
+                                    <a href='login.php?a=logout'>Cerrar Sesión</a>
+                                    <?php
+                                } else {
+                                    ?>
+                                    <a class="entrarBtn">Inicia sesión</a>
+                                    <?php
+                                }
+                                ?>
+
+                            </div>        
+                        </div>
+
                         <?php
                         require 'modulos/principal/vistas/login.php';
 
-                        if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 1) {
-                            ?>
-                            <br><br>
-                            <a href="usuarios.php"> Administración de usuarios</a>
-                            <br>
-                            <a href="restaurantes.php"> Administración de restaurantes</a>
-                            <?php
-                        }
+//                        if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 1) {
+                        ?>
+                        <!--                            <br><br>
+                                                    <a href="usuarios.php"> Administración de usuarios</a>
+                                                    <br>
+                                                    <a href="restaurantes.php"> Administración de restaurantes</a>-->
+                        <?php
+//                        }
                         ?>
                     </div>
                 </div>
             </div>
-
-
+            <div class="span6" id="menuHeader">
+                <a href="#"><img src="layout/imagenes/Home/btn_MieFood_76x50.png"></a>
+                <a href="#"><img src="layout/imagenes/Home/btn_TengoHambre_76x50.png"></a>
+                <a href="#"><img src="layout/imagenes/Home/btn_Blog_76x50.png"></a>
+            </div>
             <?php
             $mensaje = getSessionMessage();
             if (isset($mensaje)) {
@@ -58,7 +89,8 @@
                         autoOpen: true,
                         height: "auto",
                         width: "auto",
-                        modal: true
+                        modal: true,
+                        resizable:false 
                     });
                     $(".ui-widget-overlay").on("click", function(){
                         $("#modalDialogSessionMessage").dialog("close");
@@ -68,3 +100,36 @@
                 <?php
             }
             ?>
+            <!-- Dialogo para recomendar nuevos restaurantes -->
+            <div id="modalDialogRecomendarRestaurante" title="Recomendar un restaurante">
+                <div class="row-fluid"><div class="span12"></div></div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <p>
+                            Deja los datos del restaurante que te gustaría ver aquí y lo registramos de volada.
+                        </p>
+                    </div>
+                </div>
+                <legend>Datos del restaurante</legend>
+                <form action="pedidos.php?a=usuarioSolicitudRestaurante" method="post">
+                    <div class="row-fluid">
+                        <label class="span4">Nombre:</label>
+                        <input class="span8" type="text" name="nombre"> 
+                    </div>
+                    <div class="row-fluid">
+                        <label class="span4">Teléfono: (Opcional)</label>
+                        <input class="span8" type="text" name="telefono">
+                    </div>
+                    <div class="row-fluid">
+                        <label class="span4">Dirección:  (Opcional)</label>
+                        <input class="span8" type="text" name="direccion">
+                    </div>
+                    <div class="row-fluid"><div class="span12"></div></div>
+                    <div class="row-fluid">
+                        <div class="span5 offset4">
+                            <input type="image" src="layout/imagenes/btnEnviarDatos.png">
+                        </div>
+                    </div>
+                    <input type="hidden" name="idColonia" value="-1">
+                </form>
+            </div>

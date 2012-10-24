@@ -9,7 +9,6 @@ require_once('layout/headers/headFin.php');
 if (sizeof($restaurantes) <= 0) {
     ?>
     <div id="modalDialogNoHayRestaurantes" title="Ohh-ohh... Ya nos cachaste...">
-        <div class="row-fluid"><div class="span12"></div></div>
         <div class="row-fluid">
             <div class="span12">
                 <p>
@@ -18,6 +17,7 @@ if (sizeof($restaurantes) <= 0) {
                 </p>
             </div>
         </div>
+        <legend>Datos del restaurante</legend>
         <form action="pedidos.php?a=usuarioSolicitudRestaurante" method="post">
             <div class="row-fluid">
                 <label class="span4">Nombre:</label>
@@ -333,8 +333,6 @@ if (sizeof($restaurantes) <= 0) {
     }
     ?>
 </div>
-<br>
-<br><br><br><br><br><br><br><br><br><br>
 <?php
 require_once('layout/footer.php');
 ?>

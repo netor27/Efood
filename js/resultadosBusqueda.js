@@ -6,11 +6,12 @@ $(document).ready(function(){
     
     $("#modalDialogNoHayRestaurantes").dialog({
         autoOpen: true,
-        height: 380,
+        height: "auto",
         width: 500,
-        modal: true
+        modal: true,
+        resizable:false 
     });
-    //evento para cerrar el dialogo al dar click afuera
+    //evento para cerrar el dialogo
     $(".ui-widget-overlay").on("click", function(){
         $("#modalDialogNoHayRestaurantes").dialog("close");
     });
