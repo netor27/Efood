@@ -13,6 +13,7 @@
     border-bottom-left-radius: 13px;
     border-top-left-radius: 13px;
 }
+
 .platilloPar{
     border-bottom-right-radius: 13px;
     border-top-right-radius: 13px;
@@ -46,6 +47,12 @@
 
 .menuTexto{
     font-size:12px;
+    font-weight:bold;
+    line-height:35px;
+}
+
+.menuTextoChico{
+    font-size:10px;
     font-weight:bold;
     line-height:35px;
 }
@@ -95,6 +102,7 @@
     font-weight: bolder;
     font-size: 15px;
 }
+
 .detallesGrupo{
     color: #C00;
     font-size: 15px;
