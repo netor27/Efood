@@ -45,8 +45,8 @@ function getDelegacion($idDelegacion) {
         require_once 'modulos/colonias/clases/Delegacion.php';
         $delegacion = new Delegacion();
         $delegacion->idDelegacion = $row['idDelegacion'];
-        $delegacion->nombre = $row['nombre'];
-        $delegacion->entidad = $row['entidad'];
+        $delegacion->nombre = utf8_encode($row['nombre']);
+        $delegacion->entidad = utf8_encode($row['entidad']);
         return $delegacion;
     } else {
         print_r($stmt->errorInfo());
@@ -65,8 +65,8 @@ function getDelegaciones() {
         foreach ($rows as $row) {
             $delegacion = new Delegacion();
             $delegacion->idDelegacion = $row['idDelegacion'];
-            $delegacion->nombre = $row['nombre'];
-            $delegacion->entidad = $row['entidad'];
+            $delegacion->nombre = utf8_encode($row['nombre']);
+            $delegacion->entidad = utf8_encode($row['entidad']);
             $delegaciones[$i] = $delegacion;
             $i++;
         }

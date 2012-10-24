@@ -177,7 +177,7 @@ function obtenerIngredientes(id){
             txt = txt + "<div class='row-fluid especificacionesTexto'><textarea class='span10 offset1' rows='2' name=\"especificaciones\" id=\"especificaciones\"></textarea></div>";   
             txt = txt + "<div class='row-fluid'>";
             txt = txt + "   <div class='span5 cantidad'><span>Cantidad:</span><input class='span3' type='text' id='cantidad' name='cantidad' value='1'/></div>";
-            txt = txt + "   <div class='span5 '><input type='image' id=\"agregarpedido\" src='layout/imagenes/Menu/btnAnadirPedido.png'></div>";
+            txt = txt + "   <div class='span5 '><img id=\"agregarpedido\" src='layout/imagenes/Menu/btnAnadirPedido.png'></div>";
             txt = txt + "</div>";            
             txt = txt + "</form>";
             txt = txt + "</div>";

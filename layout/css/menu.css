@@ -133,3 +133,7 @@
 .cantidad input{
 
 }
+
+#agregarpedido{
+    cursor: pointer;
+}
