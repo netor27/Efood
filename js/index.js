@@ -61,4 +61,7 @@ $(function(){
             $("#antojo"+id).attr("disabled", true);
         } 
     });
+    $("#colonias").click(function(){
+        $(this).val("");
+    });
 });

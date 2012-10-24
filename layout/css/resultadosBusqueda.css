@@ -26,13 +26,19 @@ span.selectBlanco{
 }
 
 input.textoBlanco{
-    padding-top: 0px;
+    font-size: 17px;
+    padding-left: 5px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    letter-spacing: 1px;
     height: 30px;
     width: 260px;
-    margin-top: 3px;
     text-indent:10px;
     color: #b8b7b8;
-    font-size: 14px;
+
+    -webkit-box-shadow:rgba(0, 0, 0, 0.156863) -3px 0px 10px 0px inset;
+    -moz-box-shadow:rgba(0, 0, 0, 0.156863) -3px 0px 10px 0px inset;
+    box-shadow:rgba(0, 0, 0, 0.156863) -3px 0px 10px 0px inset;
 }
 
 select.selectAmarillo{
@@ -154,7 +160,7 @@ span.selectAmarillo{
     border-radius:0px,0px,6px,6px;
     border-bottom-right-radius: 6px;
     border-bottom-left-radius: 6px;
-    
+
     border-width:0px;
     border-style:none solid solid;
     border-color:rgb(209, 209, 209);
@@ -164,6 +170,11 @@ span.selectAmarillo{
 }
 
 .logoRestaurante{
+
+}
+
+.logoRestaurante img{
+    padding-top: 10px;
 }
 .separadorLogo{
     width: 6px;

@@ -39,6 +39,8 @@
 
 #opinionesContenido{
     display:none;
+    text-align: center;
+    min-height:750px !important;
 }
 
 #informacionContenido{
@@ -144,4 +146,8 @@
 
 #agregarpedido{
     cursor: pointer;
+}
+
+.fb_ltr{
+    height:750px !important;
 }

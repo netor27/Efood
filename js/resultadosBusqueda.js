@@ -88,6 +88,10 @@ $(document).ready(function(){
         }
         filtrarRestaurantes();
     });
+    
+    $("#colonias").click(function(){
+        $(this).val("");
+    });
 });
 
 function filtrarRestaurantes(){
