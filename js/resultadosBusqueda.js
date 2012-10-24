@@ -10,6 +10,10 @@ $(document).ready(function(){
         width: 500,
         modal: true
     });
+    //evento para cerrar el dialogo al dar click afuera
+    $(".ui-widget-overlay").on("click", function(){
+        $("#modalDialogNoHayRestaurantes").dialog("close");
+    });
     
     $('select.selectBlanco').each(function(){
         var title = $(this).attr('title');

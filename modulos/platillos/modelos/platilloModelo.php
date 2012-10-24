@@ -4,44 +4,69 @@ require_once 'bd/conx.php';
 
 function altaPlatillo($platillo) {
     global $conex;
-    $stmt = $conex->prepare("INSERT into platillo (idRestaurante, nombre, idCategoria, descripcion, precioBase,hint) 
-                            values (:idRestaurante,:nombre,:idCategoria,:descripcion,:precioBase,:hint)");
-    $stmt->bindParam(':idRestaurante', $platillo->idRestaurante);
-    $stmt->bindParam(':nombre', $platillo->nombre);
-    $stmt->bindParam(':idCategoria', $platillo->idCategoria);
-    $stmt->bindParam(':descripcion', $platillo->descripcion);
-    $stmt->bindParam(':precioBase', $platillo->precioBase);
-    $stmt->bindParam(':hint', $platillo->hint);
     $id = -1;
-    $val = $stmt->execute();
-    if ($val) {
-        $id = $conex->lastInsertId();
-        $stmt = $conex->prepare("INSERT into horarioplatillo (idPlatillo) values(:id)");
-        $stmt->bindParam(':id', $id);
-        $stmt->execute();
+    try {
+        $conex->beginTransaction();
+        $stmt = $conex->prepare("INSERT into platillo (idRestaurante, nombre, categoria, descripcion, precioBase,hint) 
+                            values (:idRestaurante,:nombre,:categoria,:descripcion,:precioBase,:hint)");
+        $stmt->bindParam(':idRestaurante', $platillo->idRestaurante);
+        $stmt->bindParam(':nombre', $platillo->nombre);
+        $stmt->bindParam(':categoria', $platillo->categoria);
+        $stmt->bindParam(':descripcion', $platillo->descripcion);
+        $stmt->bindParam(':precioBase', $platillo->precioBase);
+        $stmt->bindParam(':hint', $platillo->hint);
+        $val = $stmt->execute();
+        if ($val) {
+            $id = $conex->lastInsertId();
+            $stmt = $conex->prepare("INSERT into horarioplatillo (idPlatillo) values(:id)");
+            $stmt->bindParam(':id', $id);
+            if ($stmt->execute()) {
+                $conex->commit();
+            } else {
+                $conex->rollBack();
+            }
+        } else {
+            //print_r($stmt->errorInfo());
+            $conex->rollBack();
+        }
+    } catch (Exception $e) {
+        $conex->rollBack();
     }
-    else
-        print_r($stmt->errorInfo());
     return $id;
 }
 
 function bajaPlatillo($idPlatillo) {
     global $conex;
-    $stmt = $conex->prepare("DELETE FROM platillo WHERE idPlatillo = :id");
-    $stmt->bindParam(':id', $idPlatillo);
-    $stmt->execute();
+    try {
+        $conex->beginTransaction();
+        $stmt = $conex->prepare("DELETE FROM platillo WHERE idPlatillo = :id");
+        $stmt->bindParam(':id', $idPlatillo);
+        if ($stmt->execute()) {
+            $stmt = $conex->prepare("DELETE FROM horarioplatillo WHERE idPlatillo = :id");
+            $stmt->bindParam(':id', $idPlatillo);
+            if ($stmt->execute()) {
+                $conex->commit();
+            } else {
+                $conex->rollBack();
+            }
+        } else {
+            $conex->rollBack();
+        }
+    } catch (Exception $E) {
+        $conex->rollBack();
+    }
     return $stmt->rowCount();
 }
 
 function modificaPlatillo($platillo) {
     global $conex;
     $stmt = $conex->prepare("UPDATE platillo 
-                            SET nombre=:nombre, idCategoria=:idCategoria, descripcion=:descripcion, 
+                            SET nombre=:nombre, categoria=:categoria, descripcion=:descripcion, 
                             precioBase=:precioBase, hint=:hint
                             WHERE idPlatillo=:idPlatillo");
     $stmt->bindParam(':idPlatillo', $platillo->idPlatillo);
     $stmt->bindParam(':nombre', $platillo->nombre);
-    $stmt->bindParam(':idCategoria', $platillo->idCategoria);
+    $stmt->bindParam(':categoria', $platillo->categoria);
     $stmt->bindParam(':descripcion', $platillo->descripcion);
     $stmt->bindParam(':precioBase', $platillo->precioBase);
     $stmt->bindParam(':hint', $platillo->hint);
@@ -66,7 +91,7 @@ function getPlatillos() {
             $platillo->idPlatillo = $row['idPlatillo'];
             $platillo->idRestaurante = $row['idRestaurante'];
             $platillo->nombre = $row['nombre'];
-            $platillo->idCategoria = $row['idCategoria'];
+            $platillo->categoria = $row['categoria'];
             $platillo->descripcion = $row['descripcion'];
             $platillo->horario = $row['horario'];
             $platillo->precioBase = $row['precioBase'];
@@ -92,7 +117,7 @@ function getPlatillo($idPlatillo) {
         $platillo->idPlatillo = $row['idPlatillo'];
         $platillo->idRestaurante = $row['idRestaurante'];
         $platillo->nombre = $row['nombre'];
-        $platillo->idCategoria = $row['idCategoria'];
+        $platillo->categoria = $row['categoria'];
         $platillo->descripcion = $row['descripcion'];
         $platillo->precioBase = $row['precioBase'];
         $platillo->hint = $row['hint'];
@@ -116,7 +141,7 @@ function getPlatillosDeRestaurante($idRestaurante) {
             $platillo->idPlatillo = $row['idPlatillo'];
             $platillo->idRestaurante = $row['idRestaurante'];
             $platillo->nombre = $row['nombre'];
-            $platillo->idCategoria = $row['idCategoria'];
+            $platillo->categoria = $row['categoria'];
             $platillo->descripcion = $row['descripcion'];
             $platillo->precioBase = $row['precioBase'];
             $platillo->hint = $row['hint'];
@@ -217,6 +242,5 @@ function actualizaHorarioPlatillo($idPlatillo, $horario) {
         return false;
     }
 }
-
 
 ?>

@@ -5,7 +5,7 @@ class Platillo {
     public $idPlatillo;
     public $idRestaurante;
     public $nombre;
-    public $idCategoria;
+    public $categoria;
     public $descripcion;
     public $precioBase;
     public $hint;
@@ -15,7 +15,7 @@ class Platillo {
         echo '<th>idPlatillo</th>';
         echo '<th>idRestaurante</th>';
         echo '<th>nombre</th>';
-        echo '<th>idCategoria</th>';
+        echo '<th>categoria</th>';
         echo '<th>descripcion</th>';
         echo '<th>precioBase</th>';
         echo '<th>Grupos Ingredientes</th>';
@@ -30,7 +30,7 @@ class Platillo {
         echo '<td>' . $this->idPlatillo . '</td>';
         echo '<td>' . $this->idRestaurante . '</td>';
         echo '<td>' . $this->nombre . '</td>';
-        echo '<td>' . $this->idCategoria . '</td>';
+        echo '<td>' . $this->categoria . '</td>';
         echo '<td>' . $this->descripcion . '</td>';
         echo '<td>' . $this->precioBase . '</td>';
         echo '<td><a href="grupoIngredientes.php?i=' . $this->idPlatillo . '">Ver Grupos Ingredientes </a></td>';

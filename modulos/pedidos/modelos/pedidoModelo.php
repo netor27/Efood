@@ -7,7 +7,7 @@ function getIngredientesPlatillo($idPlatillo) {
     /* $query = "SELECT p.idPlatillo,p.idRestaurante,p.idCategoria,p.nombre as nombrePlatillo, p.descripcion, p.precioBase,p.hint,gi.idGrupoIngredientes, gi.nombre as nombreGrupo, gi.excluyente, gi.requerido, gi.idGrupoDepende, gi.idIngredienteDepende, i.idIngrediente, i.idGrupoIngredientes as idGrupoIngredientesI, i.nombre as nombreIngrediente, i.precio 
       FROM platillo p, grupoingredientes gi, ingrediente i
       WHERE p.idPlatillo = :id AND p.idPlatillo = gi.idPlatillo AND i.idGrupoIngredientes = gi.idGrupoIngredientes"; */
-    $query = "SELECT DISTINCT p.idPlatillo,p.idRestaurante,p.idCategoria,p.nombre as nombrePlatillo, p.descripcion, p.precioBase,p.hint,gi.idGrupoIngredientes, gi.nombre as nombreGrupo, gi.excluyente, gi.requerido, gi.idGrupoDepende, gi.idIngredienteDepende, i.idIngrediente, i.idGrupoIngredientes as idGrupoIngredientesI, i.nombre as nombreIngrediente, i.precio 
+    $query = "SELECT DISTINCT p.idPlatillo,p.idRestaurante,p.categoria,p.nombre as nombrePlatillo, p.descripcion, p.precioBase,p.hint,gi.idGrupoIngredientes, gi.nombre as nombreGrupo, gi.excluyente, gi.requerido, gi.idGrupoDepende, gi.idIngredienteDepende, i.idIngrediente, i.idGrupoIngredientes as idGrupoIngredientesI, i.nombre as nombreIngrediente, i.precio 
         FROM platillo p
         LEFT OUTER JOIN grupoingredientes gi ON p.idPlatillo = gi.idPlatillo
         LEFT OUTER JOIN ingrediente i ON gi.idGrupoIngredientes = i.idGrupoIngredientes
@@ -23,7 +23,7 @@ function getIngredientesPlatillo($idPlatillo) {
             $pedido = new PlatilloElementos();
             $pedido->idPlatillo = $row['idPlatillo'];
             $pedido->idRestaurante = $row['idRestaurante'];
-            $pedido->idCategoria = $row['idCategoria'];
+            $pedido->categoria = $row['categoria'];
             $pedido->nombrePlatillo = $row['nombrePlatillo'];
             $pedido->descripcion = $row['descripcion'];
             $pedido->precioBase = $row['precioBase'];
@@ -133,7 +133,7 @@ function getDirecciones($idUsuario){
     /* $query = "SELECT p.idPlatillo,p.idRestaurante,p.idCategoria,p.nombre as nombrePlatillo, p.descripcion, p.precioBase,p.hint,gi.idGrupoIngredientes, gi.nombre as nombreGrupo, gi.excluyente, gi.requerido, gi.idGrupoDepende, gi.idIngredienteDepende, i.idIngrediente, i.idGrupoIngredientes as idGrupoIngredientesI, i.nombre as nombreIngrediente, i.precio 
       FROM platillo p, grupoingredientes gi, ingrediente i
       WHERE p.idPlatillo = :id AND p.idPlatillo = gi.idPlatillo AND i.idGrupoIngredientes = gi.idGrupoIngredientes"; */
-    $query = "SELECT DISTINCT p.idPlatillo,p.idRestaurante,p.idCategoria,p.nombre as nombrePlatillo, p.descripcion, p.precioBase,p.hint,gi.idGrupoIngredientes, gi.nombre as nombreGrupo, gi.excluyente, gi.requerido, gi.idGrupoDepende, gi.idIngredienteDepende, i.idIngrediente, i.idGrupoIngredientes as idGrupoIngredientesI, i.nombre as nombreIngrediente, i.precio 
+    $query = "SELECT DISTINCT p.idPlatillo,p.idRestaurante,p.categoria,p.nombre as nombrePlatillo, p.descripcion, p.precioBase,p.hint,gi.idGrupoIngredientes, gi.nombre as nombreGrupo, gi.excluyente, gi.requerido, gi.idGrupoDepende, gi.idIngredienteDepende, i.idIngrediente, i.idGrupoIngredientes as idGrupoIngredientesI, i.nombre as nombreIngrediente, i.precio 
         FROM platillo p
         LEFT OUTER JOIN grupoingredientes gi ON p.idPlatillo = gi.idPlatillo
         LEFT OUTER JOIN ingrediente i ON gi.idGrupoIngredientes = i.idGrupoIngredientes

@@ -67,7 +67,7 @@ function obtenerIngredientes(id){
             var txt="";
             //txt=txt + json[x].idPlatillo;
             //txt=txt + json[x].idRestaurante;
-            //txt=txt + json[x].idCategoria;
+            //txt=txt + json[x].categoria;
             //txt = txt + "<div class='row-fluid'></div>";
             txt = txt + "<form id=\"pedido\" name=\"pedido\">"; 
             txt = txt + "<div class='row-fluid'><div class='detallesNombre'>"+json[0].nombrePlatillo+"</div></div>";            
@@ -189,6 +189,10 @@ function obtenerIngredientes(id){
                 width: 320,
                 modal: true,
                 resizable: false
+            });
+            //evento para cerrar el dialogo al dar click afuera
+            $(".ui-widget-overlay").on("click", function(){
+                $("#modalDialogIngredientes").dialog("close");
             });
             //habilito el click al boton que acabo de crear "agregarpedido"
             $("#agregarpedido").bind("click", function(event) {

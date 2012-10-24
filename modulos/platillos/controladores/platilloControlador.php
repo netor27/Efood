@@ -4,10 +4,8 @@ function alta() {
     $idRestaurante = $_GET['r'];
     if (validarAdministrador() || validarRestauranteLoggeadoId($idRestaurante)) {
         $tipo = "alta";
-        require_once 'modulos/platillos/clases/Platillo.php';
-        require_once 'modulos/platillos/clases/Categoria.php';
+        require_once 'modulos/platillos/clases/Platillo.php';        
         $platillo = new Platillo();
-        $categoria = new Categoria();
         require_once 'modulos/platillos/vistas/formaPlatillo.php';
     } else {
         goToIndex();
@@ -24,7 +22,7 @@ function formaPlatilloSubmit() {
         $platillo->idRestaurante = $idRestaurante;
         $platillo->nombre = $_POST['nombre'];
         $platillo->descripcion = $_POST['descripcion'];
-        $platillo->idCategoria = $_POST['idCategoria'];
+        $platillo->categoria = $_POST['categoria'];
         $platillo->precioBase = $_POST['precioBase'];
         $platillo->hint = $_POST['hint'];
 
@@ -77,12 +75,10 @@ function modificar() {
     $tipo = "editar";
     $idPlatillo = $_GET['i'];
     require_once 'modulos/platillos/modelos/platilloModelo.php';
-    require_once 'modulos/platillos/modelos/CategoriaModelo.php';
     $idRestaurante = getIdRestauranteDePlatillo($idPlatillo);
     if (validarAdministrador() || validarRestauranteLoggeadoId($idRestaurante)) {
         require_once 'modulos/platillos/clases/Platillo.php';
         $platillo = getPlatillo($idPlatillo);
-        $categoria = getCategoria($platillo->idCategoria);
         require_once 'modulos/platillos/vistas/formaPlatillo.php';
     } else {
         goToIndex();

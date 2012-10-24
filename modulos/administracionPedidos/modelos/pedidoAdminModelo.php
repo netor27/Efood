@@ -42,14 +42,14 @@ function getPedidosUsuario($idUsuario) {
         $i = 0;
         foreach ($rows as $row) {
             $pedido = new Pedido();
-            $pedido->idPedido = $row['idPlatillo'];
+            $pedido->idPedido = $row['idPedido'];
             $pedido->idRestaurante = $row['idRestaurante'];
-            $pedido->idUsuario = $row['idCategoria'];
-            $pedido->idEstadoPedido = $row['nombrePlatillo'];
-            $pedido->comentario = $row['descripcion'];
-            $pedido->idMetodoEntrega = $row['precioBase'];
-            $pedido->idTipoPago = $row['hint'];
-            $pedido->numReferencia = $row['idGrupoIngredientes'];
+            $pedido->idUsuario = $row['idUsuario'];
+            $pedido->idEstadoPedido = $row['idEstadoPedido'];
+            $pedido->comentario = $row['comentario'];
+            $pedido->idMetodoEntrega = $row['idMetodoEntrega'];
+            $pedido->idTipoPago = $row['idTipoPago'];
+            $pedido->numReferencia = $row['numReferencia'];
             $pedidos[$i] = $pedido;
             $i++;
         }
@@ -63,26 +63,9 @@ function updateEstadoPedido($idPedido) {
     global $conex;
     $query = "UPDATE pedido SET idEstadoPedido = :idPedido WHERE ";
     $stmt = $conex->prepare($query);
-    $stmt->bindParam(':idUsuario', $idUsuario);
+    $stmt->bindParam(':idPedido', $idPedido);
     if ($stmt->execute()) {
-        $pedidos = array();
-        $rows = $stmt->fetchAll();
-        require_once 'modulos/administracionPedidos/clases/PedidoAdmin.php';
-        $i = 0;
-        foreach ($rows as $row) {
-            $pedido = new Pedido();
-            $pedido->idPedido = $row['idPlatillo'];
-            $pedido->idRestaurante = $row['idRestaurante'];
-            $pedido->idUsuario = $row['idCategoria'];
-            $pedido->idEstadoPedido = $row['nombrePlatillo'];
-            $pedido->comentario = $row['descripcion'];
-            $pedido->idMetodoEntrega = $row['precioBase'];
-            $pedido->idTipoPago = $row['hint'];
-            $pedido->numReferencia = $row['idGrupoIngredientes'];
-            $pedidos[$i] = $pedido;
-            $i++;
-        }
-        return $pedidos;
+        
     } else {
         return NULL;
     }

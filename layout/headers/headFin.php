@@ -54,13 +54,17 @@
                     <?php echo $mensaje; ?>
                 </div>
                 <script>
-                        $("#modalDialogSessionMessage").dialog({
-                            autoOpen: true,
-                            height: 380,
-                            width: 600,
-                            modal: true
-                        });
+                    $("#modalDialogSessionMessage").dialog({
+                        autoOpen: true,
+                        height: "auto",
+                        width: "auto",
+                        modal: true
+                    });
+                    $(".ui-widget-overlay").on("click", function(){
+                        $("#modalDialogSessionMessage").dialog("close");
+                    });
                 </script>
+
                 <?php
             }
             ?>

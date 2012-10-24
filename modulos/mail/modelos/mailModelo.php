@@ -4,7 +4,7 @@ require_once 'bd/conx.php';
 function enviarEmailDeSolicitudAgregarRestaurante($mensaje){
     $asunto = "Solicitud de nuevo restaurante";
     $remitente = "no-reply@efood.com.mx";
-    $destinatario = "no-reply@efood.com.mx";
+    $destinatario = "contacto@efood.com.mx";
     $res = enviaMailSMTP($asunto, $mensaje, $remitente, $destinatario);
     return $res;
 }
@@ -12,7 +12,7 @@ function enviarEmailDeSolicitudAgregarRestaurante($mensaje){
 function enviarEmailDeConfirmacion($destinatario, $codigo){
     $mensaje = "Favor de confirmar tu cuenta de efood dando click en el siguiente link";
     $asunto = "Confirmacion";
-    $remitente = "registro@efood.com.mx";
+    $remitente = "no-reply@efood.com.mx";
 
     $mensaje = $mensaje . ' <br>http://www.efood.com.mx/beta/correoConfirmacion.php?conf='.$codigo.'<br><br>';
 
