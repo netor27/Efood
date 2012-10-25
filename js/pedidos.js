@@ -73,8 +73,8 @@ function obtenerIngredientes(id){
             txt = txt + "<form id=\"pedido\" name=\"pedido\">"; 
             txt = txt + "<div class='row-fluid'><div class='detallesNombre'>"+json[0].nombrePlatillo+"</div></div>";            
             txt = txt + "<div class='row-fluid'><div class='detallesPrecio'>$ "+json[0].precioBase+"</div></div>";
-            if(json[0].descripcion!="" || json[0].descripcion!=null || json[0].descripcion!="null")
-                txt = txt + "<div class='row-fluid'><div class='detallesDescripcion'>" + json[0].descripcion+"</div></div>";
+            if(json[0].hint!="" || json[0].hint!=null || json[0].hint!="null")
+                txt = txt + "<div class='row-fluid'><div class='detallesDescripcion'>" + json[0].hint+"</div></div>";
             
             var grupo = json[0].nombreGrupo;
             var checked = true;
@@ -84,9 +84,9 @@ function obtenerIngredientes(id){
             if(grupo!=null){
                 txt = txt + "<div class='grupoContainer'>";
                 //txt = txt + "<div class='row-fluid'><div class='span12'></div></div>";//para dejar una linea en blanco
-                txt = txt + "<div class='row-fluid'><div class='detallesGrupo'>"+grupo+"</div></div>";                
-            }
-            txt = txt + "<div class='ui-corner-all detallesCadroAmarillo row-fluid'>";
+                txt = txt + "<div class='row-fluid'><div class='detallesGrupo'>"+grupo+"</div></div>";  
+                txt = txt + "<div class='ui-corner-all detallesCadroAmarillo row-fluid'>";
+            }            
             var contador = 0;
             for (x in json){
                 if(json[x].nombreGrupo != null){
