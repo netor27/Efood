@@ -1,5 +1,5 @@
 #buscadorContainer{
-    
+
 }
 
 #logo_chef{
@@ -226,3 +226,14 @@
     font-weight: bold;
     font-size: 10px;
 }
+
+.blogEntry{
+    padding-top: 20px;
+}
+
+.tituloBlog a{
+    font-weight: bolder;
+    font-size: 25px;
+    text-decoration: none;
+}
+

@@ -112,6 +112,66 @@ require_once('layout/headers/headFin.php');
         </div>
     </form>
 </div>
+<div class="row-fluid">
+    <div class="span10 offset1">
+        <img src="layout/imagenes/Home/SeparadorBlog.png">
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span10 offset1">
+        <?php
+        $i = 0;
+        foreach ($blogEntries as $entry) {
+            //Listamos las demás entradas
+            ?>
+            <div class="row-fluid blogEntry">
+                <div class="span3">
+                    <?php
+                    if ($i == 0) {
+                        //si es la primera entrada ponemos la imagen
+                        echo '<img src="layout/imagenes/Home/ultimasNoticias.png">';
+                    }
+                    ?>
+                </div>
+                <div class="span9">
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div class="tituloBlog">
+                                <a href="<?php echo $entry['link']; ?>">
+                                    <?php echo $entry['titulo']; ?>
+                                </a>
+                            </div>
+                            <div class="fechaPublicadoBlog">
+                                <?php echo $entry['fecha']; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div class="contenidoBlog">
+                                <?php
+                                if (strlen($entry['contenido']) > 750) {
+                                    echo substr($entry['contenido'], 0, 750) . "...<br>";
+                                    echo ' <a href="' . $entry['link'] . '"> Continuar leyendo..</a>';
+                                } else {
+                                    echo $entry['contenido'];
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+            <?php
+            $i++;
+        }
+        ?>
+
+    </div>
+    <div class="row-fluid"><div class="span10"></div></div>
+    <div class="row-fluid"><div class="span10"></div></div>
+</div>
 <?php
 require_once('layout/footer.php');
 ?>

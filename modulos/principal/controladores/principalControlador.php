@@ -5,6 +5,10 @@ function principal() {
     $colonias = getColonias();    
     require_once 'modulos/tipoComida/modelos/tipoComidaModelo.php';
     $tiposComida = getTiposComida();
+    
+    include('lib/rssFeed/rssFeed.php');
+    $blogEntries = parseRssFeed('http://testefood.blogspot.com/feeds/posts/default?alt=rss');
+    
     require_once('modulos/principal/vistas/principal.php');
 }
 
