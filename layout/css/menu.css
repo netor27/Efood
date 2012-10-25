@@ -40,7 +40,6 @@
 #opinionesContenido{
     display:none;
     text-align: center;
-    min-height:750px !important;
 }
 
 #informacionContenido{
@@ -149,5 +148,5 @@
 }
 
 .fb_ltr{
-    height:750px !important;
+    /*height:750px !important;*/
 }

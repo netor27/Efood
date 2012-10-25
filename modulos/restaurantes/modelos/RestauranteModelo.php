@@ -10,41 +10,54 @@ require_once 'bd/conx.php';
 function altaRestaurante($restaurante) {
     global $conex;
     $stmt = $conex->prepare("INSERT INTO restaurante
-                            (usuario,password,nombre,idColonia,descripcion,pedidoMinimo,gastoEnvio,formaPago,rfc,razonSocial,paginaWeb,telefono,email,metodoEntrega,calle,numero,numeroInt,referencia,nombreContacto,telefonoContacto,comision,tipoGastoEnvio,tipoComision)
-                            VALUES(:usuario,:password,:nombre,:idColonia,:descripcion,:pedidoMinimo,:gastoEnvio,:formaPago,:rfc,:razonSocial,:paginaWeb,:telefono,:email,:metodoEntrega,:calle,:numero,:numeroInt,:referencia,:nombreContacto,:telefonoContacto,:comision,:tipoGastoEnvio,:tipoComision)");
-
-    $stmt->bindParam(":usuario", $restaurante->usuario);
-    $stmt->bindParam(":password", $restaurante->password);
-    $stmt->bindParam(":nombre", $restaurante->nombre);
-    $stmt->bindParam(":idColonia", $restaurante->idColonia);
-    $stmt->bindParam(":descripcion", $restaurante->descripcion);
-    $stmt->bindParam(":pedidoMinimo", $restaurante->pedidoMinimo);
-    $stmt->bindParam(":gastoEnvio", $restaurante->gastoEnvio);
-    $stmt->bindParam(":formaPago", $restaurante->formaPago);
-    $stmt->bindParam(":rfc", $restaurante->rfc);
-    $stmt->bindParam(":razonSocial", $restaurante->razonSocial);
-    $stmt->bindParam(":paginaWeb", $restaurante->paginaWeb);
-    $stmt->bindParam(":telefono", $restaurante->telefono);
-    $stmt->bindParam(":email", $restaurante->email);
-    $stmt->bindParam(":metodoEntrega", $restaurante->metodoEntrega);
-    $stmt->bindParam(":calle", $restaurante->calle);
-    $stmt->bindParam(":numero", $restaurante->numero);
-    $stmt->bindParam(":numeroInt", $restaurante->numeroInt);
-    $stmt->bindParam(":referencia", $restaurante->referencia);
-    $stmt->bindParam(":nombreContacto", $restaurante->nombreContacto);
-    $stmt->bindParam(":telefonoContacto", $restaurante->telefonoContacto);
-    $stmt->bindParam(":comision", $restaurante->comision);
-    $stmt->bindParam(":tipoGastoEnvio", $restaurante->tipoGastoEnvio);
-    $stmt->bindParam(":tipoComision", $restaurante->tipoComision);
-
+                            (usuario,password,nombre,idColonia,descripcion,pedidoMinimo,gastoEnvio,formaPago,rfc,razonSocial,paginaWeb,telefono,email,metodoEntrega,calle,numero,numeroInt,referencia,nombreContacto,telefonoContacto,comision,tipoGastoEnvio,tipoComision,informacion)
+                            VALUES(:usuario,:password,:nombre,:idColonia,:descripcion,:pedidoMinimo,:gastoEnvio,:formaPago,:rfc,:razonSocial,:paginaWeb,:telefono,:email,:metodoEntrega,:calle,:numero,:numeroInt,:referencia,:nombreContacto,:telefonoContacto,:comision,:tipoGastoEnvio,:tipoComision,:informacion)");
     $id = -1;
-    if ($stmt->execute()) {
-        $id = $conex->lastInsertId();
-        $stmt = $conex->prepare("INSERT into horariorestaurante (idRestaurante) values(:id)");
-        $stmt->bindParam(":id", $id);
-        $stmt->execute();
-    } else {
-        print_r($stmt->errorInfo());
+    try {
+        $conex->beginTransaction();
+        $stmt->bindParam(":usuario", $restaurante->usuario);
+        $stmt->bindParam(":password", $restaurante->password);
+        $stmt->bindParam(":nombre", $restaurante->nombre);
+        $stmt->bindParam(":idColonia", $restaurante->idColonia);
+        $stmt->bindParam(":descripcion", $restaurante->descripcion);
+        $stmt->bindParam(":pedidoMinimo", $restaurante->pedidoMinimo);
+        $stmt->bindParam(":gastoEnvio", $restaurante->gastoEnvio);
+        $stmt->bindParam(":formaPago", $restaurante->formaPago);
+        $stmt->bindParam(":rfc", $restaurante->rfc);
+        $stmt->bindParam(":razonSocial", $restaurante->razonSocial);
+        $stmt->bindParam(":paginaWeb", $restaurante->paginaWeb);
+        $stmt->bindParam(":telefono", $restaurante->telefono);
+        $stmt->bindParam(":email", $restaurante->email);
+        $stmt->bindParam(":metodoEntrega", $restaurante->metodoEntrega);
+        $stmt->bindParam(":calle", $restaurante->calle);
+        $stmt->bindParam(":numero", $restaurante->numero);
+        $stmt->bindParam(":numeroInt", $restaurante->numeroInt);
+        $stmt->bindParam(":referencia", $restaurante->referencia);
+        $stmt->bindParam(":nombreContacto", $restaurante->nombreContacto);
+        $stmt->bindParam(":telefonoContacto", $restaurante->telefonoContacto);
+        $stmt->bindParam(":comision", $restaurante->comision);
+        $stmt->bindParam(":tipoGastoEnvio", $restaurante->tipoGastoEnvio);
+        $stmt->bindParam(":tipoComision", $restaurante->tipoComision);
+        $stmt->bindParam(":informacion", $restaurante->informacion);
+
+        if ($stmt->execute()) {
+            $id = $conex->lastInsertId();
+            $stmt = $conex->prepare("INSERT into horariorestaurante (idRestaurante) values(:id)");
+            $stmt->bindParam(":id", $id);
+            if ($stmt->execute()) {
+                $conex->commit();
+            } else {
+                $id = -1;
+                $conex->rollBack();
+            }
+        } else {
+            $id = -1;
+            $conex->rollBack();
+            print_r($stmt->errorInfo());
+        }
+    } catch (Exception $e) {
+        $id = -1;
+        $conex->rollBack();
     }
     return $id;
 }
@@ -53,13 +66,31 @@ function bajaRestaurante($idRestaurante) {
     global $conex;
     $stmt = $conex->prepare("DELETE FROM restaurante
                             WHERE idRestaurante = :idRestaurante");
-    $stmt->bindParam(":idRestaurante", $idRestaurante);
-    if ($stmt->execute())
-        return true;
-    else {
-        print_r($stmt->errorInfo());
-        return false;
+    $res = false;
+    try {
+        $stmt->bindParam(":idRestaurante", $idRestaurante);
+        $conex->beginTransaction();
+        if ($stmt->execute()) {
+            $stmt = $conex->prepare("DELETE FROM horariorestaurante
+                                     WHERE idRestaurante = :idRestaurante");
+            $stmt->bindParam(":idRestaurante", $idRestaurante);
+            if ($stmt->execute()) {
+                $conex->commit();
+                $res = true;
+            } else {
+                $res = false;
+                $conex->rollBack();
+            }
+        } else {
+            print_r($stmt->errorInfo());
+            $conex->rollBack();
+            $res = false;
+        }
+    } catch (Exception $e) {
+        $res = false;
+        $conex->rollBack();
     }
+    return $res;
 }
 
 function modificaRestaurante($restaurante) {
@@ -87,7 +118,8 @@ function modificaRestaurante($restaurante) {
                                 comision = :comision,
                                 tipoComision = :tipoComision,
                                 tipoGastoEnvio = :tipoGasto,
-                                habilitado = :habilitado
+                                habilitado = :habilitado,
+                                informacion = :informacion                                
                                 WHERE idRestaurante = :idRestaurante
                                 ");
     $stmt->bindParam(":usuario", $restaurante->usuario);
@@ -113,7 +145,7 @@ function modificaRestaurante($restaurante) {
     $stmt->bindParam(":tipoComision", $restaurante->tipoComision);
     $stmt->bindParam(":tipoGasto", $restaurante->tipoGastoEnvio);
     $stmt->bindParam(":habilitado", $restaurante->habilitado);
-
+    $stmt->bindParam(":informacion", $restaurante->informacion);
     $stmt->bindParam(":idRestaurante", $restaurante->idRestaurante);
 
     if ($stmt->execute()) {
@@ -192,6 +224,7 @@ function getRestaurante($idRestaurante) {
         $restaurante->tipoGastoEnvio = $row['tipoGastoEnvio'];
         $restaurante->habilitado = $row['habilitado'];
         $restaurante->tipoComision = $row['tipoComision'];
+        $restaurante->informacion = $row['informacion'];
         $restaurante->horario = getHorario($idRestaurante);
         $restaurante->tiposComida = getTipoComidaRestaurante($idRestaurante);
         return $restaurante;
@@ -240,7 +273,7 @@ function getRestaurantePorLogin($usuario, $pass) {
         $restaurante->tipoGastoEnvio = $row['tipoGastoEnvio'];
         $restaurante->habilitado = $row['habilitado'];
         $restaurante->tipoComision = $row['tipoComision'];
-
+        $restaurante->informacion = $row['informacion'];
         return $restaurante;
     } else {
         return NULL;
@@ -283,6 +316,7 @@ function getRestaurantes() {
             $restaurante->tipoGastoEnvio = $row['tipoGastoEnvio'];
             $restaurante->habilitado = $row['habilitado'];
             $restaurante->tipoComision = $row['tipoComision'];
+            $restaurante->informacion = $row['informacion'];
             $restaurantes[$i] = $restaurante;
             $i++;
         }
@@ -512,6 +546,7 @@ function getRestaurantesColonia($idColonia) {
             $restaurante->rfc = utf8_encode($row['rfc']);
             $restaurante->telefono = utf8_encode($row['telefono']);
             $restaurante->usuario = utf8_encode($row['usuario']);
+            $restaurante->informacion = $row['informacion'];
             $restaurantes[$i] = $restaurante;
             $i++;
         }
@@ -559,7 +594,7 @@ function getRestaurantesColoniaTipoComidaMetodoEntrega($idColonia, $tipoComida, 
         }
         $query = $query . " )";
     }
-    
+
     $stmt = $conex->prepare($query);
     $stmt->bindParam(":idColonia", $idColonia);
 
@@ -594,16 +629,24 @@ function getRestaurantesColoniaTipoComidaMetodoEntrega($idColonia, $tipoComida, 
             $restaurante->telefono = utf8_encode($row['telefono']);
             $restaurante->usuario = utf8_encode($row['usuario']);
             $restaurante->tipoGastoEnvio = $row['tipoGastoEnvio'];
+            $restaurante->informacion = $row['informacion'];
             $horario = new Horario();
-            $horario->doFin = $row['doFin'];$horario->doIni = $row['doIni'];
-            $horario->luFin = $row['luFin'];$horario->luIni = $row['luIni'];
-            $horario->maFin = $row['maFin'];$horario->maIni = $row['maIni'];
-            $horario->miFin = $row['miFin'];$horario->miIni = $row['miIni'];
-            $horario->juFin = $row['juFin'];$horario->juIni = $row['juIni'];
-            $horario->viFin = $row['viFin'];$horario->viIni = $row['viIni'];
-            $horario->saFin = $row['saFin'];$horario->saIni = $row['saIni'];
+            $horario->doFin = $row['doFin'];
+            $horario->doIni = $row['doIni'];
+            $horario->luFin = $row['luFin'];
+            $horario->luIni = $row['luIni'];
+            $horario->maFin = $row['maFin'];
+            $horario->maIni = $row['maIni'];
+            $horario->miFin = $row['miFin'];
+            $horario->miIni = $row['miIni'];
+            $horario->juFin = $row['juFin'];
+            $horario->juIni = $row['juIni'];
+            $horario->viFin = $row['viFin'];
+            $horario->viIni = $row['viIni'];
+            $horario->saFin = $row['saFin'];
+            $horario->saIni = $row['saIni'];
             $restaurante->horario = $horario;
-            
+
             $restaurante->tiposComida = getTipoComidaRestaurante($restaurante->idRestaurante);
             $restaurantes[$i] = $restaurante;
             $i++;
@@ -675,6 +718,7 @@ function getRestauranteHabilitado($idRestaurante) {
         $restaurante->tipoGastoEnvio = $row['tipoGastoEnvio'];
         $restaurante->habilitado = $row['habilitado'];
         $restaurante->tipoComision = $row['tipoComision'];
+        $restaurante->informacion = $row['informacion'];
 
         return $restaurante;
     } else {

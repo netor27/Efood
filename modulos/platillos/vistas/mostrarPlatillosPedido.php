@@ -150,7 +150,7 @@ if (restauranteAbiertoAhorita($restaurante->idRestaurante)) {
                         <!--<div class="datos row-fluid">
                             <div class="span6">
                                 <span class="datosRed">Pedido mínimo:</span>
-                                <span>$<?php //echo $restaurante->pedidoMinimo;               ?></span>
+                                <span>$<?php //echo $restaurante->pedidoMinimo;                 ?></span>
                             </div>
                             <div class="span6">
                         <?php
@@ -300,15 +300,20 @@ $_SESSION['tipoGastoEnvio'] = $restaurante->tipoGastoEnvio;
                 //tenemos que quitar el ic del url, para que los comentarios aparezcan sin 
                 //importar desde que colonia se hizo la busqueda
                 $url = getUrl();
-                $aux = explode("&",$url);
-                $url = $aux[0] . "&".$aux[1] . "&ic=8";
+                $aux = explode("&", $url);
+                $url = $aux[0] . "&" . $aux[1] . "&ic=8";
                 ?>
-                <div class="fb-comments" data-href="<?php echo $url;  ?>" data-num-posts="10" data-width="600"></div>
+                <div class="fb-comments" data-href="<?php echo $url; ?>" data-num-posts="10" data-width="600"></div>
             </div>
             <div class="row-fluid"><div class="span12"></div></div>
         </div>
         <div class="row-fluid" id="informacionContenido">
-            Aquí va la información
+            <div class="span10 offset1">
+                <legend>Información del restaurante</legend>
+                <p>
+                    <?php echo $restaurante->informacion; ?>
+                </p>
+            </div>
         </div>
     </div>
     <div class="span4">

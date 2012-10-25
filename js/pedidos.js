@@ -72,7 +72,7 @@ function obtenerIngredientes(id){
             //txt = txt + "<div class='row-fluid'></div>";
             txt = txt + "<form id=\"pedido\" name=\"pedido\">"; 
             txt = txt + "<div class='row-fluid'><div class='detallesNombre'>"+json[0].nombrePlatillo+"</div></div>";            
-            txt = txt + "<div class='row-fluid'><div class='detallesPrecio'>$ "+json[0].precioBase+".00</div></div>";
+            txt = txt + "<div class='row-fluid'><div class='detallesPrecio'>$ "+json[0].precioBase+"</div></div>";
             if(json[0].descripcion!="" || json[0].descripcion!=null || json[0].descripcion!="null")
                 txt = txt + "<div class='row-fluid'><div class='detallesDescripcion'>" + json[0].descripcion+"</div></div>";
             
@@ -159,7 +159,7 @@ function obtenerIngredientes(id){
                         //txt=txt + json[x].idIngredienteDepende+"<br>";
                         //txt=txt + json[x].idIngrediente;
                         if(json[x].precio!=0){
-                            txt=txt + "&nbsp;(+"+json[x].precio+".00)";
+                            txt=txt + "&nbsp;(+"+json[x].precio+")";
                         }
                         if(contador % 2 != 0){
                             //es el del lado derecho, cerramos la fila
@@ -187,7 +187,7 @@ function obtenerIngredientes(id){
             $("#modalDialogIngredientes").dialog({
                 autoOpen: true,
                 height: "auto",
-                width: 320,
+                width: 420,
                 modal: true,
                 resizable: false
             });

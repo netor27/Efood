@@ -33,6 +33,7 @@ class Restaurante {
     public $comision;
     public $tipoGastoEnvio;
     public $habilitado;
+    public $informacion;
     //No son parte de la bd
     public $nombreColonia;
     public $horario;
@@ -70,7 +71,6 @@ class Restaurante {
         echo '<th>telefonoContacto</th>';
         echo '<th>tipoComision</th>';
         echo '<th>comision</th>';
-
         echo '<th>habilitado</th>';
         echo '<th>editar</th>';
         echo '<th>borrar</th>';

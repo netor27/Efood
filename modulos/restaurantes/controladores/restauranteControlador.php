@@ -57,6 +57,8 @@ function formaRestauranteSubmit() {
     $restaurante->comision = $_POST['comision'];
     $restaurante->tipoGasto = $_POST['tipoGasto'];
     $restaurante->habilitado = $_POST['habilitado'];
+    
+    $restaurante->informacion = $_POST['informacion'];
 
     require_once 'modulos/restaurantes/modelos/RestauranteModelo.php';
     if ($tipo == "alta") {
@@ -80,8 +82,8 @@ function formaRestauranteSubmit() {
         $restaurante->idRestaurante = $_POST['idRestaurante'];
         if (validarAdministrador() || validarRestauranteLoggeadoId($restaurante->idRestaurante)) {
             if (modificaRestaurante($restaurante)) {
-                setSessionMessage("Se modificó el restaurante " . $restaurante->nombre);
-                redirect("restaurantes.php?a=editar&i=" . $restaurante->idRestaurante);
+                setSessionMessage('Se modificó correctamente la información del restaurante: "' . $restaurante->nombre.'"');
+                redirect("restaurantes.php");
             } else {
                 $tipo = "editar";
                 $msg = "Ocurrió un error al modificar el restaurante";
