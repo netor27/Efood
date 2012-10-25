@@ -20,7 +20,7 @@ if (isset($_SESSION['email'])) {
         </div>
         <div class="span6 headerSocial">
             <div class="span5 centerText">
-                <a href="#" class="socialRedText">
+                <a href="https://twitter.com/eFoodMX" class="socialRedText" target="_blank">
                     <img src="layout/imagenes/Home/twitterCheff.png"><br>
                     <span >Síguenos</span>
                 </a>
