@@ -85,7 +85,7 @@
             <div class="span6" id="menuHeader">
                 <a href="#"><img src="layout/imagenes/Home/btn_MieFood_76x50.png"></a>
                 <a href="#"><img src="layout/imagenes/Home/btn_TengoHambre_76x50.png"></a>
-                <a href="#"><img src="layout/imagenes/Home/btn_Blog_76x50.png"></a>
+                <a href="http://testefood.blogspot.mx"><img src="layout/imagenes/Home/btn_Blog_76x50.png"></a>
             </div>
             <?php
             $mensaje = getSessionMessage();

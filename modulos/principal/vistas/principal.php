@@ -129,7 +129,7 @@ require_once('layout/headers/headFin.php');
                     <?php
                     if ($i == 0) {
                         //si es la primera entrada ponemos la imagen
-                        echo '<img src="layout/imagenes/Home/ultimasNoticias.png">';
+                        echo '<a href="http://testefood.blogspot.mx"><img src="layout/imagenes/Home/ultimasNoticias.png"></a>';
                     }
                     ?>
                 </div>
