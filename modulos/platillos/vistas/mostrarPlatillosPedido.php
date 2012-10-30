@@ -2,6 +2,7 @@
 require_once('layout/headers/headInicio.php');
 require_once('layout/headers/headPedidos.php');
 require_once('layout/headers/headAutocompleteColonias.php');
+require_once('layout/headers/headSocialMedia.php');
 require_once('layout/headers/headFin.php');
 ?>
 <div id="modalDialogIngredientes" title="Aquí es al gusto">
@@ -65,7 +66,16 @@ if (restauranteAbiertoAhorita($restaurante->idRestaurante)) {
 }
 ?>
 <div class="restaurante ui-corner-all <?php echo $aux; ?>">
-    <div class="restauranteHeader row-fluid">
+    <?php
+    if ($habilitado) {
+        ?>
+        <div class="restauranteHeader row-fluid">
+        <?php
+    } else {
+        echo '<div class="restauranteHeaderCerrado row-fluid">';
+    }
+    ?>
+    
         <div class="titulo">
             <?php echo $restaurante->nombre; ?>
         </div>
@@ -90,138 +100,139 @@ if (restauranteAbiertoAhorita($restaurante->idRestaurante)) {
             <img class="span9 offset1" src="<?php echo $restaurante->logo; ?>"/>
             <div class="span1 offset1 separadorLogo"></div>
         </div>
-        <div class="contenidoRestaurante span7">
+        <div class="contenidoRestaurante span4">
             <div class="row-fluid">
-                <div class=" span8 datosRestaurante">
-                    <div class="row-fluid">
-                        <p>
-                            <?php
-                            echo $restaurante->calle . " ";
-                            echo $restaurante->numero;
-                            if ($restaurante->numeroInt != "")
-                                echo " interior " . $restaurante->numeroInt;
-                            echo ", " . $restaurante->nombreColonia;
-                            ?>
-                        </p>
-                        <p>
-                            <?php
-                            echo "Del. " . $restaurante->delegacion->nombre . ", " . $restaurante->delegacion->entidad;
-                            ?>
-                        </p>
-                        <p>
-                            <img src="layout/imagenes/resultadosBusqueda/reloj_20x20.png"/>
-                            <?php
-                            $inicio = "";
-                            $fin = "";
-                            switch (getDay()) {
-                                case "lu": $inicio = $restaurante->horario->luIni;
-                                    $fin = $restaurante->horario->luFin;
-                                    break;
-                                case "ma": $inicio = $restaurante->horario->maIni;
-                                    $fin = $restaurante->horario->maFin;
-                                    break;
-                                case "mi": $inicio = $restaurante->horario->miIni;
-                                    $fin = $restaurante->horario->miFin;
-                                    break;
-                                case "ju": $inicio = $restaurante->horario->juIni;
-                                    $fin = $restaurante->horario->juFin;
-                                    break;
-                                case "vi": $inicio = $restaurante->horario->viIni;
-                                    $fin = $restaurante->horario->viFin;
-                                    break;
-                                case "sa": $inicio = $restaurante->horario->saIni;
-                                    $fin = $restaurante->horario->saFin;
-                                    break;
-                                case "do": $inicio = $restaurante->horario->doIni;
-                                    $fin = $restaurante->horario->doFin;
-                                    break;
-                            }
-                            $inicio = quitarSegundosHora($inicio);
-                            $fin = quitarSegundosHora($fin);
-                            if ($inicio == "00:00" && $fin == "23:59") {
-                                echo "<span>Abierto todo el día</span>";
-                            } else if ($inicio == "00:00" && $fin == "00:00") {
-                                echo "<span>Cerrado</span>";
-                            } else {
-                                echo "<span>De " . $inicio . " a " . $fin . " hrs.</span>";
-                            }
-                            ?>
-                        </p>
-                        <!--<div class="datos row-fluid">
-                            <div class="span6">
-                                <span class="datosRed">Pedido mínimo:</span>
-                                <span>$<?php //echo $restaurante->pedidoMinimo;                 ?></span>
-                            </div>
-                            <div class="span6">
+                <div class=" span12 datosRestaurante">
+                    <p class="textoDireccion">
                         <?php
-//                            switch ($restaurante->tipoGastoEnvio) {
-//                                case 0:
-//                                    //monto fijo
-//                                    echo '<span class="datosRed">Gastos de Envío:</span>';
-//                                    echo "<span> $" . $restaurante->gastoEnvio . "</span>";
-//                                    break;
-//                                case 1:
-//                                    //porcentaje
-//                                    echo '<span class="datosRed">Gastos de Envío:</span>';
-//                                    echo "<span> " . $restaurante->gastoEnvio . " %</span>";
-//                                    break;
-//                                case 2:
-//                                    //compuesto
-//                                    //echo '<br><span class="datosRed">Gastos de Envío:</span>';
-//                                    //echo "<span> ".$restaurante->gastoEnvio ."</span>";
-//                                    echo '<span class="datosRed">Gastos de Envío: </span>';
-//                                    echo "<span>Compuesto</span>";
-//                                    break;
-//                            }
+                        echo $restaurante->calle . " ";
+                        echo $restaurante->numero;
+                        if ($restaurante->numeroInt != "")
+                            echo " interior " . $restaurante->numeroInt;
+                        echo ", " . $restaurante->nombreColonia . " ";
+                        echo "Del. " . $restaurante->delegacion->nombre . ", " . $restaurante->delegacion->entidad;
                         ?>
-                            </div>
-                        </div>-->
-                        <p>
-                            <?php
-                            if ($restaurante->formaPago == 0) {
-                                echo 'efectivo';
-                            }
-                            if ($restaurante->formaPago == 1) {
-                                echo '<img src="layout/imagenes/resultadosBusqueda/tipoPagos_190x20.png"/>';
-                            }
-                            if ($restaurante->formaPago == 2) {
-                                echo 'efectivo';
-                                echo '<img src="layout/imagenes/resultadosBusqueda/tipoPagos_190x20.png"/>';
-                            }
-                            ?>
-
-                        </p>
-                    </div>
-                </div>
-                <div class="span4 metodoEntrega">
-
-                    <div class="row-fluid">
+                    </p>
+                    <p class="textoDireccion">
+                        Llama si prefieres al <span class="telefono"><?php echo $restaurante->telefono; ?></span>
+                    </p>
+                    <p class="textoDireccion">
+                        <img src="layout/imagenes/resultadosBusqueda/reloj_20x20.png"/>
                         <?php
-                        if ($restaurante->metodoEntrega != 0) {
-                            ?>
-                            <div class="span5">
-                                <h5>Domicilio</h5>
-                                <img src="layout/imagenes/Home/img_Domicilio_86x39.png"/>                                    
-                            </div>                                    
-                            <?php
+                        $inicio = "";
+                        $fin = "";
+                        switch (getDay()) {
+                            case "lu": $inicio = $restaurante->horario->luIni;
+                                $fin = $restaurante->horario->luFin;
+                                break;
+                            case "ma": $inicio = $restaurante->horario->maIni;
+                                $fin = $restaurante->horario->maFin;
+                                break;
+                            case "mi": $inicio = $restaurante->horario->miIni;
+                                $fin = $restaurante->horario->miFin;
+                                break;
+                            case "ju": $inicio = $restaurante->horario->juIni;
+                                $fin = $restaurante->horario->juFin;
+                                break;
+                            case "vi": $inicio = $restaurante->horario->viIni;
+                                $fin = $restaurante->horario->viFin;
+                                break;
+                            case "sa": $inicio = $restaurante->horario->saIni;
+                                $fin = $restaurante->horario->saFin;
+                                break;
+                            case "do": $inicio = $restaurante->horario->doIni;
+                                $fin = $restaurante->horario->doFin;
+                                break;
                         }
-                        if ($restaurante->metodoEntrega != 1) {
-                            ?>
-                            <div class="span5 offset1">
-                                <h5>Recoger</h5>
-                                <img src="layout/imagenes/Home/img_Recoger_64x40.png"/>                                    
-                            </div>                                    
-                            <?php
+                        $inicio = quitarSegundosHora($inicio);
+                        $fin = quitarSegundosHora($fin);
+                        if ($inicio == "00:00" && $fin == "23:59") {
+                            echo "<span>Abierto todo el día</span>";
+                        } else if ($inicio == "00:00" && $fin == "00:00") {
+                            echo "<span>Cerrado</span>";
+                        } else {
+                            echo "<span>De " . $inicio . " a " . $fin . " hrs.</span>";
                         }
                         ?>
-                    </div>
-                </div>                    
+                    </p>
+                    <p class="textoDireccion">
+                        <?php
+                        if ($restaurante->formaPago == 0) {
+                            echo 'efectivo';
+                        }
+                        if ($restaurante->formaPago == 1) {
+                            echo '<img src="layout/imagenes/resultadosBusqueda/tipoPagos_190x20.png"/>';
+                        }
+                        if ($restaurante->formaPago == 2) {
+                            echo 'efectivo';
+                            echo '<img src="layout/imagenes/resultadosBusqueda/tipoPagos_190x20.png"/>';
+                        }
+                        ?>
+
+                    </p>
+                </div>                 
             </div>
         </div>
-        <div class="realizarPedido span3">
-            <a href="pedidos.php?a=menu&i=<?php echo $restaurante->idRestaurante; ?>&ic=<?php echo $colonia->idColonia; ?>">
-                <img src="layout/imagenes/resultadosBusqueda/btnRealizarPedido_180x45.png"/>
-            </a>
+        <div class="span4">
+
+            <?php
+            if ($restaurante->metodoEntrega != 0) {
+                ?>
+                <div class="row-fluid rowMetodoEntrega">
+                    <div class="span4">
+                        <img src="layout/imagenes/Home/img_Domicilio_86x39.png"/>                                    
+                    </div>
+                    <div class="span8">
+                        <?php
+                        if ($restaurante->pedidoMinimo == 0) {
+                            echo '<span class="textoEntrega">¡No hay pedido mínimo!</span>';
+                        } else {
+                            echo '<span class="textoEntrega">Pedido mínimo: </span>' . '<span class="textoEntregaNumero">$' . $restaurante->pedidoMinimo . '</span>';
+                        }
+                        echo '<br>';
+                        if ($restaurante->gastoEnvio == 0) {
+                            echo '<span class="textoEntrega">¡Es gratis!</span>';
+                        } else {
+                            switch ($restaurante->tipoGastoEnvio) {
+                                case 0:
+                                    echo '<span class="textoEntrega">Gastos de envío: </span>' . '<span class="textoEntregaNumero">$' . $restaurante->gastoEnvio . '</span>';
+                                    break;
+                                case 1:
+                                    echo '<span class="textoEntrega">Gastos de envío: </span>' . '<span class="textoEntregaNumero">' . $restaurante->gastoEnvio . '%</span>';
+                                    break;
+                                case 2:
+                                    echo '<span class="textoEntrega">Gastos de envío: </span>' . '<span class="textoEntregaNumero">Compuesto</span>';
+                                    break;
+                            }
+                        }
+                        ?>
+                    </div>
+                </div>
+                <?php
+            }
+            if ($restaurante->metodoEntrega != 1) {
+                ?>
+                <div class="row-fluid rowMetodoEntrega">
+                    <div class="span4">
+                        <img src="layout/imagenes/Home/img_Recoger_64x40.png"/>                                    
+                    </div>
+                    <div class="span8">
+                        <span class="textoEntrega">¡No hay pedido mínimo!</span>
+                        <br>
+                        <span class="textoEntrega">¡Es gratis!</span>
+                    </div>
+                </div>
+                <?php
+            }
+            ?>
+
+        </div>   
+        <div class="span2">
+            <div class="span12">
+                <img class="recomiendaRestaurante" src="layout/imagenes/Menu/RecomiendaEsteRestaurante.png">
+                <a href="https://twitter.com/share" class="twitter-share-button" data-via="eFoodMX" data-lang="es">Tweet</a>
+                <div class="fb-like" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false" data-font="tahoma"></div>
+            </div>
         </div>
     </div>
 </div>

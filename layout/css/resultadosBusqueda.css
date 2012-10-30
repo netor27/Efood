@@ -86,6 +86,7 @@ span.selectAmarillo{
 #numeroRestauranteContainer .redText{
     color:#ED3237;
 }
+
 #numeroRestauranteContainer .coloniaText{
     color:#373435;
 }
@@ -135,6 +136,24 @@ span.selectAmarillo{
     margin-left: 20px;
 }
 
+.restauranteHeaderCerrado{
+    width: 850px;
+    height: 56px;
+    background:url(../imagenes/resultadosBusqueda/HeaderGris_850x56.png) no-repeat 0 0;
+}
+.restauranteHeaderCerrado .titulo{
+    color:#ffd525;
+    font-size:20px;
+    font-weight: bold;
+    margin-left: 20px;
+    padding-top: 15px;
+}
+.restauranteHeaderCerrado .tiposComida{
+    color:#ffffff;
+    font-size:10px;
+    margin-left: 20px;
+}
+
 .restauranteHeaderPar{
     width: 850px;
     height: 56px;
@@ -154,7 +173,6 @@ span.selectAmarillo{
 }
 
 .restauranteBody{
-    overflow: hidden;
     -webkit-border-radius:0px,0px,6px,6px;
     -moz-border-radius:0px,0px,6px,6px;
     border-radius:0px,0px,6px,6px;
@@ -198,10 +216,7 @@ span.selectAmarillo{
     color: #373435;
     font-weight: bold;
 }
-/*
-.datos{
-    margin-top: 9px;
-}*/
+
 .datos span{
     color: #373435;
     font-weight: bold;
@@ -213,14 +228,8 @@ span.selectAmarillo{
 .realizarPedido img{
     float:right !important;
 }
-/*
-.tipoPago{
-    margin-top: 10px;
-}
+
 .metodoEntrega{
     margin-top: 25px;
     margin-left: 25px;
 }
-.metodoEntrega img{
-    padding-left: 20px;
-}*/

@@ -167,8 +167,8 @@ if (sizeof($restaurantes) <= 0) {
                 $aux = $aux . " tipoEntrega0 tipoEntrega1 tipoEntrega2";
                 break;
         }
-
-        if (restauranteAbiertoAhorita($restaurante->idRestaurante)) {
+        $restauranteAbierto = restauranteAbiertoAhorita($restaurante->idRestaurante);
+        if ($restauranteAbierto) {
             $aux = $aux . " restauranteAbierto";
         } else {
             $aux = $aux . " restauranteCerrado";
@@ -176,10 +176,12 @@ if (sizeof($restaurantes) <= 0) {
         ?>
         <div class="restaurante ui-corner-all <?php echo $aux; ?>">
             <?php
-            if ($i % 2 == 0) {
+            if (!$restauranteAbierto) {
                 ?>
-                <div class="restauranteHeader row-fluid">
+                <div class="restauranteHeaderCerrado">
                     <?php
+                } else if ($i % 2 == 0) {
+                    echo '<div class="restauranteHeader row-fluid">';
                 } else {
                     echo '<div class="restauranteHeaderPar">';
                 }
@@ -296,22 +298,19 @@ if (sizeof($restaurantes) <= 0) {
 
                             </div>
                         </div>
-                        <div class="span4 metodoEntrega">
-
+                        <div class="span4">
                             <div class="row-fluid">
                                 <?php
                                 if ($restaurante->metodoEntrega != 0) {
                                     ?>
-                                    <div class="span5">
-                                        <h5>Domicilio</h5>
+                                    <div class="span5 metodoEntrega">
                                         <img src="layout/imagenes/Home/img_Domicilio_86x39.png"/>                                    
                                     </div>                                    
                                     <?php
                                 }
                                 if ($restaurante->metodoEntrega != 1) {
                                     ?>
-                                    <div class="span5 offset1">
-                                        <h5>Recoger</h5>
+                                    <div class="span5 offset1 metodoEntrega">
                                         <img src="layout/imagenes/Home/img_Recoger_64x40.png"/>                                    
                                     </div>                                    
                                     <?php
@@ -323,7 +322,12 @@ if (sizeof($restaurantes) <= 0) {
                 </div>
                 <div class="realizarPedido span3">
                     <a href="pedidos.php?a=menu&i=<?php echo $restaurante->idRestaurante; ?>&ic=<?php echo $colonia->idColonia; ?>">
-                        <img src="layout/imagenes/resultadosBusqueda/btnRealizarPedido_180x45.png"/>
+                        <?php 
+                        if($restauranteAbierto)
+                            echo '<img src="layout/imagenes/resultadosBusqueda/btnRealizarPedido_180x45.png"/>';
+                        else
+                            echo '<img src="layout/imagenes/resultadosBusqueda/btnVerMenu.png"/>';
+                        ?>
                     </a>
                 </div>
             </div>

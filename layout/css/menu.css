@@ -150,3 +150,30 @@
 .fb_ltr{
     /*height:750px !important;*/
 }
+
+.textoDireccion{
+    margin: 3px;
+    padding: 0px;
+}
+
+.telefono{
+    color:#ED3237;
+    
+}
+
+.textoEntrega{
+    color:#ED3237;
+    font-weight: bold;
+}
+
+.textoEntregaNumero{
+    font-weight: bold;
+}
+
+.rowMetodoEntrega{
+    padding-top: 20px;
+}
+
+.recomiendaRestaurante{
+    padding-bottom: 15px;
+}
