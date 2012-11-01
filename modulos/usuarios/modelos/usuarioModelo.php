@@ -167,4 +167,22 @@ function eliminarDireccion($idDireccion) {
     $stmt->execute();
     return $stmt->rowCount();
 }
+
+function getUsuarioFromEmail($email){
+    global $conex;
+    $stmt = $conex->prepare("SELECT idUsuario,email,telefono,tipo,habilitado FROM usuario WHERE email = :email");
+    $stmt->bindParam(':email', $email);
+    if ($stmt->execute()) {
+        $row = $stmt->fetch();
+        $user = new Usuario();
+        $user->idUsuario = $row['idUsuario'];
+        $user->email = $row['email'];
+        $user->telefono = $row['telefono'];
+        $user->tipo = $row['tipo'];
+        $user->habilitado = $row['habilitado'];
+        return $user;
+    } else {
+        return NULL;
+    }
+}
 ?>

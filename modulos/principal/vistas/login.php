@@ -45,7 +45,14 @@ if (isset($_SESSION['email'])) {
         <div class="span12">
             <div class="span3 headerTextRed">o mejor</div>
             <div class="span9">
-                <img src="layout/imagenes/Home/btn_EntraConFB_193x23.png">
+                <a href="
+                <?php
+                global $loginUrl;
+                echo $loginUrl;
+                ?>"
+                   >
+                    <img src="layout/imagenes/Home/btn_EntraConFB_193x23.png">
+                </a>
             </div>
         </div>
     </div>
