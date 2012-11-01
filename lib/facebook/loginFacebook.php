@@ -74,7 +74,7 @@ if ($user) {
     //Redireccionarlo a la página
     if (isset($_SESSION['paginaLoginFacebook'])) {
         $pagina = $_SESSION['paginaLoginFacebook'];
-        //redirect($pagina);
+        redirect($pagina);
         $_SESSION['paginaLoginFacebook'] = null;
     }
 }
