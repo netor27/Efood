@@ -68,8 +68,9 @@ function guardaPedido() {
 
 
 
+
         
-    //logica para que los valores se conviertan en los ids de la sesion $_SESSION['ingrediente'][id] para sacar los precios y demÃ¡s
+//logica para que los valores se conviertan en los ids de la sesion $_SESSION['ingrediente'][id] para sacar los precios y demÃ¡s
     //luego seteamos las sesiones a null o le aplicamos el destroy con unset (no en este momento o pierdo todos los datos
     //para mostrarlos en posteriores consultas)
     $total = 0;
@@ -128,20 +129,24 @@ function getPedidos($idRestaurante) {
     return $pedidos;
 }
 
-function getDirecciones($idUsuario){
+function getDirecciones($idUsuario) {
     global $conex;
-    /* $query = "SELECT p.idPlatillo,p.idRestaurante,p.idCategoria,p.nombre as nombrePlatillo, p.descripcion, p.precioBase,p.hint,gi.idGrupoIngredientes, gi.nombre as nombreGrupo, gi.excluyente, gi.requerido, gi.idGrupoDepende, gi.idIngredienteDepende, i.idIngrediente, i.idGrupoIngredientes as idGrupoIngredientesI, i.nombre as nombreIngrediente, i.precio 
-      FROM platillo p, grupoingredientes gi, ingrediente i
-      WHERE p.idPlatillo = :id AND p.idPlatillo = gi.idPlatillo AND i.idGrupoIngredientes = gi.idGrupoIngredientes"; */
-    $query = "SELECT DISTINCT p.idPlatillo,p.idRestaurante,p.categoria,p.nombre as nombrePlatillo, p.descripcion, p.precioBase,p.hint,gi.idGrupoIngredientes, gi.nombre as nombreGrupo, gi.excluyente, gi.requerido, gi.idGrupoDepende, gi.idIngredienteDepende, i.idIngrediente, i.idGrupoIngredientes as idGrupoIngredientesI, i.nombre as nombreIngrediente, i.precio 
-        FROM platillo p
-        LEFT OUTER JOIN grupoingredientes gi ON p.idPlatillo = gi.idPlatillo
-        LEFT OUTER JOIN ingrediente i ON gi.idGrupoIngredientes = i.idGrupoIngredientes
-        WHERE p.idPlatillo = :id";
-    $stmt = $conex->prepare($query);
-    $stmt->bindParam(':id', $idPlatillo);
-    if ($stmt->execute()) {
+    $obtenDireccionesUsuario = "SELECT * FROM direccion WHERE idUsuario = :idUsuario";
+    $stmtP = $conex->prepare($obtenDireccionesUsuario);
+    $stmtP->bindParam(':idUsuario', $_SESSION['idUsuario']);
+    if ($stmtP->execute()) {
+        $direcciones = array();
+        $rows = $stmt->fetchAll();
+        $direccion = new Direccion();
+        $direccion->calle = $row["calle"];
+        $direccion->idColonia = $row["idColonia"];
+        $direccion->idDireccion = $row['idDireccion'];
+        $direccion->numero = $row["numero"];
+        $direccion->numeroInt = $row["numeroInt"];
+        $direccion->referencia = $row["referencia"];
+        array_push($direcciones, $direccion);
     }
+    return direcciones;
 }
 
 function mostrarPedidoGenerado($pedido) {
@@ -154,16 +159,16 @@ function mostrarPedidoGenerado($pedido) {
             foreach ($pedido as $value) {
                 foreach ($value as $valor) {
                     foreach ($valor as $val) {
-                        $caracteristicas = preg_split('#=.&#', $val[7],-1);
+                        $caracteristicas = preg_split('#=.&#', $val[7], -1);
                         $pedidoResumen .= "Nombre: " . $val[0] . "<br>"; //nombre
                         $pedidoResumen .= "Especificaciones: " . $val[2] . "<br>"; //especificaciones
                         $pedidoResumen .= "Cantidad: " . $val[1] . "<br>"; //cantidad
                         $pedidoResumen .= "Precio: " . $val[3] . "<br><br>"; //total
-                        $pedidoResumen .= "<span id=\"".$val[8]."\">";
+                        $pedidoResumen .= "<span id=\"" . $val[8] . "\">";
                         print_r($val[8]);
-                         foreach($caracteristicas as $value){
-                             $pedidoResumen .= $value;
-                         }
+                        foreach ($caracteristicas as $value) {
+                            $pedidoResumen .= $value;
+                        }
                         $pedidoResumen .= "</span><br>";
                         $total += $val[3];
                     }
@@ -182,7 +187,7 @@ function mostrarPedidoGenerado($pedido) {
                     eval('$cargoExtra = ' . $cadena . ';');
                     $cargoExtra += $total;
                 }
-            }else if($_GET['p'] == 1){
+            } else if ($_GET['p'] == 1) {
                 $pedidoResumen .= "<br>Recoger pedido<br>";
                 $cargoExtra = $total;
             }
