@@ -1,8 +1,8 @@
 <?php
 
 //Application Configurations
-$app_id = "112970332196149";
-$app_secret = "4e369323f213a2fa02d601fd3ac07bbb";
+$app_id = "499264860093463";
+$app_secret = "f6ea22c4aab9f138fbd2eaea06f3dd69";
 $site_url = "http://efood.localhost";
 try {
     include_once "lib/facebook/src/facebook.php";
