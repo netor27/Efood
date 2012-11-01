@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('America/Mexico_City');
 
 require_once 'funcionesPHP/funcionesGenerales.php';
 require_once 'modulos/restaurantes/clases/Restaurante.php';
