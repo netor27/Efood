@@ -171,7 +171,7 @@ function usuarioSolicitudRestaurante() {
     if (isset($_POST['nombre']) && isset($_POST['idColonia'])) {
         $msg = "";
 
-        require_once 'modulos/colonias/modelos/coloniaModelo.php';
+        require_once 'modulos/colonias/modelos/ColoniaModelo.php';
         if ($_POST['idColonia'] >= 0) {
             $colonia = getColonia($_POST['idColonia']);
         }else{

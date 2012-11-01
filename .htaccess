@@ -1,10 +1,14 @@
 RewriteEngine On
 
-RewriteCond %{HTTP_HOST} ^efood.com.mx$ [NC]
-RewriteRule ^(.*)$ http://www.efood.mx/$1 [L,R=301]
+RewriteCond %{HTTP_HOST} ^www\.efood\.mx$ [NC]
+RewriteRule ^(.*)$ http://www.efood.com.mx/$1 [L,R=301]
 
-RewriteCond %{HTTP_HOST} ^www\.efood\.com\.mx$ [NC]
-RewriteRule ^(.*)$ http://www.efood.mx/$1 [L,R=301]
+RewriteCond %{HTTP_HOST} ^efood\.com\.mx$ [NC]
+RewriteRule ^(.*)$ http://www.efood.com.mx/$1 [L,R=301]
 
 RewriteCond %{HTTP_HOST} ^efood\.mx$ [NC]
-RewriteRule ^(.*)$ http://www.efood.mx/$1 [L,R=301]
+RewriteRule ^(.*)$ http://www.efood.com.mx/$1 [L,R=301]
+
+RewriteBase /
+
+RewriteRule ^([a-zA-Z]+)$ $1.php [L]
