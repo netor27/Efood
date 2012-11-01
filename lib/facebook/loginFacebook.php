@@ -3,7 +3,7 @@
 //Application Configurations
 $app_id = "499264860093463";
 $app_secret = "f6ea22c4aab9f138fbd2eaea06f3dd69";
-$site_url = "http://efood.localhost";
+$site_url = "http://www.efood.mx";
 try {
     include_once "lib/facebook/src/facebook.php";
 } catch (Exception $e) {
