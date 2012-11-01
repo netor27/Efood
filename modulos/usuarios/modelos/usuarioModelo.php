@@ -1,6 +1,7 @@
 <?php
 
 require_once 'bd/conx.php';
+require_once 'modulos/usuarios/clases/Usuario.php';
 
 function crearUsuario($user) {
     global $conex;
@@ -170,13 +171,14 @@ function eliminarDireccion($idDireccion) {
 
 function getUsuarioFromEmail($email){
     global $conex;
-    $stmt = $conex->prepare("SELECT idUsuario,email,telefono,tipo,habilitado FROM usuario WHERE email = :email");
+    $stmt = $conex->prepare("SELECT idUsuario,email,password,telefono,tipo,habilitado FROM usuario WHERE email = :email");
     $stmt->bindParam(':email', $email);
     if ($stmt->execute()) {
         $row = $stmt->fetch();
         $user = new Usuario();
         $user->idUsuario = $row['idUsuario'];
         $user->email = $row['email'];
+        $user->password = $row['password'];
         $user->telefono = $row['telefono'];
         $user->tipo = $row['tipo'];
         $user->habilitado = $row['habilitado'];

@@ -5,10 +5,12 @@ require_once 'modulos/restaurantes/clases/Restaurante.php';
 
 session_start();
 
-//Archivo utilizado para loggear con facebook
-global $loginUrl;
-require_once 'lib/facebook/loginFacebook.php';
-
+if (!isset($_SESSION['email'])) {
+    //No hay usuario loggeado, cargamos lo de facebook
+    //Archivo utilizado para loggear con facebook
+    global $loginUrl;
+    require_once 'lib/facebook/loginFacebook.php';
+}
 global $msg;
 $msg = '';
 if (!empty($_GET['c']))
