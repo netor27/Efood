@@ -148,6 +148,13 @@ function agregaAlPedido() {
     echo json_encode($json);
 }
 
+function agregaDireccion() {
+    require_once('modulos/pedidos/modelos/pedidoModelo.php');
+    require_once 'modulos/usuarios/clases/Direccion.php';
+    $json = guardaDireccion();
+    echo json_encode($json);
+}
+
 function eliminarDelPedido() {
     require_once('modulos/pedidos/modelos/pedidoModelo.php');
     require_once 'modulos/pedidos/clases/PlatilloElementos.php';
@@ -159,14 +166,25 @@ function eliminarDelPedido() {
 
 function pedir() {
     require_once('modulos/pedidos/modelos/pedidoModelo.php');
+    require_once('modulos/usuarios/modelos/usuarioModelo.php');
     require_once 'modulos/pedidos/clases/PlatilloElementos.php';
     $idRestaurante = $_GET['i'];
     $pedidos = getPedidos($idRestaurante);
     $pedidoGenerado = mostrarPedidoGenerado($pedidos);
-    $errores = generarPedido($pedidos);
+    //$errores = generarPedido($pedidos);
+    $direcciones = getDireccionesRestauranteUsuario($_SESSION["idUsuario"],$idRestaurante);
     require_once('modulos/pedidos/vistas/pedir.php');
 }
 
+function avanzarPedido() {
+    require_once('modulos/pedidos/modelos/pedidoModelo.php');
+    require_once('modulos/usuarios/modelos/usuarioModelo.php');
+    require_once 'modulos/pedidos/clases/PlatilloElementos.php';
+    $idRestaurante = $_GET['i'];
+    $pedidos = getPedidos($idRestaurante);
+    //$errores = generarPedido($pedidos);
+    require_once('modulos/pedidos/vistas/pedidoPago.php');
+}
 function usuarioSolicitudRestaurante() {
     if (isset($_POST['nombre']) && isset($_POST['idColonia'])) {
         $msg = "";

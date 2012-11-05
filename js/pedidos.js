@@ -347,3 +347,34 @@ function getUrlVars() {
     });
     return vars;
 }
+
+function altaDir(){
+    var colonia = $("#idColonia").val();
+    var calle = $("#calle").val();
+    var numero = $("#numero").val();
+    var numeroint = $("#numeroint").val();
+    var referencia = $("#referencia").val();
+    
+    if(calle=="" || numero=="" || colonia=="" || colonia=="" || !$.isNumeric(numero)){
+        $('.requerido').css('background-color' ,'#F6CECE');
+    }else{
+        $.ajax({
+            type: "POST",
+            url: "pedidos.php?a=agregaDireccion",
+            data: ({
+                "colonia" : colonia,
+                "calle" : calle,
+                "numero" : numero,
+                "numeroint" : numeroint,
+                "referencia" : referencia
+            }),
+            dataType: "json",
+            success: function(json) {    
+                alert("Direccion Agregada!");
+            },
+            error: function (XMLHttpRequest, textStatus, errThrown) {
+                alert(textStatus + errThrown); 
+            }
+        });
+    }
+}

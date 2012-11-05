@@ -69,6 +69,9 @@ function guardaPedido() {
 
 
 
+
+
+
         
 //logica para que los valores se conviertan en los ids de la sesion $_SESSION['ingrediente'][id] para sacar los precios y demÃ¡s
     //luego seteamos las sesiones a null o le aplicamos el destroy con unset (no en este momento o pierdo todos los datos
@@ -129,25 +132,34 @@ function getPedidos($idRestaurante) {
     return $pedidos;
 }
 
-function getDirecciones($idUsuario) {
+function getDireccionesRestauranteUsuario($idUsuario,$idRestaurante) {
     global $conex;
-    $obtenDireccionesUsuario = "SELECT * FROM direccion WHERE idUsuario = :idUsuario";
-    $stmtP = $conex->prepare($obtenDireccionesUsuario);
-    $stmtP->bindParam(':idUsuario', $_SESSION['idUsuario']);
-    if ($stmtP->execute()) {
+    $stmt = $conex->prepare("SELECT idDireccion,idColonia,calle,numero,numeroInt,referencia FROM direccion WHERE idUsuario=:idUsuario AND idColonia in(SELECT idColonia FROM restaurantecolonia WHERE idRestaurante = :idRestaurante)");
+    $stmt->bindParam(':idUsuario', $idUsuario);
+    $stmt->bindParam(':idRestaurante', $idRestaurante);
+    if ($stmt->execute()) {
         $direcciones = array();
         $rows = $stmt->fetchAll();
-        $direccion = new Direccion();
-        $direccion->calle = $row["calle"];
-        $direccion->idColonia = $row["idColonia"];
-        $direccion->idDireccion = $row['idDireccion'];
-        $direccion->numero = $row["numero"];
-        $direccion->numeroInt = $row["numeroInt"];
-        $direccion->referencia = $row["referencia"];
-        array_push($direcciones, $direccion);
+        require_once 'modulos/usuarios/clases/Direccion.php';
+        $i = 0;
+        foreach ($rows as $row) {
+            $direccion = new Direccion();
+            $direccion->idDireccion = $row['idDireccion'];
+            $direccion->idColonia = $row['idColonia'];
+            $direccion->calle = $row['calle'];
+            $direccion->numero = $row['numero'];
+            $direccion->numeroInt = $row['numeroInt'];
+            $direccion->referencia = $row['referencia'];
+            $direcciones[$i] = $direccion;
+            $i++;
+        }
+        return $direcciones;
+    } else {
+        print_r($stmt->errorInfo());
+        return NULL;
     }
-    return direcciones;
 }
+
 
 function mostrarPedidoGenerado($pedido) {
     $pedidoResumen = "";
@@ -263,13 +275,12 @@ function generarPedido($pedido) {
                         foreach ($valor as $clv => $val) {
                             $stmtPI = $conex->prepare($insertPedidoIngrediente);
                             $stmtPI->bindParam(':idPedidoPlatillo', $idPedidoPlatillo);
-                            if (is_numeric($clv)){
+                            if (is_numeric($clv)) {
                                 $stmtPI->bindParam(':idIngrediente', $clv);
                                 $valPI = $stmtPI->execute();
                             }
                             else
                                 $valPI = true;
-                            
                         }
                     }
                 }
@@ -282,10 +293,10 @@ function generarPedido($pedido) {
                 print_r('Ocurrió un error y no se pudo realizar el pedido');
                 print_r($stmtPI->errorInfo());
                 if (!$valPI)
-                    //print_r('Fallo el ultimo');
-                if (!$valPP)
+                //print_r('Fallo el ultimo');
+                    if (!$valPP)
                     //print_r('Fallo el penultimo');
-                $errores = true;
+                        $errores = true;
                 $conex->rollBack();
             }
             //$_SESSION["'rest".$_GET['i']."'"] = null;
@@ -334,6 +345,30 @@ function utf8replace($cadena) {
 function eliminarPlatilloPedido() {
     unset($_SESSION["'rest" . $_GET['ir'] . "'"][$_GET['pc']]);
     $_SESSION["'rest" . $_GET['ir'] . "'"] = array_values($_SESSION["'rest" . $_GET['ir'] . "'"]);
+}
+
+function guardaDireccion() {
+    $colonia = $_POST['colonia'];
+    $calle = $_POST['calle'];
+    $numero = $_POST['numero'];
+    $numeroint = $_POST['numeroint'];
+    $referencia = $_POST['referencia'];
+
+    $val = false;
+
+    if ((isset($colonia) && $colonia != "") && (isset($calle) && $calle != "") && (isset($numero) && $numero != "")) {
+        global $conex;
+        $insertDireccion = "INSERT INTO direccion(idUsuario,idColonia,calle,numero,numeroint,referencia) VALUES(:idUsuario,:idColonia,:calle,:numero,:numeroint,:referencia)";
+        $stmtP = $conex->prepare($insertDireccion);
+        $stmtP->bindParam(':idUsuario', $_SESSION['idUsuario']);
+        $stmtP->bindValue(':idColonia', $colonia);
+        $stmtP->bindValue(':calle', $calle);
+        $stmtP->bindValue(':numero', $numero);
+        $stmtP->bindValue(':numeroint', $numeroint);
+        $stmtP->bindParam(':referencia', $referencia);
+        $val = $stmtP->execute();
+    }
+    return $val;
 }
 
 ?>
