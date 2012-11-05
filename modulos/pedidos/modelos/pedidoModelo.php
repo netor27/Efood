@@ -165,7 +165,7 @@ function mostrarPedidoGenerado($pedido) {
                         $pedidoResumen .= "Cantidad: " . $val[1] . "<br>"; //cantidad
                         $pedidoResumen .= "Precio: " . $val[3] . "<br><br>"; //total
                         $pedidoResumen .= "<span id=\"" . $val[8] . "\">";
-                        print_r($val[8]);
+                        //print_r($val[8]);
                         foreach ($caracteristicas as $value) {
                             $pedidoResumen .= $value;
                         }
@@ -263,11 +263,13 @@ function generarPedido($pedido) {
                         foreach ($valor as $clv => $val) {
                             $stmtPI = $conex->prepare($insertPedidoIngrediente);
                             $stmtPI->bindParam(':idPedidoPlatillo', $idPedidoPlatillo);
-                            if ($clv > 0)
+                            if (is_numeric($clv)){
                                 $stmtPI->bindParam(':idIngrediente', $clv);
+                                $valPI = $stmtPI->execute();
+                            }
                             else
-                                $stmtPI->bindValue(':idIngrediente', -1);
-                            $valPI = $stmtPI->execute();
+                                $valPI = true;
+                            
                         }
                     }
                 }
@@ -278,10 +280,11 @@ function generarPedido($pedido) {
                 //$_SESSION["'rest" . $idRestaurante . "'"] = null;
             } else {
                 print_r('Ocurrió un error y no se pudo realizar el pedido');
+                print_r($stmtPI->errorInfo());
                 if (!$valPI)
-                    print_r('Fallo el ultimo');
+                    //print_r('Fallo el ultimo');
                 if (!$valPP)
-                    print_r('Fallo el penultimo');
+                    //print_r('Fallo el penultimo');
                 $errores = true;
                 $conex->rollBack();
             }
