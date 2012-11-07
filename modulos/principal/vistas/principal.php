@@ -150,8 +150,8 @@ require_once('layout/headers/headFin.php');
                         <div class="span12">
                             <div class="contenidoBlog">
                                 <?php
-                                if (strlen($entry['contenido']) > 750) {
-                                    echo substr($entry['contenido'], 0, 750) . "...<br>";
+                                if (strlen($entry['contenido']) > 500) {
+                                    echo substr($entry['contenido'], 0, 500) . "...<br>";
                                     echo ' <a href="' . $entry['link'] . '"> Continuar leyendo..</a>';
                                 } else {
                                     echo $entry['contenido'];
@@ -162,15 +162,15 @@ require_once('layout/headers/headFin.php');
                     </div>
                 </div>
             </div>
-    </div>
-            <?php
-            $i++;
-        }
-        ?>
+        </div>
+        <?php
+        $i++;
+    }
+    ?>
 
-    </div>
-    <div class="row-fluid"><div class="span10"></div></div>
-    <div class="row-fluid"><div class="span10"></div></div>
+</div>
+<div class="row-fluid"><div class="span10"></div></div>
+<div class="row-fluid"><div class="span10"></div></div>
 </div>
 <?php
 require_once('layout/footer.php');

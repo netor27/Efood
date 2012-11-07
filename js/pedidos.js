@@ -65,8 +65,8 @@ $(document).ready(function(){
             var titulo = "<span class='tooltipNombre'>"+ element.attr( "nombre" ) + " <span class='tooltipPrecio'>$" + element.attr( "precio" ) + "</span>";
             var texto = element.attr("texto");
             var dom;
-            dom = '<div class="tooltipHeader">'+titulo+'</div>';
-            dom += '<div class="tooltipText">'+texto+'</div>';
+            dom = '<div class="tooltipHeaderNoDisponible">'+titulo+'</div>';
+            dom += '<div class="tooltipTextNoDisplonible">'+texto+'</div>';
             return dom;            
         }, 
         position:{ 

@@ -189,7 +189,12 @@ if (sizeof($restaurantes) <= 0) {
                 }
                 ?>
                 <div class="titulo">
-                    <?php echo $restaurante->nombre; ?>
+                    <?php
+                    echo $restaurante->nombre;
+                    if (!$restauranteAbierto) {
+                        echo " / Cerrado";
+                    }
+                    ?>
                 </div>
                 <div class="tiposComida">
                     <?php
@@ -302,9 +307,9 @@ if (sizeof($restaurantes) <= 0) {
                         </div>
                         <div class="span4">
                             <div class="row-fluid">
-                                <?php
-                                if ($restaurante->metodoEntrega != 0) {
-                                    ?>
+    <?php
+    if ($restaurante->metodoEntrega != 0) {
+        ?>
                                     <div class="span5 metodoEntrega">
                                         <img src="layout/imagenes/Home/img_Domicilio_86x39.png"/>                                    
                                     </div>                                    
@@ -315,17 +320,17 @@ if (sizeof($restaurantes) <= 0) {
                                     <div class="span5 offset1 metodoEntrega">
                                         <img src="layout/imagenes/Home/img_Recoger_64x40.png"/>                                    
                                     </div>                                    
-                                    <?php
-                                }
-                                ?>
+        <?php
+    }
+    ?>
                             </div>
                         </div>                    
                     </div>
                 </div>
                 <div class="realizarPedido span3">
                     <a href="pedidos.php?a=menu&i=<?php echo $restaurante->idRestaurante; ?>&ic=<?php echo $colonia->idColonia; ?>">
-                        <?php 
-                        if($restauranteAbierto)
+                        <?php
+                        if ($restauranteAbierto)
                             echo '<img src="layout/imagenes/resultadosBusqueda/btnRealizarPedido_180x45.png"/>';
                         else
                             echo '<img src="layout/imagenes/resultadosBusqueda/btnVerMenu.png"/>';

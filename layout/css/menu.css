@@ -85,7 +85,24 @@
     font-weight: bold;
 }
 
+.tooltipHeaderNoDisponible{
+    background: gray;
+
+    background-image:-webkit-linear-gradient(0,rgb(220,220,220) 0%,rgb(120,120,120) 99%);
+    background-image:-moz-linear-gradient(0,rgb(220,220,220) 0%,rgb(120,120,120) 99%);
+    background-image:-o-linear-gradient(0,rgb(220,220,220) 0%,rgb(120,120,120) 99%);
+    background-image:-ms-linear-gradient(0,rgb(220,220,220) 0%,rgb(120,120,120) 99%);
+
+    padding: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    font-weight: bold;
+}
+
 .tooltipText{
+    padding: 10px;
+}
+.tooltipTextNoDisplonible{
     padding: 10px;
 }
 
@@ -166,7 +183,7 @@
 
 .telefono{
     color:#ED3237;
-    
+
 }
 
 .textoEntrega{
