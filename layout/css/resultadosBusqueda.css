@@ -44,7 +44,7 @@ input.textoBlanco{
 select.selectAmarillo{
     position:relative;
     z-index:10;
-    width:152px !important;
+    width:220px !important;
     height:28px !important;
     line-height:26px;
 }
@@ -54,7 +54,7 @@ span.selectAmarillo{
     bottom:0;
     float:left;
     left:0;
-    width:152px;
+    width:220px;
     height:28px;
     text-indent:10px;
     background:url(../imagenes/resultadosBusqueda/selectBox_amarillo_152x28.png) no-repeat 0 0;
