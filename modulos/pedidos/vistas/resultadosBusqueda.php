@@ -132,6 +132,7 @@ if (sizeof($restaurantes) <= 0) {
             </div>
         </form>
     </div>
+    <!--
     <div id="ordenaContainer" class="right">
         <span id="ordenaContainerTexto">Ordena tus restaurantes</span>
         <form action="#" method="post">
@@ -142,6 +143,7 @@ if (sizeof($restaurantes) <= 0) {
             </div>
         </form>
     </div>
+    -->
 </div>
 <div id="separadorContainer">
     <img src="layout/imagenes/resultadosBusqueda/separador_856x10.png"/>
@@ -164,7 +166,7 @@ if (sizeof($restaurantes) <= 0) {
                 $aux = $aux . " tipoEntrega1";
                 break;
             case 2:
-                $aux = $aux . " tipoEntrega0 tipoEntrega1 tipoEntrega2";
+                $aux = $aux . " tipoEntrega2";
                 break;
         }
         $restauranteAbierto = restauranteAbiertoAhorita($restaurante->idRestaurante);
