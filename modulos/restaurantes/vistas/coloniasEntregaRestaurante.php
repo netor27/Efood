@@ -35,7 +35,7 @@ if (isset($error)) {
     ?>
 </div>
 <br>
-<a href="restaurantes.php">Regresar</a>
+<a class="offset1" href="restaurantes.php">Regresar</a>
 
 <?php
 require_once('layout/footer.php');

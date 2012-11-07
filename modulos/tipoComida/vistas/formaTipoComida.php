@@ -43,9 +43,9 @@ if (isset($error)) {
 <?php
 $tipoComidaLoggeado = getRestauranteLoggeado();
 if (isset($tipoComidaLoggeado)) {
-    echo '<a href="adminRestaurante.php">Regresar</a>';
+    echo '<a  class="offset1" href="adminRestaurante.php">Regresar</a>';
 } else {
-    echo '<a href="restaurantes.php">Regresar</a>';
+    echo '<a  class="offset1" href="restaurantes.php">Regresar</a>';
 }
 ?>
 
