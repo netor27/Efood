@@ -14,7 +14,7 @@ function enviarEmailDeConfirmacion($destinatario, $codigo){
     $asunto = "Confirmacion";
     $remitente = "no-reply@efood.com.mx";
 
-    $mensaje = $mensaje . ' <br>http://www.efood.com.mx/beta/correoConfirmacion.php?conf='.$codigo.'<br><br>';
+    $mensaje = $mensaje . ' <br>http://www.efood.com.mx/correoConfirmacion.php?conf='.$codigo.'<br><br>';
 
     $res = enviaMailSMTP($asunto, $mensaje, $remitente, $destinatario);
     return $res;

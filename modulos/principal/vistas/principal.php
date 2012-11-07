@@ -122,48 +122,50 @@ require_once('layout/headers/headFin.php');
         <?php
         $i = 0;
         foreach ($blogEntries as $entry) {
-            //Listamos las demás entradas
-            ?>
-            <div class="row-fluid blogEntry">
-                <div class="span3">
-                    <?php
-                    if ($i == 0) {
-                        //si es la primera entrada ponemos la imagen
-                        echo '<a href="http://testefood.blogspot.mx"><img src="layout/imagenes/Home/ultimasNoticias.png"></a>';
-                    }
-                    ?>
-                </div>
-                <div class="span9">
-                    <div class="row-fluid">
-                        <div class="span12">
-                            <div class="tituloBlog">
-                                <a href="<?php echo $entry['link']; ?>">
-                                    <?php echo $entry['titulo']; ?>
-                                </a>
-                            </div>
-                            <div class="fechaPublicadoBlog">
-                                <?php echo $entry['fecha']; ?>
+            if ($i < 3) {
+                //Listamos las demás entradas
+                ?>
+                <div class="row-fluid blogEntry">
+                    <div class="span3">
+                        <?php
+                        if ($i == 0) {
+                            //si es la primera entrada ponemos la imagen
+                            echo '<a href="http://testefood.blogspot.mx"><img src="layout/imagenes/Home/ultimasNoticias.png"></a>';
+                        }
+                        ?>
+                    </div>
+                    <div class="span9">
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <div class="tituloBlog">
+                                    <a href="<?php echo $entry['link']; ?>">
+                                        <?php echo $entry['titulo']; ?>
+                                    </a>
+                                </div>
+                                <div class="fechaPublicadoBlog">
+                                    <?php echo $entry['fecha']; ?>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row-fluid">
-                        <div class="span12">
-                            <div class="contenidoBlog">
-                                <?php
-                                if (strlen($entry['contenido']) > 500) {
-                                    echo substr($entry['contenido'], 0, 500) . "...<br>";
-                                    echo ' <a href="' . $entry['link'] . '"> Continuar leyendo..</a>';
-                                } else {
-                                    echo $entry['contenido'];
-                                }
-                                ?>
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <div class="contenidoBlog">
+                                    <?php
+                                    if (strlen($entry['contenido']) > 300) {
+                                        echo substr($entry['contenido'], 0, 300) . "...<br>";
+                                        echo ' <a href="' . $entry['link'] . '"> Continuar leyendo..</a>';
+                                    } else {
+                                        echo $entry['contenido'];
+                                    }
+                                    ?>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <?php
+            <?php
+        }
         $i++;
     }
     ?>
