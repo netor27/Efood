@@ -8,7 +8,7 @@ require_once('layout/headers/headFin.php');
 <?php
 if (sizeof($restaurantes) <= 0) {
     ?>
-    <div id="modalDialogNoHayRestaurantes" title="Ohh-ohh... Ya nos cachaste...">
+    <div id="modalDialogNoHayRestaurantes" title="Ohh-ohh... Ya nos cachaste..." style="display: none;">
         <div class="row-fluid">
             <div class="span12">
                 <p>
@@ -180,12 +180,10 @@ if (sizeof($restaurantes) <= 0) {
             <?php
             if (!$restauranteAbierto) {
                 ?>
-                <div class="restauranteHeaderCerrado">
+                <div class="restauranteHeader">
                     <?php
-                } else if ($i % 2 == 0) {
-                    echo '<div class="restauranteHeader row-fluid">';
                 } else {
-                    echo '<div class="restauranteHeaderPar">';
+                    echo '<div class="restauranteHeader row-fluid">';
                 }
                 ?>
                 <div class="titulo">
@@ -292,13 +290,13 @@ if (sizeof($restaurantes) <= 0) {
                             <div class="tipoPago row-fluid">
                                 <?php
                                 if ($restaurante->formaPago == 0) {
-                                    echo 'efectivo';
+                                    echo '<img src="layout/imagenes/resultadosBusqueda/Efectivo.png"/>';
                                 }
                                 if ($restaurante->formaPago == 1) {
                                     echo '<img src="layout/imagenes/resultadosBusqueda/tipoPagos_190x20.png"/>';
                                 }
                                 if ($restaurante->formaPago == 2) {
-                                    echo 'efectivo';
+                                    echo '<img src="layout/imagenes/resultadosBusqueda/Efectivo.png"/>';
                                     echo '<img src="layout/imagenes/resultadosBusqueda/tipoPagos_190x20.png"/>';
                                 }
                                 ?>

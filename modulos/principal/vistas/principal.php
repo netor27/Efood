@@ -20,21 +20,22 @@ require_once('layout/headers/headFin.php');
                 <span id="estoy_en">Estoy en:</span><br>
                 <input class="ui-corner-all" id="colonias" name="colonia" type="text" placeholder="¡Escribe tu colonia!"><br>
                 <input type="hidden" id="idColonia" name="idColonia">
-                <?php
-                if (isset($_GET['coloniaNoReconocida'])) {
-                    ?>
-                    <div style="color:red;">
-                        ¡Oopps! No pudimos encontrar tu colonia. ¿Te aseguraste de seleccionarla de nuestra lista? Por favor ingrésala nuevamente y selecciona tu colonia de la lista desplegable. ¡Gracias!
-                    </div>
-                    <?php
-                }
-                ?>
+
                 <div id="bottom_center_buscador">
+                    <div style="color:red; height: 40px;">
+                        <?php
+                        if (isset($_GET['coloniaNoReconocida'])) {
+                            ?>
+
+                            ¡Oopps! No pudimos encontrar tu colonia. Por favor ingrésala nuevamente y selecciona tu colonia de la lista desplegable. ¡Gracias!
+
+                            <?php
+                        }
+                        ?>
+                    </div>
                     <span>Hoy se me antoja:</span>
                     <br>
                     <span class="texto_parentesis">(Deja todos en blanco para ver todos los tipos de comida)</span>
-                    <br>
-                    <img src="layout/imagenes/Home/img_flecha_115x15.png">
                 </div>
             </div>
             <div class="span3">
@@ -49,7 +50,7 @@ require_once('layout/headers/headFin.php');
                                 <span class="span12 span_big">a Domicilio</span>
                             </div>
                             <div class="row-fluid">
-                                <span class="span12" style="margin-top: -9px;">con un solo click!</span>
+                                <span class="span12" style="margin-top: -13px;">con un solo click!</span>
                             </div>
                         </div>
                     </div>

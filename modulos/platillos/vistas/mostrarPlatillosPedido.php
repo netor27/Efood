@@ -5,7 +5,7 @@ require_once('layout/headers/headAutocompleteColonias.php');
 require_once('layout/headers/headSocialMedia.php');
 require_once('layout/headers/headFin.php');
 ?>
-<div id="modalDialogIngredientes" title="Aquí es al gusto">
+<div id="modalDialogIngredientes" title="Aquí es al gusto" style="display:none;">
 </div>
 <div id="buscadorContainer" class="row-fluid">
     <form method="get" action="pedidos.php">
@@ -158,13 +158,13 @@ if ($habilitado) {
                     <p class="textoDireccion">
                         <?php
                         if ($restaurante->formaPago == 0) {
-                            echo 'efectivo';
+                            echo '<img src="layout/imagenes/resultadosBusqueda/Efectivo.png"/>';
                         }
                         if ($restaurante->formaPago == 1) {
                             echo '<img src="layout/imagenes/resultadosBusqueda/tipoPagos_190x20.png"/>';
                         }
                         if ($restaurante->formaPago == 2) {
-                            echo 'efectivo';
+                            echo '<img src="layout/imagenes/resultadosBusqueda/Efectivo.png"/>';
                             echo '<img src="layout/imagenes/resultadosBusqueda/tipoPagos_190x20.png"/>';
                         }
                         ?>

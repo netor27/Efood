@@ -92,6 +92,20 @@ $(document).ready(function(){
     $("#colonias").click(function(){
         $(this).val("");
     });
+    
+    $(".restaurante").hover(function(){
+        if($(this).hasClass("restauranteAbierto")){
+            $(this).addClass("restauranteAbiertoHover");
+        }else{
+            $(this).addClass("restauranteCerradoHover");
+        }       
+    },function(){
+        if($(this).hasClass("restauranteAbierto")){
+            $(this).removeClass("restauranteAbiertoHover");
+        }else{
+            $(this).removeClass("restauranteCerradoHover");
+        }
+    });
 });
 
 function filtrarRestaurantes(){

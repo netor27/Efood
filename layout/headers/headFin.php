@@ -82,7 +82,7 @@
             $mensaje = getSessionMessage();
             if (isset($mensaje)) {
                 ?>
-                <div id="modalDialogSessionMessage">
+                <div id="modalDialogSessionMessage" style="display:none">
                     <?php echo $mensaje; ?>
                 </div>
                 <script>
@@ -102,7 +102,7 @@
             }
             ?>
             <!-- Dialogo para recomendar nuevos restaurantes -->
-            <div id="modalDialogRecomendarRestaurante" title="Recomendar un restaurante">
+            <div id="modalDialogRecomendarRestaurante" title="Recomendar un restaurante" style="display: none;">
                 <div class="row-fluid"><div class="span12"></div></div>
                 <div class="row-fluid">
                     <div class="span12">
