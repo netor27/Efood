@@ -56,9 +56,9 @@ class Platillo {
     }
 
     function printPlatilloPedido($tipoPlatillo, $tipoFila) {
-        echo '<div class="' . $tipoPlatillo . ' ' . $tipoFila . ' span6 popupPlatillo" id="' . $this->idPlatillo . '" nombre="'.$this->nombre.'" precio="'.$this->precioBase.'" texto="'.$this->descripcion.'">';
+        echo '<div class="' . $tipoPlatillo . ' ' . $tipoFila . ' span6 popupPlatillo" id="' . $this->idPlatillo . '" nombre="' . $this->nombre . '" precio="' . $this->precioBase . '" texto="' . $this->descripcion . '">';
         echo '  <div class="span8 offset1">';
-        if(strlen($this->nombre) < 25)
+        if (strlen($this->nombre) < 25)
             echo '      <span class="menuTexto">';
         else
             echo '      <span class="menuTextoChico">';
@@ -73,14 +73,21 @@ class Platillo {
         echo '</div>';
     }
 
-    function printPlatilloPedidoDeshabilitado() {
-        echo '<div id="ped' . $this->idPlatillo . '" class="descripcionpedido">';
-        echo '' . $this->nombre . '';
-        echo ' $' . $this->precioBase . '';
-        //echo '' . $this->hint . '';
-        echo 'Fuera de horario';
-        echo '<span style="visibility:hidden; color:red;" id="des' . $this->idPlatillo . '">' . $this->descripcion . '</span>';
-        // echo "<td><form method='POST' action='pedidos.php?a=obtenIngredientes'><input type='hidden' value=".$this->idPlatillo." name='platillo'/><input type='submit' value='enviar'/></form></td>";
+    function printPlatilloPedidoDeshabilitado($tipoPlatillo, $tipoFila) {
+        echo '<div class="' . $tipoPlatillo . ' ' . $tipoFila . ' span6 popupPlatilloNoDisponible" id="' . $this->idPlatillo . '" nombre="' . $this->nombre . '" precio="' . $this->precioBase . '" texto="' . $this->descripcion . '">';
+        echo '  <div class="span8 offset1">';
+        if (strlen($this->nombre) < 25)
+            echo '      <span class="menuTexto">';
+        else
+            echo '      <span class="menuTextoChico">';
+        echo '          ' . $this->nombre;
+        echo '      </span>';
+        echo '  </div>';
+        echo '  <div class="span3">';
+        echo '      <span class="menuTexto">$ ';
+        echo '          ' . $this->precioBase;
+        echo '      </span>';
+        echo '  </div>';
         echo '</div>';
     }
 

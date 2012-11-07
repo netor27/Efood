@@ -27,6 +27,14 @@
     background: #ffd525;
 }
 
+.popupPlatilloNoDisponible{
+    cursor: pointer;
+}
+
+.popupPlatilloNoDisponible:hover{
+    background: rgb(143,143,143);
+}
+
 .filaPar{
     background: #e1eef9;
     height: 37px;

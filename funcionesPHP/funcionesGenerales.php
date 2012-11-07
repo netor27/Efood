@@ -286,4 +286,23 @@ function restauranteAbiertoAhorita($idRestaurante){
     //cualquier otro caso, esta cerrado
     return $habilitado;
 }
+
+function platilloDisponibleAhorita($idPlatillo){
+    $habilitado = false;
+    require_once 'modulos/platillos/modelos/platilloModelo.php';    
+    $hora = getHorarioPlatillo($idPlatillo);
+    $diaIni = getDay() . 'Ini';
+    $diaFin = getDay() . 'Fin';
+    
+    //Si estamos dentro del rango, es válido
+    if (getTime24() > $hora->$diaIni && getTime24() < $hora->$diaFin)
+        $habilitado = true;
+    
+    //Si el inicio es 00:00:00 y el fin es 23:59:00, esta abierto todo el día
+    if ($hora->$diaIni == '00:00:00' && $hora->$diaFin == '23:59:00')
+        $habilitado = true;
+    
+    //cualquier otro caso, esta cerrado
+    return $habilitado;
+}
 ?>
