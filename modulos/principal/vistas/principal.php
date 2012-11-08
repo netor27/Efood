@@ -152,9 +152,9 @@ require_once('layout/headers/headFin.php');
                             <div class="span12">
                                 <div class="contenidoBlog">
                                     <?php
-                                    if (strlen($entry['contenido']) > 300) {
-                                        echo substr($entry['contenido'], 0, 300) . "...<br>";
-                                        echo ' <a href="' . $entry['link'] . '"> Continuar leyendo..</a>';
+                                    if (strlen($entry['contenido']) > 750) {
+                                        echo substr($entry['contenido'], 0, 750) . "...<br>";
+                                        echo ' <a target="_blank" href="' . $entry['link'] . '"> Continuar leyendo..</a>';
                                     } else {
                                         echo $entry['contenido'];
                                     }

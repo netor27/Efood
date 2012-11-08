@@ -7,12 +7,12 @@ require_once('layout/headers/headFin.php');
 <div class="row-fluid"><div class="span12"></div></div>
 <div class="row-fluid"><div class="span12"></div></div>
 <div class="row-fluid">
-    <div class="span6 offset1">
+    <div class="span11 offset1">
         <h2>Horario del restaurante: "<?php echo $restaurante->nombre; ?>"</h2>
     </div>    
 </div>
 <div class="row-fluid">
-    <div class="span6 offset2">
+    <div class="span11 offset1">
         <?php
         if (isset($error)) {
             echo '<h2 style="color: red">' . $error . '</h2>';
@@ -30,7 +30,7 @@ require_once('layout/headers/headFin.php');
             ?>
         </table>
     </div>
-    <div class="span8">
+    <div class="span9">
         <div class="row-fluid">
             <div class="span12">
                 <h3>Actualizar Horario</h3>
