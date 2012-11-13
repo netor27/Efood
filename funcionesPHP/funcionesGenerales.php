@@ -229,8 +229,7 @@ function validarRestauranteLoggeadoId($idRestaurante) {
 }
 
 function getTime24() {
-    date_default_timezone_set("Mexico/General");
-    $hora = date('H:i:s', time() + 1 - 3600 * date('I') + (60 * 60));
+    $hora = date('H:i:s');
     return $hora;
 }
 
