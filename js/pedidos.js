@@ -98,7 +98,8 @@ function obtenerIngredientes(id, disponible){
             txt = txt + "<div class='row-fluid'><div class='detallesPrecio'>$ "+json[0].precioBase+"</div></div>";
             if(json[0].hint!="" || json[0].hint!=null || json[0].hint!="null")
                 txt = txt + "<div class='row-fluid'><div class='detallesDescripcion'>" + json[0].hint+"</div></div>";
-            
+            if(json[0].descripcion !="" || json[0].descripcion != null || json[0].descripcion != "null")
+                txt = txt + "<div class='row-fluid'><div class='detallesDescripcion'>" + json[0].descripcion+"</div></div>";
             var grupo = json[0].nombreGrupo;
             var checked = true;
             var idIngredienteClick = new Array();
