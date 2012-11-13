@@ -44,7 +44,7 @@ input.textoBlanco{
 select.selectAmarillo{
     position:relative;
     z-index:10;
-    width:152px !important;
+    width:220px !important;
     height:28px !important;
     line-height:26px;
 }
@@ -54,7 +54,7 @@ span.selectAmarillo{
     bottom:0;
     float:left;
     left:0;
-    width:152px;
+    width:220px;
     height:28px;
     text-indent:10px;
     background:url(../imagenes/resultadosBusqueda/selectBox_amarillo_152x28.png) no-repeat 0 0;
@@ -118,56 +118,74 @@ span.selectAmarillo{
     width: 850px;
     padding-top: 15px;
 }
-.restauranteHeader{
+.restauranteAbierto .restauranteHeader{
     width: 850px;
     height: 56px;
-    background:url(../imagenes/resultadosBusqueda/HeaderRojo_850x56.png) no-repeat 0 0;
+    background:url(../imagenes/resultadosBusqueda/Header.png) no-repeat 0 0;
 }
-.restauranteHeader .titulo{
+.restauranteAbierto .restauranteHeader .titulo{
     color:#ffd525;
     font-size:20px;
     font-weight: bold;
     margin-left: 20px;
     padding-top: 15px;
 }
-.restauranteHeader .tiposComida{
+.restauranteAbierto .restauranteHeader .tiposComida{
     color:#ffffff;
     font-size:10px;
     margin-left: 20px;
 }
 
-.restauranteHeaderCerrado{
+.restauranteAbiertoHover .restauranteHeader{
     width: 850px;
     height: 56px;
-    background:url(../imagenes/resultadosBusqueda/HeaderGris_850x56.png) no-repeat 0 0;
+    background:url(../imagenes/resultadosBusqueda/HeaderHover.png) no-repeat 0 0;
 }
-.restauranteHeaderCerrado .titulo{
-    color:#ffd525;
-    font-size:20px;
-    font-weight: bold;
-    margin-left: 20px;
-    padding-top: 15px;
-}
-.restauranteHeaderCerrado .tiposComida{
-    color:#ffffff;
-    font-size:10px;
-    margin-left: 20px;
-}
-
-.restauranteHeaderPar{
-    width: 850px;
-    height: 56px;
-    background:url(../imagenes/resultadosBusqueda/HeaderAmarillo_850x56.png) no-repeat 0 0;
-}
-.restauranteHeaderPar .titulo{
+.restauranteAbiertoHover .restauranteHeader .titulo{
     color:#ED3237;
     font-size:20px;
     font-weight: bold;
     margin-left: 20px;
     padding-top: 15px;
 }
-.restauranteHeaderPar .tiposComida{
+.restauranteAbiertoHover .restauranteHeader .tiposComida{
     color:#373435;
+    font-size:10px;
+    margin-left: 20px;
+}
+
+.restauranteCerrado .restauranteHeader{
+    width: 850px;
+    height: 56px;
+    background:url(../imagenes/resultadosBusqueda/HeaderCerrado.png) no-repeat 0 0;
+}
+.restauranteCerrado .restauranteHeader .titulo{
+    color:#ffd525;
+    font-size:20px;
+    font-weight: bold;
+    margin-left: 20px;
+    padding-top: 15px;
+}
+.restauranteCerrado .restauranteHeader .tiposComida{
+    color:#ffffff;
+    font-size:10px;
+    margin-left: 20px;
+}
+
+.restauranteCerradoHover .restauranteHeader{
+    width: 850px;
+    height: 56px;
+    background:url(../imagenes/resultadosBusqueda/HeaderCerradoHover.png) no-repeat 0 0;
+}
+.restauranteCerradoHover .restauranteHeader .titulo{
+    color:#ffd525;
+    font-size:20px;
+    font-weight: bold;
+    margin-left: 20px;
+    padding-top: 15px;
+}
+.restauranteCerradoHover .restauranteHeader .tiposComida{
+    color:#ffffff;
     font-size:10px;
     margin-left: 20px;
 }

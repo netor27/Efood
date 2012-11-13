@@ -5,7 +5,7 @@ require_once('layout/headers/headAutocompleteColonias.php');
 require_once('layout/headers/headSocialMedia.php');
 require_once('layout/headers/headFin.php');
 ?>
-<div id="modalDialogIngredientes" title="Aquí es al gusto">
+<div id="modalDialogIngredientes" title="Aquí es al gusto" style="display:none;">
 </div>
 <div id="buscadorContainer" class="row-fluid">
     <form method="get" action="pedidos.php">
@@ -59,7 +59,7 @@ switch ($restaurante->metodoEntrega) {
         break;
 }
 
-if (restauranteAbiertoAhorita($restaurante->idRestaurante)) {
+if ($habilitado) {
     $aux = $aux . " restauranteAbierto";
 } else {
     $aux = $aux . " restauranteCerrado";
@@ -70,12 +70,12 @@ if (restauranteAbiertoAhorita($restaurante->idRestaurante)) {
     if ($habilitado) {
         ?>
         <div class="restauranteHeader row-fluid">
-        <?php
-    } else {
-        echo '<div class="restauranteHeaderCerrado row-fluid">';
-    }
-    ?>
-    
+            <?php
+        } else {
+            echo '<div class="restauranteHeaderCerrado row-fluid">';
+        }
+        ?>
+
         <div class="titulo">
             <?php echo $restaurante->nombre; ?>
         </div>
@@ -158,13 +158,13 @@ if (restauranteAbiertoAhorita($restaurante->idRestaurante)) {
                     <p class="textoDireccion">
                         <?php
                         if ($restaurante->formaPago == 0) {
-                            echo 'efectivo';
+                            echo '<img src="layout/imagenes/resultadosBusqueda/Efectivo.png"/>';
                         }
                         if ($restaurante->formaPago == 1) {
                             echo '<img src="layout/imagenes/resultadosBusqueda/tipoPagos_190x20.png"/>';
                         }
                         if ($restaurante->formaPago == 2) {
-                            echo 'efectivo';
+                            echo '<img src="layout/imagenes/resultadosBusqueda/Efectivo.png"/>';
                             echo '<img src="layout/imagenes/resultadosBusqueda/tipoPagos_190x20.png"/>';
                         }
                         ?>
@@ -273,34 +273,32 @@ $_SESSION['tipoGastoEnvio'] = $restaurante->tipoGastoEnvio;
             $tipoPlatillo = "";
             $tipoFila = "";
             if (isset($platillos)) {
-                if ($habilitado) {
-                    //el restaurante esta abierto, hay que validar cada platillo con su horario
-                    foreach ($platillos as $platillo) {
-                        if ($contador % 2 == 0) {
-                            //inicia un renglón           
-                            echo '<div class="row-fluid">';
-                            $tipoPlatillo = "platilloPar";
-                            $filaPar = !$filaPar;
-                            if ($filaPar) {
-                                $tipoFila = "filaPar";
-                            } else {
-                                $tipoFila = "filaNon";
-                            }
+                //el restaurante esta abierto, hay que validar cada platillo con su horario
+                foreach ($platillos as $platillo) {
+                    if ($contador % 2 == 0) {
+                        //inicia un renglón           
+                        echo '<div class="row-fluid">';
+                        $tipoPlatillo = "platilloPar";
+                        $filaPar = !$filaPar;
+                        if ($filaPar) {
+                            $tipoFila = "filaPar";
                         } else {
-                            $tipoPlatillo = "platilloNon";
+                            $tipoFila = "filaNon";
                         }
+                    } else {
+                        $tipoPlatillo = "platilloNon";
+                    }
 
+                    if ($habilitado && platilloDisponibleAhorita($platillo->idPlatillo)) {
                         $platillo->printPlatilloPedido($tipoPlatillo, $tipoFila);
-                        if ($contador % 2 == 1) {
-                            echo '</div>'; //termina el renglón
-                        }
-                        $contador++;
+                    } else {
+                        $platillo->printPlatilloPedidoDeshabilitado($tipoPlatillo, $tipoFila);
                     }
-                } else {
-                    //el restaurante esta cerrado, no se puede pedir ningún platillo
-                    foreach ($platillos as $platillo) {
-                        $platillo->printPlatilloPedidoDeshabilitado();
+
+                    if ($contador % 2 == 1) {
+                        echo '</div>'; //termina el renglón
                     }
+                    $contador++;
                 }
             }
             ?>

@@ -13,7 +13,10 @@ $(document).ready(function(){
         resizable:false 
     });
     $(".popupPlatillo").click(function(){
-        obtenerIngredientes(this.id);
+        obtenerIngredientes(this.id, true);
+    });
+    $(".popupPlatilloNoDisponible").click(function(){
+        obtenerIngredientes(this.id, false);
     });
     $(".popuppedir").click(function(){
         pedir(this.id);
@@ -53,8 +56,28 @@ $(document).ready(function(){
         },
         show: "fade"
     });
+    
+    $( ".popupPlatilloNoDisponible" ).tooltip({
+        items: ".popupPlatilloNoDisponible",
+        tooltipClass: "tooltipClass",
+        content: function(){
+            var element = $( this );
+            var titulo = "<span class='tooltipNombre'>"+ element.attr( "nombre" ) + " <span class='tooltipPrecio'>$" + element.attr( "precio" ) + "</span>";
+            var texto = element.attr("texto");
+            var dom;
+            dom = '<div class="tooltipHeaderNoDisponible">'+titulo+'</div>';
+            dom += '<div class="tooltipTextNoDisplonible">'+texto+'</div>';
+            return dom;            
+        }, 
+        position:{ 
+            my: "left bottom-10",
+            at: "center top",
+            collision: "none none"
+        },
+        show: "fade"
+    });
 });
-function obtenerIngredientes(id){
+function obtenerIngredientes(id, disponible){
     //Va a obtener la informaciÃ³n en ajax para no tener que refrescar la pÃ¡gina
     //El id del platillo lo obtenemos con el atributo de cada "liga"
     $.ajax({
@@ -174,11 +197,15 @@ function obtenerIngredientes(id){
                 txt = txt + "</div>";
             txt = txt + "</div></div>";//cerramos el ultimo cuadro amarillo
             //txt = txt + "<div class='row-fluid'><div class='span12'></div></div>";//para dejar una linea en blanco
-            txt = txt + "<div class='row-fluid especificaciones'>Especificaciones:</div>";
-            txt = txt + "<div class='row-fluid especificacionesTexto'><textarea class='span10 offset1' rows='2' name=\"especificaciones\" id=\"especificaciones\"></textarea></div>";   
-            txt = txt + "<div class='row-fluid'>";
-            txt = txt + "   <div class='span5 cantidad'><span>Cantidad:</span><input class='span3' type='text' id='cantidad' name='cantidad' value='1'/></div>";
-            txt = txt + "   <div class='span5 '><img id=\"agregarpedido\" src='layout/imagenes/Menu/btnAnadirPedido.png'></div>";
+            if(disponible){
+                txt = txt + "<div class='row-fluid especificaciones'>Especificaciones:</div>";
+                txt = txt + "<div class='row-fluid especificacionesTexto'><textarea class='span10 offset1' rows='2' name=\"especificaciones\" id=\"especificaciones\"></textarea></div>";   
+                txt = txt + "<div class='row-fluid'>";
+                txt = txt + "   <div class='span5 cantidad'><span>Cantidad:</span><input class='span3' type='text' id='cantidad' name='cantidad' value='1'/></div>";
+                txt = txt + "   <div class='span5 '><img id=\"agregarpedido\" src='layout/imagenes/Menu/btnAnadirPedido.png'></div>";
+            }else{
+                txt = txt + "<div class='row-fluid especificaciones'>Este platillo no está disponible ahorita</div>";
+            }
             txt = txt + "</div>";            
             txt = txt + "</form>";
             txt = txt + "</div>";
@@ -195,10 +222,13 @@ function obtenerIngredientes(id){
             $(".ui-widget-overlay").on("click", function(){
                 $("#modalDialogIngredientes").dialog("close");
             });
-            //habilito el click al boton que acabo de crear "agregarpedido"
-            $("#agregarpedido").bind("click", function(event) {
-                agregarPedido();
-            });
+            
+            if(disponible){
+                //habilito el click al boton que acabo de crear "agregarpedido"
+                $("#agregarpedido").bind("click", function(event) {
+                    agregarPedido();
+                });
+            }
             
             $(".hab").bind("click", function(event) {
                 eventos(this);                

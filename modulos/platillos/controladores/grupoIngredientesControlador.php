@@ -34,7 +34,7 @@ function mostrar() {
         echo GrupoIngredientes::printGrupoIngredientesHeader();
         $grupoIngredientes->printGrupoIngredientes();
         echo '</table>';
-        echo '<a href="grupoIngredientes.php?i=' . $idPlatillo . '">Regresar</a>';
+        echo '<a  class="offset1" href="grupoIngredientes.php?i=' . $idPlatillo . '">Regresar</a>';
     } else {
         goToIndex();
     }

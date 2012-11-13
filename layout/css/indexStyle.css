@@ -56,7 +56,7 @@
 #bottom_center_buscador{
     margin: 0 auto;
     text-align: center;
-    padding-top: 20px;
+
 }
 
 #top_buscador_center span.texto_parentesis{
@@ -65,8 +65,9 @@
 }
 
 #lo_nuevo{
-    overflow: hidden;
     text-align: center;
+    margin-left: -35px;
+    margin-top: 35px;
 }
 #lo_nuevo img, #lo_nuevo span, #lo_nuevo div{
     text-align: center;
@@ -80,6 +81,7 @@
 
 #lo_nuevo #lo_nuevo_texto{
     text-align: center;
+    margin-top: -15px;
 }
 
 #lo_nuevo #lo_nuevo_texto .span_big{
@@ -87,7 +89,7 @@
     font-size: 23.5px;
     text-align: center;
     font-weight: bold;
-    line-height: 12px;
+    line-height: 6px;
 }
 
 
@@ -237,3 +239,35 @@
     text-decoration: none;
 }
 
+.contenedorLikes{
+    border-style:groove;
+    border-width:0px;
+    -webkit-box-shadow:rgba(112, 107, 99, 0.611765) -1px 0px 41px -3px inset;
+    -moz-box-shadow:rgba(112, 107, 99, 0.611765) -1px 0px 41px -3px inset;
+    box-shadow:rgba(112, 107, 99, 0.611765) -1px 0px 41px -3px inset;
+    padding:15px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    border-radius:5px;
+}
+
+.likeSoloSi{
+    color: #ED3237;
+    font-weight: bolder;
+    font-size: 21px;
+    margin-top: 57px; 
+}
+
+
+.comoSeCome{
+    color: #ED3237;
+    font-weight: bolder;
+    font-size: 30px;
+    text-align: center;
+    margin-top: -15px;
+}
+
+.comoSeComeTexto{
+    font-weight: bold;
+    margin-top: 15px;
+}

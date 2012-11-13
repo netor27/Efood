@@ -20,21 +20,22 @@ require_once('layout/headers/headFin.php');
                 <span id="estoy_en">Estoy en:</span><br>
                 <input class="ui-corner-all" id="colonias" name="colonia" type="text" placeholder="¡Escribe tu colonia!"><br>
                 <input type="hidden" id="idColonia" name="idColonia">
-                <?php
-                if (isset($_GET['coloniaNoReconocida'])) {
-                    ?>
-                    <div style="color:red;">
-                        ¡Oopps! No pudimos encontrar tu colonia. ¿Te aseguraste de seleccionarla de nuestra lista? Por favor ingrésala nuevamente y selecciona tu colonia de la lista desplegable. ¡Gracias!
-                    </div>
-                    <?php
-                }
-                ?>
+
                 <div id="bottom_center_buscador">
+                    <div style="color:red; height: 40px;">
+                        <?php
+                        if (isset($_GET['coloniaNoReconocida'])) {
+                            ?>
+
+                            ¡Oopps! No pudimos encontrar tu colonia. Por favor ingrésala nuevamente y selecciona tu colonia de la lista desplegable. ¡Gracias!
+
+                            <?php
+                        }
+                        ?>
+                    </div>
                     <span>Hoy se me antoja:</span>
                     <br>
                     <span class="texto_parentesis">(Deja todos en blanco para ver todos los tipos de comida)</span>
-                    <br>
-                    <img src="layout/imagenes/Home/img_flecha_115x15.png">
                 </div>
             </div>
             <div class="span3">
@@ -49,7 +50,7 @@ require_once('layout/headers/headFin.php');
                                 <span class="span12 span_big">a Domicilio</span>
                             </div>
                             <div class="row-fluid">
-                                <span class="span12" style="margin-top: -9px;">con un solo click!</span>
+                                <span class="span12" style="margin-top: -13px;">con un solo click!</span>
                             </div>
                         </div>
                     </div>
@@ -118,60 +119,94 @@ require_once('layout/headers/headFin.php');
     </div>
 </div>
 <div class="row-fluid">
-    <div class="span10 offset1">
+    <div class="span7" style="padding-left:35px">
+        <div class="row-fluid">
+            <a href="http://testefood.blogspot.mx"><img src="layout/imagenes/Home/ultimasNoticias.png"></a>
+        </div>        
         <?php
         $i = 0;
         foreach ($blogEntries as $entry) {
-            //Listamos las demás entradas
-            ?>
-            <div class="row-fluid blogEntry">
-                <div class="span3">
-                    <?php
-                    if ($i == 0) {
-                        //si es la primera entrada ponemos la imagen
-                        echo '<a href="http://testefood.blogspot.mx"><img src="layout/imagenes/Home/ultimasNoticias.png"></a>';
-                    }
-                    ?>
-                </div>
-                <div class="span9">
-                    <div class="row-fluid">
-                        <div class="span12">
-                            <div class="tituloBlog">
-                                <a href="<?php echo $entry['link']; ?>">
-                                    <?php echo $entry['titulo']; ?>
-                                </a>
-                            </div>
-                            <div class="fechaPublicadoBlog">
-                                <?php echo $entry['fecha']; ?>
+            if ($i < 3) {
+                //Listamos las demás entradas
+                ?>
+                <div class="row-fluid blogEntry">
+                    <div class="span12">
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <div class="tituloBlog">
+                                    <a href="<?php echo $entry['link']; ?>">
+                                        <?php echo $entry['titulo']; ?>
+                                    </a>
+                                </div>
+                                <div class="fechaPublicadoBlog">
+                                    <?php echo $entry['fecha']; ?>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row-fluid">
-                        <div class="span12">
-                            <div class="contenidoBlog">
-                                <?php
-                                if (strlen($entry['contenido']) > 750) {
-                                    echo substr($entry['contenido'], 0, 750) . "...<br>";
-                                    echo ' <a href="' . $entry['link'] . '"> Continuar leyendo..</a>';
-                                } else {
-                                    echo $entry['contenido'];
-                                }
-                                ?>
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <div class="contenidoBlog">
+                                    <?php
+                                    if (strlen($entry['contenido']) > 750) {
+                                        echo substr($entry['contenido'], 0, 750) . "...";
+                                        echo '</div>'; //Ponemos este tag porque "seguramente" 
+                                        //hay un div sin cerrar en el contenido del blog.   
+                                        echo ' <a target="_blank" href="' . $entry['link'] . '"> Continuar leyendo..</a>';
+                                    } else {
+                                        echo $entry['contenido'];
+                                    }
+                                    ?>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-    </div>
-            <?php
+
+                <?php
+            }
             $i++;
         }
         ?>
-
     </div>
-    <div class="row-fluid"><div class="span10"></div></div>
-    <div class="row-fluid"><div class="span10"></div></div>
+    <div class="span5">
+        <div class="row-fluid ">
+            <div class="span10 contenedorLikes">
+                <div class="row-fluid">
+                    <div class="span6 likeSoloSi">
+                        "Like" sólo si
+                    </div>
+                    <div class="span6">
+                        <img src="layout/imagenes/Home/Gorrito_corazon.png">
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="fb-like" data-send="false" data-width="300" data-show-faces="true" data-font="tahoma"></div>
+                </div>
+                <div class="row-fluid">
+                    <a href="https://twitter.com/eFoodMX" class="twitter-follow-button" data-show-count = true data-lang="es">Follow @eFoodMX</a>
+                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<div class="row-fluid"><div class="span12 "></div></div>
+<div class="row-fluid">
+    <div class="span10 offset1">
+        <img src="layout/imagenes/Home/SeparadorBlog.png">
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span8 offset2 comoSeCome">
+            ¿eFood? ... Y cómo se come?!
+    </div>    
+</div>
+<div class="row-fluid">
+    <div class="span10 offset1 comoSeComeTexto">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse adipiscing velit quis sapien ullamcorper at viverra lacus eleifend. Maecenas nisi erat, pulvinar a interdum at, rhoncus vel orci. In blandit risus vitae erat posuere et tincidunt enim pharetra. Quisque congue, nulla at rutrum hendrerit, quam ligula ultrices augue, sed volutpat eros diam in ante. Sed diam tortor, mollis non vehicula sed, ultricies eget enim. Nunc dictum, sapien at facilisis facilisis, ante ante placerat nulla, molestie sodales erat elit vitae nisl. Mauris 
+    </div>    
+</div>
+
 <?php
 require_once('layout/footer.php');
 ?>

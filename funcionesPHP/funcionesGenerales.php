@@ -229,8 +229,7 @@ function validarRestauranteLoggeadoId($idRestaurante) {
 }
 
 function getTime24() {
-    date_default_timezone_set("Mexico/General");
-    $hora = date('H:i:s', time() + 1 - 3600 * date('I') + (60 * 60));
+    $hora = date('H:i:s');
     return $hora;
 }
 
@@ -287,7 +286,27 @@ function restauranteAbiertoAhorita($idRestaurante){
     return $habilitado;
 }
 
+<<<<<<< HEAD
 function isLogued(){
     return (isset($_SESSION["idUsuario"]) && $_SESSION["idUsuario"]!=null);
+=======
+function platilloDisponibleAhorita($idPlatillo){
+    $habilitado = false;
+    require_once 'modulos/platillos/modelos/platilloModelo.php';    
+    $hora = getHorarioPlatillo($idPlatillo);
+    $diaIni = getDay() . 'Ini';
+    $diaFin = getDay() . 'Fin';
+    
+    //Si estamos dentro del rango, es válido
+    if (getTime24() > $hora->$diaIni && getTime24() < $hora->$diaFin)
+        $habilitado = true;
+    
+    //Si el inicio es 00:00:00 y el fin es 23:59:00, esta abierto todo el día
+    if ($hora->$diaIni == '00:00:00' && $hora->$diaFin == '23:59:00')
+        $habilitado = true;
+    
+    //cualquier otro caso, esta cerrado
+    return $habilitado;
+>>>>>>> origin/master
 }
 ?>

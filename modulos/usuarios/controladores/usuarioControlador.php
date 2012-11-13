@@ -1,7 +1,7 @@
 <?php
 
 function alta() {
-    require_once 'modulos/usuarios/vistas/registro.html';
+    require_once 'modulos/usuarios/vistas/registro.php';
 }
 
 function altaSubmit() {
@@ -57,13 +57,14 @@ function baja() {
 
         $id = eliminarUsuario($idUsuario);
         if ($id >= 1) {
-            $mensaje = 'Usuario Eliminado';
+            setSessionMessage('Usuario Eliminado');
         } else {
-            $mensaje = 'Hubo un error al eliminar el usuario';
+            setSessionMessage('Hubo un error al eliminar el usuario');
         }
-        require_once('funcionesPHP/funcionesGenerales.php');
+        redirect("/usuarios");
+    } else {
+        goToIndex();
     }
-    goToIndex();
 }
 
 function modificacion() {
@@ -81,7 +82,7 @@ function modificacion() {
     } else {
         $mensaje = 'No has iniciado sesión<br><a href="usuarios.php">Regresar</a>';
     }
-    require_once 'modulos/usuarios/vistas/edicion.html';
+    require_once 'modulos/usuarios/vistas/edicion.php';
 }
 
 function modificacionSubmit() {
@@ -138,7 +139,7 @@ function modificacionDireccion() {
     } else {
         $mensaje = 'Error en los datos<br><a href="usuarios.php">Regresar</a>';
     }
-    require_once 'modulos/usuarios/vistas/ediciondir.html';
+    require_once 'modulos/usuarios/vistas/ediciondir.php';
 }
 
 function modificacionDireccionSubmit() {
@@ -170,7 +171,7 @@ function mostrar() {
         require_once 'modulos/principal/modelos/login.php';
         confirmBoxBaja();
         $usuarios = getUsuarios();
-        require_once 'modulos/usuarios/vistas/mostrarUsuarios.html';
+        require_once 'modulos/usuarios/vistas/mostrarUsuarios.php';
     } else {
         goToIndex();
     }

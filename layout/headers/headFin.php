@@ -76,13 +76,13 @@
             <div class="span6" id="menuHeader">
                 <a href="#"><img src="layout/imagenes/Home/btn_MieFood_76x50.png"></a>
                 <a href="#"><img src="layout/imagenes/Home/btn_TengoHambre_76x50.png"></a>
-                <a href="http://testefood.blogspot.mx"><img src="layout/imagenes/Home/btn_Blog_76x50.png"></a>
+                <a href="http://blog.efood.com.mx/" target="_blank"><img src="layout/imagenes/Home/btn_Blog_76x50.png"></a>
             </div>
             <?php
             $mensaje = getSessionMessage();
             if (isset($mensaje)) {
                 ?>
-                <div id="modalDialogSessionMessage">
+                <div id="modalDialogSessionMessage" style="display:none">
                     <?php echo $mensaje; ?>
                 </div>
                 <script>
@@ -102,7 +102,7 @@
             }
             ?>
             <!-- Dialogo para recomendar nuevos restaurantes -->
-            <div id="modalDialogRecomendarRestaurante" title="Recomendar un restaurante">
+            <div id="modalDialogRecomendarRestaurante" title="Recomendar un restaurante" style="display: none;">
                 <div class="row-fluid"><div class="span12"></div></div>
                 <div class="row-fluid">
                     <div class="span12">

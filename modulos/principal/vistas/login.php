@@ -58,7 +58,7 @@ if (isset($_SESSION['email'])) {
     </div>
 
 
-    <div id="modalDialogLogin" title="Bienvenido">
+    <div id="modalDialogLogin" title="Bienvenido" style="display: none;">
         <div class="row-fluid">
             <h4><strong>Inicia Sesión</strong></h4>
             <form action="login.php?a=login" method="post">

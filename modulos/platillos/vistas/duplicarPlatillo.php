@@ -19,7 +19,7 @@ require_once('layout/headers/headFin.php');
     <input type="submit">
 </form>
 <br><br>
-<a href="restaurantes.php?a=menu&i=<?php echo $idRestaurante; ?>">Regresar</a>
+<a  class="offset1" href="restaurantes.php?a=menu&i=<?php echo $idRestaurante; ?>">Regresar</a>
 
 <?php
 require_once('layout/footer.php');

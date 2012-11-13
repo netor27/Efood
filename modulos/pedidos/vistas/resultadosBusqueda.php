@@ -8,7 +8,7 @@ require_once('layout/headers/headFin.php');
 <?php
 if (sizeof($restaurantes) <= 0) {
     ?>
-    <div id="modalDialogNoHayRestaurantes" title="Ohh-ohh... Ya nos cachaste...">
+    <div id="modalDialogNoHayRestaurantes" title="Ohh-ohh... Ya nos cachaste..." style="display: none;">
         <div class="row-fluid">
             <div class="span12">
                 <p>
@@ -132,6 +132,7 @@ if (sizeof($restaurantes) <= 0) {
             </div>
         </form>
     </div>
+    <!--
     <div id="ordenaContainer" class="right">
         <span id="ordenaContainerTexto">Ordena tus restaurantes</span>
         <form action="#" method="post">
@@ -142,6 +143,7 @@ if (sizeof($restaurantes) <= 0) {
             </div>
         </form>
     </div>
+    -->
 </div>
 <div id="separadorContainer">
     <img src="layout/imagenes/resultadosBusqueda/separador_856x10.png"/>
@@ -164,7 +166,7 @@ if (sizeof($restaurantes) <= 0) {
                 $aux = $aux . " tipoEntrega1";
                 break;
             case 2:
-                $aux = $aux . " tipoEntrega0 tipoEntrega1 tipoEntrega2";
+                $aux = $aux . " tipoEntrega2";
                 break;
         }
         $restauranteAbierto = restauranteAbiertoAhorita($restaurante->idRestaurante);
@@ -178,16 +180,19 @@ if (sizeof($restaurantes) <= 0) {
             <?php
             if (!$restauranteAbierto) {
                 ?>
-                <div class="restauranteHeaderCerrado">
+                <div class="restauranteHeader">
                     <?php
-                } else if ($i % 2 == 0) {
-                    echo '<div class="restauranteHeader row-fluid">';
                 } else {
-                    echo '<div class="restauranteHeaderPar">';
+                    echo '<div class="restauranteHeader row-fluid">';
                 }
                 ?>
                 <div class="titulo">
-                    <?php echo $restaurante->nombre; ?>
+                    <?php
+                    echo $restaurante->nombre;
+                    if (!$restauranteAbierto) {
+                        echo " / Cerrado";
+                    }
+                    ?>
                 </div>
                 <div class="tiposComida">
                     <?php
@@ -285,13 +290,13 @@ if (sizeof($restaurantes) <= 0) {
                             <div class="tipoPago row-fluid">
                                 <?php
                                 if ($restaurante->formaPago == 0) {
-                                    echo 'efectivo';
+                                    echo '<img src="layout/imagenes/resultadosBusqueda/Efectivo.png"/>';
                                 }
                                 if ($restaurante->formaPago == 1) {
                                     echo '<img src="layout/imagenes/resultadosBusqueda/tipoPagos_190x20.png"/>';
                                 }
                                 if ($restaurante->formaPago == 2) {
-                                    echo 'efectivo';
+                                    echo '<img src="layout/imagenes/resultadosBusqueda/Efectivo.png"/>';
                                     echo '<img src="layout/imagenes/resultadosBusqueda/tipoPagos_190x20.png"/>';
                                 }
                                 ?>
@@ -300,9 +305,9 @@ if (sizeof($restaurantes) <= 0) {
                         </div>
                         <div class="span4">
                             <div class="row-fluid">
-                                <?php
-                                if ($restaurante->metodoEntrega != 0) {
-                                    ?>
+    <?php
+    if ($restaurante->metodoEntrega != 0) {
+        ?>
                                     <div class="span5 metodoEntrega">
                                         <img src="layout/imagenes/Home/img_Domicilio_86x39.png"/>                                    
                                     </div>                                    
@@ -313,17 +318,17 @@ if (sizeof($restaurantes) <= 0) {
                                     <div class="span5 offset1 metodoEntrega">
                                         <img src="layout/imagenes/Home/img_Recoger_64x40.png"/>                                    
                                     </div>                                    
-                                    <?php
-                                }
-                                ?>
+        <?php
+    }
+    ?>
                             </div>
                         </div>                    
                     </div>
                 </div>
                 <div class="realizarPedido span3">
                     <a href="pedidos.php?a=menu&i=<?php echo $restaurante->idRestaurante; ?>&ic=<?php echo $colonia->idColonia; ?>">
-                        <?php 
-                        if($restauranteAbierto)
+                        <?php
+                        if ($restauranteAbierto)
                             echo '<img src="layout/imagenes/resultadosBusqueda/btnRealizarPedido_180x45.png"/>';
                         else
                             echo '<img src="layout/imagenes/resultadosBusqueda/btnVerMenu.png"/>';

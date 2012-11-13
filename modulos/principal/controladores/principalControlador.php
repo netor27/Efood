@@ -7,8 +7,7 @@ function principal() {
     $tiposComida = getTiposComida();
     
     include('lib/rssFeed/rssFeed.php');
-    $blogEntries = parseRssFeed('http://testefood.blogspot.com/feeds/posts/default?alt=rss');
-    
+    $blogEntries = parseRssFeed('http://blog.efood.com.mx/feeds/posts/default?alt=rss');    
     require_once('modulos/principal/vistas/principal.php');
 }
 
