@@ -286,6 +286,10 @@ function restauranteAbiertoAhorita($idRestaurante){
     return $habilitado;
 }
 
+<<<<<<< HEAD
+function isLogued(){
+    return (isset($_SESSION["idUsuario"]) && $_SESSION["idUsuario"]!=null);
+=======
 function platilloDisponibleAhorita($idPlatillo){
     $habilitado = false;
     require_once 'modulos/platillos/modelos/platilloModelo.php';    
@@ -303,5 +307,6 @@ function platilloDisponibleAhorita($idPlatillo){
     
     //cualquier otro caso, esta cerrado
     return $habilitado;
+>>>>>>> origin/master
 }
 ?>

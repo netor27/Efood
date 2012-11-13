@@ -15,13 +15,17 @@ if (isset($pedidoGenerado)) {
   else
   print_r('Ocurrió un error durante la generación de su pedido'); */
 
+echo '<div id="direcciones">';
 if (isset($direcciones) && count($direcciones) > 0) {
-    echo '<select id="direccionesU">';
+    //echo '<select id="direccionesU">';
     foreach ($direcciones as $key => $direccion) {
-        echo '<option value="' . $direccion->idDireccion . '">' . $direccion->calle . ' #' . $direccion->numero . ' interior:' . $direccion->numeroInt . '</option>';
+        //echo '<option value="' . $direccion->idDireccion . '">' . $direccion->calle . ' #' . $direccion->numero . ' interior:' . $direccion->numeroInt . '</option>';
+        echo '<input type="radio" name="direccion" id="direccion" value="'.$direccion->idDireccion.'">' . $direccion->calle . ' #' . $direccion->numero . ' interior:' . $direccion->numeroInt . "<br>";
     }
-    echo '</select><br><br>';
+    //echo '</select><br><br>';
 }
+echo '</div>';
+if(isLogued()){
 ?>
 Da de alta una nueva Direcci&oacute;n:<br>
 <form id="altaDireccion" method="Post" action="">
@@ -48,5 +52,6 @@ Da de alta una nueva Direcci&oacute;n:<br>
 
         <?php
         echo '<a href="pedidos.php?a=avanzarPedido&i='.$idRestaurante.'">Avanzar</a>';
+}
         require_once('layout/footer.php');
         ?>
