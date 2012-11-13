@@ -187,3 +187,41 @@ h6{ margin:0;   padding:0px 0px  0px 0px;;  color:red;  font-weight:100;    font
 
 /* Transiciones en .3 segundos*/
 .ease3 {    -webkit-transition: all .3s ease;   -moz-transition: all .3s ease;  -o-transition: all .3s ease;    -ms-transition: all .3s ease;   transition: all .3s ease;   }
+
+.footer{
+    background: #FFFFFF url('../imagenes/Home/Fondo_Footer.png') repeat-x;
+    height: 150px;
+}
+
+.footerMenu{
+    margin-left: 80px !important;
+}
+
+.footerLinks{
+    
+}
+
+.footerLinksHeader{
+    color: #727376;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.footerLinks a{
+    color: #727376;
+    font-weight: normal;
+    padding-left: 10px;
+    font-size: 15px;
+}
+.footerLast{
+    color: #727376;
+    margin-left: 50px !important;
+}
+.socialMediaFooter a{
+    color:black !important;
+}
+
+.socialMediaFooter span{
+    color:black !important;
+    font-size: 14px;
+}

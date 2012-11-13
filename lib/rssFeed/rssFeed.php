@@ -1,15 +1,16 @@
 <?php
 
 function parseRssFeed($feed) {
+    
     $rss = simplexml_load_file($feed);
     $entries = array();
     $entry = array();
     foreach ($rss->channel->item as $item) {
-        
+
         $titulo = (string) $item->title; // Title
         $link = (string) $item->link; // Url Link
         $contenido = (string) $item->description; //Contenido
-        $fecha = date("j/n/Y",strtotime($item->pubDate));
+        $fecha = date("j/n/Y", strtotime($item->pubDate));
         $entry = array(
             "titulo" => $titulo,
             "link" => $link,

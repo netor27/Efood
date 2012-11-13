@@ -239,3 +239,35 @@
     text-decoration: none;
 }
 
+.contenedorLikes{
+    border-style:groove;
+    border-width:0px;
+    -webkit-box-shadow:rgba(112, 107, 99, 0.611765) -1px 0px 41px -3px inset;
+    -moz-box-shadow:rgba(112, 107, 99, 0.611765) -1px 0px 41px -3px inset;
+    box-shadow:rgba(112, 107, 99, 0.611765) -1px 0px 41px -3px inset;
+    padding:15px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    border-radius:5px;
+}
+
+.likeSoloSi{
+    color: #ED3237;
+    font-weight: bolder;
+    font-size: 21px;
+    margin-top: 57px; 
+}
+
+
+.comoSeCome{
+    color: #ED3237;
+    font-weight: bolder;
+    font-size: 30px;
+    text-align: center;
+    margin-top: -15px;
+}
+
+.comoSeComeTexto{
+    font-weight: bold;
+    margin-top: 15px;
+}
