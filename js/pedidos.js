@@ -370,7 +370,9 @@ function altaDir(){
             }),
             dataType: "json",
             success: function(json) {    
-                alert("Direccion Agregada!");
+                //alert("Direccion Agregada!");
+                alert(json[0]);
+                //$("#direcciones").append('<input type="radio" id="colonia">');
             },
             error: function (XMLHttpRequest, textStatus, errThrown) {
                 alert(textStatus + errThrown); 

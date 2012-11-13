@@ -286,4 +286,8 @@ function restauranteAbiertoAhorita($idRestaurante){
     //cualquier otro caso, esta cerrado
     return $habilitado;
 }
+
+function isLogued(){
+    return (isset($_SESSION["idUsuario"]) && $_SESSION["idUsuario"]!=null);
+}
 ?>

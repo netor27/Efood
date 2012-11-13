@@ -172,7 +172,8 @@ function pedir() {
     $pedidos = getPedidos($idRestaurante);
     $pedidoGenerado = mostrarPedidoGenerado($pedidos);
     //$errores = generarPedido($pedidos);
-    $direcciones = getDireccionesRestauranteUsuario($_SESSION["idUsuario"],$idRestaurante);
+    if(isLogued())
+        $direcciones = getDireccionesRestauranteUsuario($_SESSION["idUsuario"],$idRestaurante);
     require_once('modulos/pedidos/vistas/pedir.php');
 }
 
@@ -182,7 +183,7 @@ function avanzarPedido() {
     require_once 'modulos/pedidos/clases/PlatilloElementos.php';
     $idRestaurante = $_GET['i'];
     $pedidos = getPedidos($idRestaurante);
-    //$errores = generarPedido($pedidos);
+    $errores = generarPedido($pedidos);
     require_once('modulos/pedidos/vistas/pedidoPago.php');
 }
 function usuarioSolicitudRestaurante() {

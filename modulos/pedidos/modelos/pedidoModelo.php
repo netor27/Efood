@@ -207,7 +207,7 @@ function mostrarPedidoGenerado($pedido) {
             $pedidoResumen .= "Total: " . ($cargoExtra) . "<br><br>";
         }
     } else {
-        $pedidoResumen = "Favor de hacer login";
+        $pedidoResumen = "<h2>Favor de hacer login</h2>";
     }
 
     return $pedidoResumen;
@@ -368,7 +368,12 @@ function guardaDireccion() {
         $stmtP->bindParam(':referencia', $referencia);
         $val = $stmtP->execute();
     }
-    return $val;
+    if($val){
+        $respuesta['direccion'] = $conex->lastInsertId(); 
+    }else{
+        $respuesta = false;
+    }
+    return $respuesta;
 }
 
 ?>
