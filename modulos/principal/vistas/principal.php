@@ -180,7 +180,7 @@ require_once('layout/headers/headFin.php');
                     </div>
                 </div>
                 <div class="row-fluid">
-                    <div class="fb-like" data-send="false" data-width="300" data-show-faces="true" data-font="tahoma"></div>
+                    <div class="fb-like-box" data-href="http://www.facebook.com/eFoodMX" data-width="300" data-show-faces="false" data-stream="false" data-header="false"></div>
                 </div>
                 <div class="row-fluid">
                     <a href="https://twitter.com/eFoodMX" class="twitter-follow-button" data-show-count = true data-lang="es">Follow @eFoodMX</a>

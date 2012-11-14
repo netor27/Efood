@@ -30,7 +30,7 @@
                     </div>
                     <div class="span3 socialMediaFooter" style="padding-top: 15px;">
                         <div class="span7 centerText">
-                            <a href="http://www.facebook.com/pages/eFoodcommx/231607330290874" class="socialRedText" target="_blank">
+                            <a href="http://www.facebook.com/eFoodMX" class="socialRedText" target="_blank">
                                 <img src="layout/imagenes/Home/facebookCheffGrande.png"><br>
                                 <span >Se nuestro fan</span>
                             </a>
