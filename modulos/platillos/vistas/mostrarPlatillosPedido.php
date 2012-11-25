@@ -375,7 +375,7 @@ $_SESSION['tipoGastoEnvio'] = $restaurante->tipoGastoEnvio;
                 <input type="radio" name="envio" value="0" checked/><br>
                 Lo paso a recoger:  $0<input type="radio" name="envio" value="1"/><br>
                 <?php
-                if (($total > $_SESSION['pedidoMinimo']) && isset($pedidos) && $pedidos != array()) {
+                if (($total >= $_SESSION['pedidoMinimo']) && isset($pedidos) && $pedidos != array()) {
                     //$opcion = '<script language="javascript" type="text/javascript">document.write(document.getElementByName("envio"));<script/>';
 
                     echo "<br><a href='#' id='pedirp'>Pedir</a>";
