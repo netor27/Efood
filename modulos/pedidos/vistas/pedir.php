@@ -17,12 +17,12 @@ if (isset($pedidoGenerado)) {
 
 echo '<div id="direcciones">';
 if (isset($direcciones) && count($direcciones) > 0) {
-    //echo '<select id="direccionesU">';
+    echo '<select id="direccionesU">';
     foreach ($direcciones as $key => $direccion) {
-        //echo '<option value="' . $direccion->idDireccion . '">' . $direccion->calle . ' #' . $direccion->numero . ' interior:' . $direccion->numeroInt . '</option>';
-        echo '<input type="radio" name="direccion" id="direccion" value="'.$direccion->idDireccion.'">' . $direccion->calle . ' #' . $direccion->numero . ' interior:' . $direccion->numeroInt . "<br>";
+        echo '<option value="' . $direccion->idDireccion . '">' . $direccion->calle . ' #' . $direccion->numero . ' interior:' . $direccion->numeroInt . '</option>';
+        //echo '<input type="radio" name="direccion" id="direccion" value="'.$direccion->idDireccion.'">' . $direccion->calle . ' #' . $direccion->numero . ' interior:' . $direccion->numeroInt . "<br>";
     }
-    //echo '</select><br><br>';
+    echo '</select><br><br>';
 }
 echo '</div>';
 if(isLogued()){
