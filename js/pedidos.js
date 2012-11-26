@@ -5,6 +5,12 @@ $(document).ready(function(){
         var ic = getUrlVars()["ic"];
         window.location.href = "pedidos.php?p="+tipoEnvio+"&a=pedir&i="+i+"&ic="+ic;
     });    
+    $("#avanzarp").click(function(){
+        var tipoPago = $("input[name='pago']:checked").val();
+        var i = getUrlVars()["i"];
+        var ic = getUrlVars()["ic"];
+        window.location.href = "pedidos.php?p="+tipoPago+"&a=avanzarPedido&i="+i+"&ic="+ic;
+    });   
     $("#modalDialogIngredientes").dialog({
         autoOpen: false,
         height: 600,

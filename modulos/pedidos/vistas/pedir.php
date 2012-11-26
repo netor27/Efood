@@ -14,7 +14,7 @@ if (isset($pedidoGenerado)) {
   print_r('Se generó correctamente su pedido');
   else
   print_r('Ocurrió un error durante la generación de su pedido'); */
-
+if($_GET['p']==0){
 echo '<div id="direcciones">';
 if (isset($direcciones) && count($direcciones) > 0) {
     echo '<select id="direccionesU">';
@@ -24,9 +24,13 @@ if (isset($direcciones) && count($direcciones) > 0) {
     }
     echo '</select><br><br>';
 }
+}
 echo '</div>';
 if(isLogued()){
 ?>
+<?php
+if($_GET['p']==0){ //pregunto si es a domicilio para poner la dirección, sino no poner nada
+    ?>
 Da de alta una nueva Direcci&oacute;n:<br>
 <form id="altaDireccion" method="Post" action="">
     <div class="span6" id="top_buscador_center">
@@ -42,16 +46,24 @@ Da de alta una nueva Direcci&oacute;n:<br>
             <?php
         }
         ?><br>
+         <div class="row-fluid">
         Calle:<input type="text" id="calle" name="calle" class="requerido"/><br>
         N&uacute;mero:<input type="text" id="numero" name="numero" class="requerido"/><br>
         N&uacute;mero Interior:<input type="text" id="numeroint" name="numeroint" /><br>
         Referencia:<input type="text" id="referencia" name="referencia" /><br>
         <input type="button" value="Nueva Direccion" id="altaDireccion" name="altaDireccion" onclick="altaDir();"><br>
+         </div>
+ <?php
+    }//cierre del if para saber si es a domicilio o a recoger
+ ?>
+        M&eacute;do de pago<br>
+         Efectivo:<input type="radio" name="pago" value="0" checked/><br>
+         Paypal:<input type="radio" name="pago" value="1"/><br>
         </form>
 
 
         <?php
-        echo '<a href="pedidos.php?a=avanzarPedido&i='.$idRestaurante.'">Avanzar</a>';
+        echo '<a id="avanzarp" href="#">Avanzar</a>';
 }
         require_once('layout/footer.php');
         ?>
