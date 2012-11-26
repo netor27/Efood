@@ -14,12 +14,14 @@ if (isset($_SESSION['email'])) {
 <?php
     if($_GET['p']==1){
         require_once 'modulos/pagos/modelos/PayPalModelo.php';
-        $botonPaypal = encriptarInformacionBotonPago("Pedido a Restaurante", "123456", $_SESSION['precioTotal'], "6934827");
+        //el ultimo numero no se bien que va, estoy poniendo el email del usuario
+        $botonPaypal = encriptarInformacionBotonPago("Pedido a ".$restaurante->nombre, $errores, $_SESSION['precioTotal'], $_SESSION['email']); //errores trae el id del insert del pedido
+        //pero dice errores porque es un booleano que trae true si el insert no se pudo realizar        
         echo $botonPaypal;
     }
 }
 ?>
-    <input type="button" value="pedir"/>
+<a href="#" id="terminap">Pedir</a>
 </form>
 
 <?php

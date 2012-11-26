@@ -179,13 +179,30 @@ function pedir() {
 
 function avanzarPedido() {
     require_once('modulos/pedidos/modelos/pedidoModelo.php');
+    require_once('modulos/restaurantes/modelos/RestauranteModelo.php');
     require_once('modulos/usuarios/modelos/usuarioModelo.php');
+    require_once('modulos/mail/modelos/mailModelo.php');
     require_once 'modulos/pedidos/clases/PlatilloElementos.php';
     $idRestaurante = $_GET['i'];
     $pedidos = getPedidos($idRestaurante);
     $errores = generarPedido($pedidos);
+    $restaurante = getRestaurante($idRestaurante);
     require_once('modulos/pedidos/vistas/pedidoPago.php');
 }
+
+function terminarPedido() {
+    require_once('modulos/pedidos/modelos/pedidoModelo.php');
+    require_once('modulos/restaurantes/modelos/RestauranteModelo.php');
+    require_once('modulos/usuarios/modelos/usuarioModelo.php');
+    require_once('modulos/mail/modelos/mailModelo.php');
+    require_once 'modulos/pedidos/clases/PlatilloElementos.php';
+    $idRestaurante = $_GET['i'];
+    $restaurante = getRestaurante($idRestaurante);
+    $cliente = enviaMailSMTP("Pedido a ".$restaurante, "Se ha generado su pedido con un total de ". $_SESSION['precioTotal']." informacion: ".$_SESSION['pedidoResumen'], "efood@efood.com.mx", $_SESSION['email']);
+    $emailRestaurante = enviaMailSMTP("Pedido de " .$_SESSION['email'], "Se ha generado un pedido con un total de ". $_SESSION['precioTotal']." por parte de ".$_SESSION['email']. " informacion: ".$_SESSION['pedidoResumen'], "efood@efood.com.mx", $restaurante->email);
+    require_once('modulos/pedidos/vistas/pedidoPago.php');
+}
+
 function usuarioSolicitudRestaurante() {
     if (isset($_POST['nombre']) && isset($_POST['idColonia'])) {
         $msg = "";

@@ -11,6 +11,11 @@ $(document).ready(function(){
         var ic = getUrlVars()["ic"];
         window.location.href = "pedidos.php?p="+tipoPago+"&a=avanzarPedido&i="+i+"&ic="+ic;
     });   
+    $("#terminap").click(function(){
+        var i = getUrlVars()["i"];
+        var ic = getUrlVars()["ic"];
+        window.location.href = "pedidos.php?p="+tipoPago+"&a=terminarPedido&i="+i+"&ic="+ic;
+    });   
     $("#modalDialogIngredientes").dialog({
         autoOpen: false,
         height: 600,

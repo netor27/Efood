@@ -209,6 +209,8 @@ function mostrarPedidoGenerado($pedido) {
     } else {
         $pedidoResumen = "<h2>Favor de hacer login</h2>";
     }
+    
+    $_SESSION['pedidoResumen'] = $pedidoResumen;
 
     return $pedidoResumen;
 }
@@ -309,7 +311,7 @@ function generarPedido($pedido) {
           print_r('Favor de llenar correctamente los campos');
           } */
     } else {
-        $errores = false;
+        $errores = $id;
         //print_r('Favor de hacer login');
     }
     return $errores;
