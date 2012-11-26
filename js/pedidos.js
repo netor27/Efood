@@ -14,7 +14,7 @@ $(document).ready(function(){
     $("#terminap").click(function(){
         var i = getUrlVars()["i"];
         var ic = getUrlVars()["ic"];
-        window.location.href = "pedidos.php?p="+tipoPago+"&a=terminarPedido&i="+i+"&ic="+ic;
+        window.location.href = "pedidos.php?a=terminarPedido&i="+i+"&ic="+ic;
     });   
     $("#modalDialogIngredientes").dialog({
         autoOpen: false,
