@@ -576,7 +576,7 @@ function getRestaurantesColoniaTipoComidaMetodoEntrega($idColonia, $tipoComida, 
         AND r.idRestaurante = h.idRestaurante
         AND r.habilitado = 1 ";
     if (isset($metodoEntrega) && $metodoEntrega < 2) {
-        $query = $query . "AND r.metodoEntrega = " . $metodoEntrega;
+        $query = $query . "AND (r.metodoEntrega = " . $metodoEntrega . " OR r.metodoEntrega = 2 )";
     }
     if (isset($tipoComida) && sizeof($tipoComida) > 0) {
         $query = $query . " AND r.idRestaurante IN 

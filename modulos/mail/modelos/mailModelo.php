@@ -4,7 +4,7 @@ require_once 'bd/conx.php';
 function enviarEmailDeSolicitudAgregarRestaurante($mensaje){
     $asunto = "Solicitud de nuevo restaurante";
     $remitente = "no-reply@efood.com.mx";
-    $destinatario = "contacto@efood.com.mx";
+    $destinatario = "neto.r27@gmail.com";
     $res = enviaMailSMTP($asunto, $mensaje, $remitente, $destinatario);
     return $res;
 }

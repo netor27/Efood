@@ -166,7 +166,7 @@ if (sizeof($restaurantes) <= 0) {
                 $aux = $aux . " tipoEntrega1";
                 break;
             case 2:
-                $aux = $aux . " tipoEntrega2";
+                $aux = $aux . " tipoEntrega0 tipoEntrega1 tipoEntrega2";
                 break;
         }
         $restauranteAbierto = restauranteAbiertoAhorita($restaurante->idRestaurante);

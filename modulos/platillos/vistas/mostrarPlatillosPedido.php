@@ -248,19 +248,22 @@ $_SESSION['tipoGastoEnvio'] = $restaurante->tipoGastoEnvio;
 <div class="row-fluid">
     <div id="menu" class="span8">     
         <div class="row-fluid">
-            <div class="span3 offset2">
+            <div class="span3 offset1">
                 <a id="btnMostrarMenu">
-                    <img src="layout/imagenes/Menu/btnMenu.png">
+                    <img src="layout/imagenes/Menu/Btn_Menu_rojo.png" id="btnMenuRojo">
+                    <img src="layout/imagenes/Menu/Btn_Menu_gris.png" id="btnMenuGris" style="display: none;">
                 </a>
             </div>
             <div class="span3">
                 <a id="btnMostrarOpiniones">
-                    <img src="layout/imagenes/Menu/btnOpiniones.png">
+                    <img src="layout/imagenes/Menu/Btn_Opiniones_rojo.png" id="btnOpinionesRojo" style="display: none;">
+                    <img src="layout/imagenes/Menu/Btn_Opiniones_gris.png" id="btnOpinionesGris">
                 </a>
             </div>
-            <div class="span3">
+            <div class="span4">
                 <a id="btnMostrarInformacion">
-                    <img src="layout/imagenes/Menu/btnInformacion.png">
+                    <img src="layout/imagenes/Menu/Btn_Informacion_rojo.png" id="btnInformacionRojo" style="display: none; height: 34px;">
+                    <img src="layout/imagenes/Menu/Btn_Informacion_gris.png" id="btnInformacionGris" style=" height: 34px;">
                 </a>
             </div>
         </div>

@@ -36,16 +36,34 @@ $(document).ready(function(){
         $('#menuContenido').show();
         $('#opinionesContenido').hide();
         $('#informacionContenido').hide();
+        $("#btnMenuRojo").show();
+        $("#btnMenuGris").hide();
+        $("#btnOpinionesRojo").hide();
+        $("#btnOpinionesGris").show();
+        $("#btnInformacionRojo").hide();
+        $("#btnInformacionGris").show();
     });
     $('#btnMostrarOpiniones').click(function(){
         $('#opinionesContenido').show();
         $('#menuContenido').hide();
         $('#informacionContenido').hide();
+        $("#btnMenuRojo").hide();
+        $("#btnMenuGris").show();
+        $("#btnOpinionesRojo").show();
+        $("#btnOpinionesGris").hide();
+        $("#btnInformacionRojo").hide();
+        $("#btnInformacionGris").show();
     });
     $('#btnMostrarInformacion').click(function(){
         $('#informacionContenido').show();
         $('#opinionesContenido').hide();
         $('#menuContenido').hide();
+        $("#btnMenuRojo").hide();
+        $("#btnMenuGris").show();
+        $("#btnOpinionesRojo").hide();
+        $("#btnOpinionesGris").show();
+        $("#btnInformacionRojo").show();
+        $("#btnInformacionGris").hide();
     });
     
     $( ".popupPlatillo" ).tooltip({
