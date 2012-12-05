@@ -11,9 +11,20 @@ $(document).ready(function(){
         modal: true,
         resizable:false 
     });
+    $("#modalDialogNoHayBusquedaAvanzada").dialog({
+        autoOpen: true,
+        height: "auto",
+        width: 500,
+        modal: true,
+        resizable:false 
+    });
+    
+    
+    
     //evento para cerrar el dialogo
     $(".ui-widget-overlay").on("click", function(){
         $("#modalDialogNoHayRestaurantes").dialog("close");
+        $("#modalDialogNoHayBusquedaAvanzada").dialog("close");
     });
     
     $('select.selectAmarillo').each(function(){
@@ -85,6 +96,23 @@ $(document).ready(function(){
             $(this).removeClass("restauranteCerradoHover");
         }
     });
+    
+    $( ".popupTexto" ).tooltip({
+        items: ".popupTexto",
+        tooltipClass: "tooltipClass",
+        content: function(){
+            var element = $( this );
+            var texto = element.attr("texto");
+            return texto;
+        }, 
+        position:{ 
+            my: "left bottom-10",
+            at: "center top",
+            collision: "none none"
+        },
+        show: "fade"
+    });
+    
 });
 
 function filtrarRestaurantes(){

@@ -4,13 +4,11 @@ function buscarRestauranteHome() {
     require_once('funcionesPHP/funcionesGenerales.php');
     require_once 'modulos/restaurantes/modelos/RestauranteModelo.php';
     require_once 'modulos/restaurantes/clases/Restaurante.php';
-
     //valores necesarios
     $idColonia = -1;
     $idTiposComida = array();
     $domicilio = true;
     $recoger = true;
-
     if (isset($_GET['idColonia']) &&
             is_numeric($_GET['idColonia']) &&
             $_GET['idColonia'] > 0) {
@@ -38,7 +36,6 @@ function buscarRestauranteHome() {
         $valores['domicilio'] = $domicilio;
         $valores['recoger'] = $recoger;
         $metodoEntrega = getIdMetodoEntrega($domicilio, $recoger);
-
         mostrarBusqueda($idColonia, $idTiposComida, $metodoEntrega);
     } else {
         $coloniaNoReconocida = true;
@@ -80,7 +77,23 @@ function buscarRestaurante() {
 }
 
 function mostrarBusqueda($idColonia, $idTiposComida, $metodoEntrega) {
+    $busquedaAvanzada = false; //es búsqueda avanzada cuando hay tipo de comida o método de entrega seleccionado
+    $noHayResultadosEnBusquedaAvanzada = false;
+    if($metodoEntrega != 2 || sizeof($idTiposComida) > 0){
+        $busquedaAvanzada = true;
+    }
+    
     $restaurantes = getRestaurantesColoniaTipoComidaMetodoEntrega($idColonia, $idTiposComida, $metodoEntrega);
+    if(sizeof($restaurantes) == 0){
+        //si no hay resultados y estamos en una busqueda avanzada, hacemos una busqueda simple sobre esta colonia
+        $noHayResultadosEnBusquedaAvanzada = true;
+        $aux = array();
+        $restaurantes = getRestaurantesColoniaTipoComidaMetodoEntrega($idColonia, $aux, 2);
+        if(sizeof($restaurantes) == 0){
+            //si sigue siendo 0, no hay restaurantes en esa colonia
+            $noHayResultadosEnBusquedaAvanzada=false;
+        }
+    }
     require_once 'modulos/tipoComida/modelos/tipoComidaModelo.php';
     $tiposDeComida = getTiposComida();
     require_once 'modulos/colonias/modelos/ColoniaModelo.php';
@@ -172,8 +185,8 @@ function pedir() {
     $pedidos = getPedidos($idRestaurante);
     $pedidoGenerado = mostrarPedidoGenerado($pedidos);
     //$errores = generarPedido($pedidos);
-    if(isLogued())
-        $direcciones = getDireccionesRestauranteUsuario($_SESSION["idUsuario"],$idRestaurante);
+    if (isLogued())
+        $direcciones = getDireccionesRestauranteUsuario($_SESSION["idUsuario"], $idRestaurante);
     require_once('modulos/pedidos/vistas/pedir.php');
 }
 
@@ -198,8 +211,8 @@ function terminarPedido() {
     require_once 'modulos/pedidos/clases/PlatilloElementos.php';
     $idRestaurante = $_GET['i'];
     $restaurante = getRestaurante($idRestaurante);
-    $cliente = enviaMailSMTP("Pedido a ".$restaurante->nombre, "Se ha generado su pedido con un total de ". $_SESSION['precioTotal']." informacion: ".$_SESSION['pedidoResumen'], "no-reply@efood.com.mx", $_SESSION['email']);
-    $emailRestaurante = enviaMailSMTP("Pedido de " .$_SESSION['email'], "Se ha generado un pedido con un total de ". $_SESSION['precioTotal']." por parte de ".$_SESSION['email']. " informacion: ".$_SESSION['pedidoResumen'], "no-reply@efood.com.mx", $restaurante->email);
+    $cliente = enviaMailSMTP("Pedido a " . $restaurante->nombre, "Se ha generado su pedido con un total de " . $_SESSION['precioTotal'] . " informacion: " . $_SESSION['pedidoResumen'], "no-reply@efood.com.mx", $_SESSION['email']);
+    $emailRestaurante = enviaMailSMTP("Pedido de " . $_SESSION['email'], "Se ha generado un pedido con un total de " . $_SESSION['precioTotal'] . " por parte de " . $_SESSION['email'] . " informacion: " . $_SESSION['pedidoResumen'], "no-reply@efood.com.mx", $restaurante->email);
     require_once('modulos/pedidos/vistas/termina.php');
 }
 
@@ -210,7 +223,7 @@ function usuarioSolicitudRestaurante() {
         require_once 'modulos/colonias/modelos/ColoniaModelo.php';
         if ($_POST['idColonia'] >= 0) {
             $colonia = getColonia($_POST['idColonia']);
-        }else{
+        } else {
             $colonia = new Colonia();
             $colonia->idColonia = -1;
             $colonia->nombre = "No hay colonia de búsqueda, fue una recomendación";

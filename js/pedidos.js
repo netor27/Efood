@@ -71,11 +71,13 @@ $(document).ready(function(){
         tooltipClass: "tooltipClass",
         content: function(){
             var element = $( this );
-            var titulo = "<span class='tooltipNombre'>"+ element.attr( "nombre" ) + " <span class='tooltipPrecio'>$" + element.attr( "precio" ) + "</span>";
+            var titulo = "<span class='tooltipNombre'>"+ element.attr( "nombre" ) + "</span> <span class='tooltipPrecio right'>$" + element.attr( "precio" ) + "</span>";
             var texto = element.attr("texto");
             var dom;
             dom = '<div class="tooltipHeader">'+titulo+'</div>';
-            dom += '<div class="tooltipText">'+texto+'</div>';
+            if(texto != ""){
+                dom += '<div class="tooltipText">'+texto+'</div>';
+            }            
             return dom;            
         }, 
         position:{ 
@@ -91,7 +93,7 @@ $(document).ready(function(){
         tooltipClass: "tooltipClass",
         content: function(){
             var element = $( this );
-            var titulo = "<span class='tooltipNombre'>"+ element.attr( "nombre" ) + " <span class='tooltipPrecio'>$" + element.attr( "precio" ) + "</span>";
+            var titulo = "<span class='tooltipNombre'>"+ element.attr( "nombre" ) + " </span><span class='tooltipPrecio right'>$" + element.attr( "precio" ) + "</span>";
             var texto = element.attr("texto");
             var dom;
             dom = '<div class="tooltipHeaderNoDisponible">'+titulo+'</div>';
@@ -243,10 +245,11 @@ function obtenerIngredientes(id, disponible){
             $("#modalDialogIngredientes").html(txt);
             $("#modalDialogIngredientes").dialog({
                 autoOpen: true,
-                height: "auto",
+                height: 600,
                 width: 420,
                 modal: true,
-                resizable: false
+                resizable: false,
+                draggable: false
             });
             //evento para cerrar el dialogo al dar click afuera
             $(".ui-widget-overlay").on("click", function(){

@@ -2,7 +2,7 @@
 <html lang="es" xml:lang="es">
     <head>
         <meta name="google" value="notranslate">
-        <meta charset="utf-8" />
+        <meta charset="utf8" />
         <link rel="SHORTCUT ICON" href="/layout/favicon.ico">
         <title>efood - A un click de tu comida</title>
         <script src="js/jquery-1.8.2.js"></script>	

@@ -91,7 +91,7 @@ require_once('layout/headers/headFin.php');
             <div id="bottom_buscador_container">
                 <div id="bottom_buscador">
                     <span>Prefiero:</span>
-                    <br><br>
+                    <br>
                     <div class="left">
                         <div class="left preferencia_texto" >A mi domicilio</div>
                         <img class="left" src="layout/imagenes/Home/img_Domicilio_86x39.png">
@@ -104,7 +104,7 @@ require_once('layout/headers/headFin.php');
                         <div id="recoger" class="checkbox_preferencia_clear">&nbsp;</div>
                         <input class="checkbox_vacio" type="hidden" id="preferencia_recoger" name="preferenciaRecoger" value="1"/>
                     </div>
-                    <br><br><br><br>
+                    <br><br><br>
                     <div style="margin: 0 auto;">
                         <input id="btnBuscar" type="image" src="layout/imagenes/Home/btn_Buscar_188x37(2).png">
                     </div>
@@ -169,7 +169,7 @@ require_once('layout/headers/headFin.php');
         ?>
     </div>
     <div class="span5">
-        <div class="row-fluid ">
+        <div class="row-fluid ">            
             <div class="span10 contenedorLikes">
                 <div class="row-fluid">
                     <div class="span6 likeSoloSi">
@@ -198,12 +198,12 @@ require_once('layout/headers/headFin.php');
 </div>
 <div class="row-fluid">
     <div class="span8 offset2 comoSeCome">
-            ¿eFood? ... Y cómo se come?!
+        ¿eFood? ... Y cómo se come?!
     </div>    
 </div>
 <div class="row-fluid">
     <div class="span10 offset1 comoSeComeTexto">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse adipiscing velit quis sapien ullamcorper at viverra lacus eleifend. Maecenas nisi erat, pulvinar a interdum at, rhoncus vel orci. In blandit risus vitae erat posuere et tincidunt enim pharetra. Quisque congue, nulla at rutrum hendrerit, quam ligula ultrices augue, sed volutpat eros diam in ante. Sed diam tortor, mollis non vehicula sed, ultricies eget enim. Nunc dictum, sapien at facilisis facilisis, ante ante placerat nulla, molestie sodales erat elit vitae nisl. Mauris 
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse adipiscing velit quis sapien ullamcorper at viverra lacus eleifend. Maecenas nisi erat, pulvinar a interdum at, rhoncus vel orci. In blandit risus vitae erat posuere et tincidunt enim pharetra. Quisque congue, nulla at rutrum hendrerit, quam ligula ultrices augue, sed volutpat eros diam in ante. Sed diam tortor, mollis non vehicula sed, ultricies eget enim. Nunc dictum, sapien at facilisis facilisis, ante ante placerat nulla, molestie sodales erat elit vitae nisl. Mauris 
     </div>    
 </div>
 

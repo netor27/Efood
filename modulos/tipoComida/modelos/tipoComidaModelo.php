@@ -88,7 +88,7 @@ function getTiposComida() {
         foreach ($rows as $row) {
             $tipoComida = new TipoComida();
             $tipoComida->idTipoComida = $row['idTipoComida'];
-            $tipoComida->nombre = utf8_encode($row['nombre']);
+            $tipoComida->nombre = $row['nombre'];
             $tipoComida->imagen = $row['imagen'];
             $tiposComida[$i] = $tipoComida;
             $i++;

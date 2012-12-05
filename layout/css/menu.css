@@ -69,7 +69,7 @@
 .tooltipClass{
     margin: 0px;
     padding: 0px;
-    max-width: 200px;
+    width: 200px;
 }
 
 .tooltipHeader{
@@ -179,6 +179,7 @@
 .textoDireccion{
     margin: 3px;
     padding: 0px;
+    font-weight: bold;
 }
 
 .telefono{
@@ -188,6 +189,11 @@
 
 .textoEntrega{
     color:#ED3237;
+    font-weight: bold;
+}
+
+.textoEntregaGreen{
+    color:#009900;
     font-weight: bold;
 }
 

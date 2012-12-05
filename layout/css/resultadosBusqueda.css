@@ -242,6 +242,9 @@ span.selectAmarillo{
 .datos span.datosRed{
     color: #ED3237;
 }
+.datos span.datosGreen{    
+    color: #009900;
+}
 
 .realizarPedido img{
     float:right !important;

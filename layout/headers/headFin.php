@@ -17,7 +17,7 @@
                 <div class="span8">
                     <div id="headerLogo" class="span5">
                         <a href="/">
-                            <img class="span10 offset1" src="layout/imagenes/Home/LogoEfood_205x100.png" alt="efood">
+                            <img class="span10 offset1" src="layout/imagenes/Home/Logo_letras_164x80.png" alt="efood" style="width: 164px;margin-top: 10px;">
                         </a>
                     </div>
                     <div class="span7" id="headerTitles">

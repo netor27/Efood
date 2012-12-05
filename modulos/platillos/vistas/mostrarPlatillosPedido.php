@@ -185,13 +185,13 @@ if ($habilitado) {
                     <div class="span8">
                         <?php
                         if ($restaurante->pedidoMinimo == 0) {
-                            echo '<span class="textoEntrega">¡No hay pedido mínimo!</span>';
+                            echo '<span class="textoEntregaGreen">¡No hay pedido mínimo!</span>';
                         } else {
                             echo '<span class="textoEntrega">Pedido mínimo: </span>' . '<span class="textoEntregaNumero">$' . $restaurante->pedidoMinimo . '</span>';
                         }
                         echo '<br>';
                         if ($restaurante->gastoEnvio == 0) {
-                            echo '<span class="textoEntrega">¡Es gratis!</span>';
+                            echo '<span class="textoEntregaGreen">¡Es gratis!</span>';
                         } else {
                             switch ($restaurante->tipoGastoEnvio) {
                                 case 0:
@@ -217,9 +217,9 @@ if ($habilitado) {
                         <img src="layout/imagenes/Home/img_Recoger_64x40.png"/>                                    
                     </div>
                     <div class="span8">
-                        <span class="textoEntrega">¡No hay pedido mínimo!</span>
+                        <span class="textoEntregaGreen">¡No hay pedido mínimo!</span>
                         <br>
-                        <span class="textoEntrega">¡Es gratis!</span>
+                        <span class="textoEntregaGreen">¡Es gratis!</span>
                     </div>
                 </div>
                 <?php
