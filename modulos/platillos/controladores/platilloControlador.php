@@ -283,13 +283,19 @@ function duplicarSubmit() {
         require_once 'modulos/platillos/modelos/platilloModelo.php';
         require_once 'modulos/platillos/modelos/grupoIngredientesModelo.php';
         require_once 'modulos/platillos/modelos/ingredienteModelo.php';
+        
+        //En estos arreglos se va a guardar los nuevos id para actualizar las dependencias
+        //Se guardaran como $array[$idViejo] = $idNuevo;
+        $arrayIdGrupos = array();
+        $arrayIdGrupos[-1] = -1;
+        $arrayIdIngredientes = array();
+        $arrayIdIngredientes[-1] = -1;
 
         //obtenemos el platillo que vamos a duplicar
         $platillo = getPlatillo($idPlatillo);
         //obtenemos su horario
         $horario = getHorarioPlatillo($idPlatillo);
-
-
+        
         //generamos un platillo nuevo, con la misma información, pero con un idNuevo
         $idPlatilloNuevo = altaPlatillo($platillo);
         //actualizamos la hora de este platillo
@@ -297,24 +303,42 @@ function duplicarSubmit() {
 
         //obtenemos los grupos de ingredientes que pertenecen a este platillo
         $gruposIngredientes = getGruposIngredientesDePlatillo($idPlatillo);
-
+        
+        //usamos un arreglo para guardar las dependencias y después actualizar
+        $arrayDependencias = array();
+        
         foreach ($gruposIngredientes as $grupo) {
             //actualizamos el idPlatillo al platillo nuevo
-            $grupo->idPlatillo = $idPlatilloNuevo;
-            //establecer la dependencia de los grupos en -1
-            $grupo->idGrupoDepende = -1;
-            $grupo->idIngredienteDepende = -1;
+            $grupo->idPlatillo = $idPlatilloNuevo;            
             //duplicamos este grupo de ingredientes
             $idGrupoNuevo = altaGrupoIngredientes($grupo);
+            //Guardamos el nuevo id en el arreglo
+            $arrayIdGrupos[$grupo->idGrupoIngredientes] = $idGrupoNuevo;
             //obtenemos los ingredientes
             $ingredientes = getIngredientesDeGrupo($grupo->idGrupoIngredientes);
             foreach ($ingredientes as $ingrediente) {
+                //Establecemos que pertenece al nuevo grupo
                 $ingrediente->idGrupoIngredientes = $idGrupoNuevo;
+                //Creamos el nuevo ingrediente
                 $idIngrediente = altaIngrediente($ingrediente);
+                //Guardamos en el arreglo el nuevo id
+                $arrayIdIngredientes[$ingrediente->idIngrediente] = $idIngrediente;
             }
+        }        
+        //Ya se duplicaron, ahora hay que establecer las dependencias
+        //Obtenemos todos los nuevos grupos de ingredientes
+        $gruposIngredientes = getGruposIngredientesDePlatillo($idPlatilloNuevo);
+        foreach ($gruposIngredientes as $grupo) {
+            //Obtenemos el nuevo grupo de ingrediente depende
+            $grupo->idGrupoDepende = $arrayIdGrupos[$grupo->idGrupoDepende];
+            //obtenemos el nuevo ingrediente depende
+            $grupo->idIngredienteDepende = $arrayIdIngredientes[$grupo->idIngredienteDepende];
+            //actualizamos
+            modificaGrupoIngredientes($grupo);
         }
+        
         setSessionMessage("Se duplicó correctamente el platillo");
-        redirect("restaurantes.php?a=menu&i=" . $idRestaurante);
+        redirect("platillos.php?a=modificar&i=" . $idPlatilloNuevo);
     } else {
         goToIndex();
     }

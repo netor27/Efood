@@ -21,6 +21,7 @@
 
 .popupPlatillo{
     cursor: pointer;
+    overflow: hidden;
 }
 
 .popupPlatillo:hover{

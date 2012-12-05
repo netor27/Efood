@@ -69,7 +69,7 @@ require_once('layout/headers/headFin.php');
                                 <div class="imagen_slider_div checkbox_antojo_container" id="<?php echo $tipo->idTipoComida; ?>">
                                     <img src="<?php echo $tipo->imagen; ?>" title="<?php echo urldecode($tipo->nombre); ?>">
                                     <br>
-                                    <div id="checkbox_<?php echo $tipo->idTipoComida; ?>" class="checkbox_antojo_clear">&nbsp;</div>
+                                    <div class="checkbox_antojo_clear checkbox_<?php echo $tipo->idTipoComida; ?>">&nbsp;</div>
                                     <input type="hidden" class="checkbox_vacio" id="antojo<?php echo $tipo->idTipoComida; ?>" name="antojos[]" value="<?php echo $tipo->idTipoComida; ?>"/>
                                     <input type="hidden" id="antojo_nombre_<?php echo $tipo->idTipoComida; ?>" value="<?php echo urldecode($tipo->nombre); ?>"/>
                                 </div>
@@ -106,7 +106,8 @@ require_once('layout/headers/headFin.php');
                     </div>
                     <br><br><br>
                     <div style="margin: 0 auto;">
-                        <input id="btnBuscar" type="image" src="layout/imagenes/Home/btn_Buscar_188x37(2).png">
+                        <input type="submit" id="search-submit" value=""
+                        style="background-image: url('layout/imagenes/Home/btn_Buscar_188x37(2).png'); border: solid 0px #000000; width: 188px; height: 37px;" />
                     </div>
                 </div>
             </div>

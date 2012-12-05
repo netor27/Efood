@@ -129,7 +129,9 @@ function getPlatillo($idPlatillo) {
 
 function getPlatillosDeRestaurante($idRestaurante) {
     global $conex;
-    $stmt = $conex->prepare("SELECT * FROM platillo WHERE idRestaurante = :id order by idPlatillo desc");
+    $stmt = $conex->prepare("SELECT * FROM platillo 
+                            WHERE idRestaurante = :id 
+                            ORDER BY idPlatillo ASC");
     $stmt->bindParam(':id', $idRestaurante);
     if ($stmt->execute()) {
         $platillos = array();

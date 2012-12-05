@@ -64,7 +64,8 @@ function getGruposIngredientesDePlatillo($idPlatillo) {
     global $conex;
     $stmt = $conex->prepare("SELECT gi.idGrupoIngredientes, gi.idPlatillo, gi.nombre, gi.excluyente, gi.requerido, gi.idGrupoDepende, gi.idIngredienteDepende
                             FROM grupoingredientes gi, platillo p
-                            WHERE gi.idPlatillo = p.idPlatillo AND p.idPlatillo = :id order by gi.idGrupoIngredientes desc");
+                            WHERE gi.idPlatillo = p.idPlatillo AND p.idPlatillo = :id 
+                            ORDER BY gi.idGrupoIngredientes asc");
     $stmt->bindParam(':id', $idPlatillo);
     if ($stmt->execute()) {
         $gruposIngredientes = array();

@@ -13,7 +13,7 @@ $(function(){
         function(){
             var id;
             id = $(this).attr("id");
-            var texto = $("#antojo_nombre_"+id).attr("value");
+            var texto = $(".antojo_nombre_"+id).attr("value");
             $("#sliderText").html(texto);        
         }, 
         function(){
@@ -23,7 +23,7 @@ $(function(){
         var id;
         id = $(this).attr("id");
         var check;
-        check = $("#checkbox_"+id);
+        check = $(".checkbox_"+id);
         if ($(check).hasClass("checkbox_antojo")){
             $(check).removeClass("checkbox_antojo");
             $(check).addClass("checkbox_antojo_clear");            
@@ -63,5 +63,23 @@ $(function(){
     });
     $("#colonias").click(function(){
         $(this).val("");
+    });
+    
+    $(window).scroll(function () { 
+        var $top = $(this).scrollTop();
+        console.log($top);
+        if($top > 1131 ){
+            $(".contenedorLikes").addClass("contenedorLikesFijoAbajo"); 
+            $(".contenedorLikes").removeClass("contenedorLikesEnMovimiento");                       
+            $(".contenedorLikes").removeClass("span10");                        
+        }else if($top > 587){
+            $(".contenedorLikes").addClass("contenedorLikesEnMovimiento");
+            $(".contenedorLikes").removeClass("contenedorLikesFijoAbajo"); 
+            $(".contenedorLikes").removeClass("span10");
+        }else{
+            $(".contenedorLikes").removeClass("contenedorLikesEnMovimiento");
+            $(".contenedorLikes").removeClass("contenedorLikesFijoAbajo"); 
+            $(".contenedorLikes").addClass("span10");
+        }
     });
 });

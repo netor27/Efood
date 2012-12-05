@@ -2,7 +2,8 @@
 require_once('layout/headers/headInicio.php');
 require_once('layout/headers/headFin.php');
 ?>
-
+<div class="row-fluid"><div class="span12"></div></div>
+<div class="row-fluid"><div class="span12"></div></div>
 <h2>Platillos del restaurante <?php echo $restaurante->nombre; ?></h2>
 <h4><a href="platillos.php?a=alta&r=<?php echo $restaurante->idRestaurante; ?>">Agregar platillo</a></h4>
 <h4><a href="platillos.php?a=duplicar&r=<?php echo $restaurante->idRestaurante; ?>">Duplicar platillo</a></h4>

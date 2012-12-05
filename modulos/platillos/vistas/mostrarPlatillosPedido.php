@@ -305,6 +305,9 @@ $_SESSION['tipoGastoEnvio'] = $restaurante->tipoGastoEnvio;
                 }
             }
             ?>
+            <div class="row-fluid">
+                <div class="span12"></div>
+            </div>
         </div>
         <div class="row-fluid" id="opinionesContenido">
             <div class="row-fluid">

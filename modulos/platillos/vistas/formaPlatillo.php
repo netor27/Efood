@@ -3,9 +3,19 @@ require_once('layout/headers/headInicio.php');
 require_once('layout/headers/headFin.php');
 ?>
 <div class="row-fluid"><div class="span8 offset2"></div></div>
+<div class="row-fluid"><div class="span8 offset2"></div></div>
 <div class="row-fluid">
     <div class="span8 offset2">
-        <h2><?php echo $tipo; ?> platillo</h2>
+        <?php
+        switch ($tipo) {
+            case "alta":
+                echo "<h2>Agregar un platillo</h2>";
+                break;
+            case "editar":
+                echo "<h2>Editar platillo</h2>";
+                break;
+        }
+        ?>
     </div>
 </div>
 <?php
