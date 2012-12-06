@@ -308,8 +308,8 @@ function horarioDisponibleAhorita($hora) {
             $habilitado = true;
     }
 
-    //Otro caso, que la hora de inicio y fin sean las mismas, es abierto todo el día
-    if ($hora->$diaIni == $hora->$diaFin)
+    //Otro caso, que la hora de inicio y fin sean las mismas, y no son 00:00 es abierto todo el día
+    if ($hora->$diaIni == $hora->$diaFin && $hora->$diaIni != '00:00:00')
         $habilitado = true;
 
     //Si estamos dentro del rango, es válido

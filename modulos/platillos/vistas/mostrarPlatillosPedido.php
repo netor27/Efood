@@ -72,12 +72,16 @@ if ($habilitado) {
         <div class="restauranteHeader row-fluid">
             <?php
         } else {
-            echo '<div class="restauranteHeaderCerrado row-fluid">';
+            echo '<div class="restauranteHeader row-fluid">';
         }
         ?>
 
         <div class="titulo">
-            <?php echo $restaurante->nombre; ?>
+            <?php 
+            echo $restaurante->nombre; 
+            if(!$habilitado)
+                echo " / Cerrado";
+            ?>
         </div>
         <div class="tiposComida">
             <?php
