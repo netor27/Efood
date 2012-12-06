@@ -93,8 +93,9 @@ function subirImagenTipoComida($imagenAnterior) {
             $result['tipo'] = 'error';
             $result['desc'] = "Error al subir el archivo: " . $_FILES["logo"]["error"];
         } else {
-            $sufix = getUniqueCode(5);
-            $fileName = "archivos/" . $sufix . "_" . $_FILES["logo"]["name"];
+            $pathInfo = pathinfo($_FILES['logo']["name"]);            
+            $sufix = getUniqueCode(25);
+            $fileName = "archivos/tiposComida/tipo_" . $sufix . "." . $pathInfo['extension'];
             if (file_exists($fileName)) {
                 unlink($fileName);
             }

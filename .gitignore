@@ -1,3 +1,9 @@
+!/archivos/logosRestaurantes
+!/archivos/tiposComida
 *~
 /nbproject/
+/archivos/*
 /archivos/certificadosPaypal/
+/archivos/certificadosPaypal/*
+/archivos/logosRestaurantes/*
+/archivos/tiposComida/*

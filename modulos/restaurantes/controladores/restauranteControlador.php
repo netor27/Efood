@@ -57,7 +57,7 @@ function formaRestauranteSubmit() {
     $restaurante->comision = $_POST['comision'];
     $restaurante->tipoGasto = $_POST['tipoGasto'];
     $restaurante->habilitado = $_POST['habilitado'];
-    
+
     $restaurante->informacion = $_POST['informacion'];
 
     require_once 'modulos/restaurantes/modelos/RestauranteModelo.php';
@@ -82,7 +82,7 @@ function formaRestauranteSubmit() {
         $restaurante->idRestaurante = $_POST['idRestaurante'];
         if (validarAdministrador() || validarRestauranteLoggeadoId($restaurante->idRestaurante)) {
             if (modificaRestaurante($restaurante)) {
-                setSessionMessage('Se modificó correctamente la información del restaurante: "' . $restaurante->nombre.'"');
+                setSessionMessage('Se modificó correctamente la información del restaurante: "' . $restaurante->nombre . '"');
                 redirect("restaurantes.php");
             } else {
                 $tipo = "editar";
@@ -390,7 +390,7 @@ function actualizarLogoSubmit() {
     if (validarAdministrador() || validarRestauranteLoggeadoId($idRestaurante)) {
         require_once 'modulos/restaurantes/modelos/RestauranteModelo.php';
         $restaurante = getRestaurante($idRestaurante);
-        $sufix = getUniqueCode(5);
+        $sufix = getUniqueCode(25);
 
         if ((($_FILES["logo"]["type"] == "image/gif")
                 || ($_FILES["logo"]["type"] == "image/jpeg")
@@ -400,27 +400,28 @@ function actualizarLogoSubmit() {
             if ($_FILES["logo"]["error"] > 0) {
                 echo "Error al subir el archivo: " . $_FILES["logo"]["error"] . "<br />";
             } else {
-                $fileName = "archivos/" . $sufix . "_" . $_FILES["logo"]["name"];
+                $pathInfo = pathinfo($_FILES['logo']["name"]);
+                $fileName = "archivos/logosRestaurantes/logo_" . $sufix . "." . $pathInfo['extension'];
                 if (file_exists($fileName)) {
                     unlink($fileName);
                 }
                 move_uploaded_file($_FILES["logo"]["tmp_name"], $fileName);
                 require_once 'funcionesPHP/CropImage.php';
-                if(cropImage($fileName, $fileName, 100, 100)){
-                    echo ' se hizo el crop correctamente';
-                }
-                $logoAnterior = $restaurante->logo;
-                echo $idRestaurante;
-                if (actualizaLogoRestaurante($idRestaurante, $fileName)) {
-                    $error = 'Se actualizó el logo del archivo';
-                    if (file_exists($logoAnterior)) {
-                        unlink($logoAnterior);
+                if (cropImage($fileName, $fileName, 100, 100)) {
+                    $logoAnterior = $restaurante->logo;
+                    if (actualizaLogoRestaurante($idRestaurante, $fileName)) {
+                        $error = 'Se actualizó el logo del archivo';
+                        if (file_exists($logoAnterior)) {
+                            unlink($logoAnterior);
+                        }
+                        $restaurante->logo = $fileName;
+                    } else {
+                        $error = 'Ocurrió un error al actualizar el logo';
                     }
-                    $restaurante->logo = $fileName;
-                } else {
-                    $error = 'Ocurrió un error al actualizar el logo';
+                    require_once 'modulos/restaurantes/vistas/logo.php';
+                }else{
+                    echo "error al procesar la imagen";
                 }
-                require_once 'modulos/restaurantes/vistas/logo.php';
             }
         } else {
             echo "No se permite ese tipo de archivo";
