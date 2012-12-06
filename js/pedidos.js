@@ -16,13 +16,6 @@ $(document).ready(function(){
         var ic = getUrlVars()["ic"];
         window.location.href = "pedidos.php?a=terminarPedido&i="+i+"&ic="+ic;
     });   
-    $("#modalDialogIngredientes").dialog({
-        autoOpen: false,
-        height: 600,
-        width: 320,
-        modal: true,
-        resizable:false 
-    });
     $(".popupPlatillo").click(function(){
         obtenerIngredientes(this.id, true);
     });
@@ -71,7 +64,7 @@ $(document).ready(function(){
         tooltipClass: "tooltipClass",
         content: function(){
             var element = $( this );
-            var titulo = "<span class='tooltipNombre'>"+ element.attr( "nombre" ) + "</span> <span class='tooltipPrecio right'>$" + element.attr( "precio" ) + "</span>";
+            var titulo = "<span class='tooltipNombre'>"+ element.attr( "nombre" ) + "</span> <span class='tooltipPrecio'>$" + element.attr( "precio" ) + "</span>";
             var texto = element.attr("texto");
             var dom;
             dom = '<div class="tooltipHeader">'+titulo+'</div>';
@@ -207,7 +200,7 @@ function obtenerIngredientes(id, disponible){
                             else{
                                 txt=txt+"<input type=\"checkbox\" value=\""+json[x].idIngrediente+"\" name=\""+quitaAcentos(grupo)+"\" id=\""+idDepende+"\" class=\"d"+idDepende+"\" />";
                             }
-                        //txt=txt+"<input type=\"checkbox\" value=\""+json[x].idIngrediente+"\" name=\""+json[x].idIngrediente+"\" id=\""+idDepende+"\" class=\"hab\"/>";
+                            //txt=txt+"<input type=\"checkbox\" value=\""+json[x].idIngrediente+"\" name=\""+json[x].idIngrediente+"\" id=\""+idDepende+"\" class=\"hab\"/>";
                         }
                         txt = txt + "<span class='ingredienteNombre'>" +  json[x].nombreIngrediente + "</span>";
                         //txt=txt + json[x].idGrupoDepende+"<br>";
@@ -244,13 +237,25 @@ function obtenerIngredientes(id, disponible){
                         
             $("#modalDialogIngredientes").html(txt);
             $("#modalDialogIngredientes").dialog({
-                autoOpen: true,
-                height: 600,
+                minHeight: 0,
+                create: function() {
+                    $(this).css("maxHeight", 600);        
+                },
                 width: 420,
-                modal: true,
                 resizable: false,
-                draggable: false
+                draggable: false,
+                modal: true
             });
+            
+            //                autoOpen: true,
+//                height: 600,
+//                width: 420,
+//                modal: true,
+//                resizable: false,
+//                draggable: false
+
+
+            $("#modalDialogIngredientes").dialog("open");
             //evento para cerrar el dialogo al dar click afuera
             $(".ui-widget-overlay").on("click", function(){
                 $("#modalDialogIngredientes").dialog("close");

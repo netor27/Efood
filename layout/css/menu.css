@@ -70,7 +70,17 @@
 .tooltipClass{
     margin: 0px;
     padding: 0px;
-    width: 200px;
+    min-width: 200px;
+    max-width: 300px;
+    overflow: hidden;
+}
+
+.tooltipNombre{
+    
+}
+
+.tooltipPrecio{
+    float: right;
 }
 
 .tooltipHeader{
@@ -84,6 +94,8 @@
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     font-weight: bold;
+    
+    overflow: hidden;
 }
 
 .tooltipHeaderNoDisponible{
