@@ -56,7 +56,7 @@ class Platillo {
     }
 
     function printPlatilloPedido($tipoPlatillo, $tipoFila) {
-        echo '<div class="' . $tipoPlatillo . ' ' . $tipoFila . ' span6 popupPlatillo" id="' . $this->idPlatillo . '" nombre="' . $this->nombre . '" precio="' . $this->precioBase . '" texto="' . $this->descripcion . '">';
+        echo '<div class="platillo ' . $tipoPlatillo . ' ' . $tipoFila . ' span6 popupPlatillo" id="' . $this->idPlatillo . '" nombre="' . $this->nombre . '" precio="' . $this->precioBase . '" texto="' . $this->descripcion . '">';
         echo '  <div class="span8 offset1">';
         if (strlen($this->nombre) < 25)
             echo '      <span class="menuTexto">';
@@ -74,7 +74,7 @@ class Platillo {
     }
 
     function printPlatilloPedidoDeshabilitado($tipoPlatillo, $tipoFila) {
-        echo '<div class="' . $tipoPlatillo . ' ' . $tipoFila . ' span6 popupPlatilloNoDisponible" id="' . $this->idPlatillo . '" nombre="' . $this->nombre . '" precio="' . $this->precioBase . '" texto="' . $this->descripcion . '">';
+        echo '<div class="platillo ' . $tipoPlatillo . ' ' . $tipoFila . ' span6 popupPlatilloNoDisponible" id="' . $this->idPlatillo . '" nombre="' . $this->nombre . '" precio="' . $this->precioBase . '" texto="' . $this->descripcion . '">';
         echo '  <div class="span8 offset1">';
         if (strlen($this->nombre) < 25)
             echo '      <span class="menuTexto">';

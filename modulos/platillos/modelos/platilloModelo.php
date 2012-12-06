@@ -44,18 +44,21 @@ function bajaPlatillo($idPlatillo) {
         if ($stmt->execute()) {
             $stmt = $conex->prepare("DELETE FROM horarioplatillo WHERE idPlatillo = :id");
             $stmt->bindParam(':id', $idPlatillo);
-            if ($stmt->execute()) {
+            if ($stmt->execute()) {                
                 $conex->commit();
+                return true;
             } else {
                 $conex->rollBack();
+                return false;
             }
         } else {
             $conex->rollBack();
+            return false;
         }
     } catch (Exception $E) {
         $conex->rollBack();
+        return false;
     }
-    return $stmt->rowCount();
 }
 
 function modificaPlatillo($platillo) {

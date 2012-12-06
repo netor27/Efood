@@ -261,50 +261,65 @@ function getDay() {
     return $dia;
 }
 
-function quitarSegundosHora($hora){
+function quitarSegundosHora($hora) {
     $exploded = explode(":", $hora);
-    $hora = $exploded[0].":".$exploded[1];
+    $hora = $exploded[0] . ":" . $exploded[1];
     return $hora;
 }
 
-function restauranteAbiertoAhorita($idRestaurante){
-    $habilitado = false;
+function isLogued() {
+    return (isset($_SESSION["idUsuario"]) && $_SESSION["idUsuario"] != null);
+}
+
+function restauranteAbiertoAhorita($idRestaurante) {
     require_once 'modulos/restaurantes/modelos/RestauranteModelo.php';
     $hora = getHorario($idRestaurante);
-    $diaIni = getDay() . 'Ini';
-    $diaFin = getDay() . 'Fin';
-    
-    //Si estamos dentro del rango, es válido
-    if (getTime24() > $hora->$diaIni && getTime24() < $hora->$diaFin)
-        $habilitado = true;
-    
-    //Si el inicio es 00:00:00 y el fin es 23:59:00, esta abierto todo el día
-    if ($hora->$diaIni == '00:00:00' && $hora->$diaFin == '23:59:00')
-        $habilitado = true;
-    
-    //cualquier otro caso, esta cerrado
-    return $habilitado;
+    return horarioDisponibleAhorita($hora);
 }
 
-function isLogued(){
-    return (isset($_SESSION["idUsuario"]) && $_SESSION["idUsuario"]!=null);
-}
-
-function platilloDisponibleAhorita($idPlatillo){
-    $habilitado = false;
-    require_once 'modulos/platillos/modelos/platilloModelo.php';    
+function platilloDisponibleAhorita($idPlatillo) {
+    
+    require_once 'modulos/platillos/modelos/platilloModelo.php';
     $hora = getHorarioPlatillo($idPlatillo);
+    return horarioDisponibleAhorita($hora);
+}
+
+function horarioDisponibleAhorita($hora) {
+    $habilitado = false;
     $diaIni = getDay() . 'Ini';
     $diaFin = getDay() . 'Fin';
-    
+
+    //Hay un caso que no se tomaba en cuenta, si el restaurante cierra de madrugada del siguiente día
+    //Ejemplo. Abre a las 10am y cierra a las 2 de la madrugada, 2am   
+    //Entonces dia ini será mayor que día fin
+    //Para que séa válido debemos pasar esto
+    //
+    //___________horaCierre___________________________horaApertura____________________
+    //   Abierto                    Cerrado                             Abierto
+    //
+    //Tenemos dos casos en los que estas abierto:
+    //-Ser menor a hora cierre
+    //-Ser mayora hora apertura
+    //
+    if ($hora->$diaIni > $hora->$diaFin) {
+        if (getTime24() < $hora->$diaFin)
+            $habilitado = true;
+        if (getTime24() > $hora->$diaIni)
+            $habilitado = true;
+    }
+
+    //Otro caso, que la hora de inicio y fin sean las mismas, es abierto todo el día
+    if ($hora->$diaIni == $hora->$diaFin)
+        $habilitado = true;
+
     //Si estamos dentro del rango, es válido
     if (getTime24() > $hora->$diaIni && getTime24() < $hora->$diaFin)
         $habilitado = true;
-    
+
     //Si el inicio es 00:00:00 y el fin es 23:59:00, esta abierto todo el día
     if ($hora->$diaIni == '00:00:00' && $hora->$diaFin == '23:59:00')
         $habilitado = true;
-    
+
     //cualquier otro caso, esta cerrado
     return $habilitado;
 }

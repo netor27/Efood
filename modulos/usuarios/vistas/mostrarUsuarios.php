@@ -17,7 +17,7 @@ require_once('layout/headers/headFin.php');
     }
     ?>
 </table>
-<br><a href="index.php">Regresar</a>
+<br><a href="admin.php">Regresar</a>
 <br><br>
 <?php
 require_once('layout/footer.php');
