@@ -22,6 +22,7 @@ function analizarIpnMensaje($ipnMensaje) {
         //verificarán manualmente
         default:
             //Caso no reconocido, no hacer nada
+            return '<br>Caso no reconocido.';
             break;
     }
 }
