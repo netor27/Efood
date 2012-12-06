@@ -85,8 +85,8 @@ function getIngredientesDeGrupo($idGrupoIngredientes) {
             $ingrediente = new Ingrediente();
             $ingrediente->idIngrediente = $row['idIngrediente'];
             $ingrediente->idGrupoIngredientes = $row['idGrupoIngredientes'];
-            $ingrediente->nombre = utf8_encode($row['nombre']);
-            $ingrediente->precio = utf8_encode($row['precio']);
+            $ingrediente->nombre = $row['nombre'];
+            $ingrediente->precio = $row['precio'];
             $ingredientes[$i] = $ingrediente;
             $i++;
         }
