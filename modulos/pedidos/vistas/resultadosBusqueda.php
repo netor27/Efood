@@ -270,46 +270,52 @@ if ($noHayResultadosEnBusquedaAvanzada) {
                                 ?>
 
                             </div>
-                            <div class="datos row-fluid">
-                                <div class="span6">
-                                    <?php
-                                    if ($restaurante->pedidoMinimo == 0) {
-                                        echo '<span class="datosGreen">No hay pedido mínimo</span>';
-                                    } else {
-                                        echo '<span class="datosRed">Pedido mínimo:</span>';
-                                        echo '<span>$' . $restaurante->pedidoMinimo . '</span>';
-                                    }
-                                    ?>
-                                </div>
-                                <div class="span6">
-                                    <?php
-                                    switch ($restaurante->tipoGastoEnvio) {
-                                        case 0:
-                                            //monto fijo
-                                            if ($restaurante->gastoEnvio == 0) {
-                                                echo '<span class="datosGreen">No hay gastos de envío</span>';
-                                            } else {
-                                                echo '<span class="datosRed">Gastos de Envío:</span>';
-                                                echo "<span> $" . $restaurante->gastoEnvio . "</span>";
-                                            }
-                                            break;
-                                        case 1:
-                                            //porcentaje
-                                            if ($restaurante->gastoEnvio == 0) {
-                                                echo '<span class="datosGreen">No hay gastos de envío</span>';
-                                            } else {
-                                                echo '<span class="datosRed">Gastos de Envío:</span>';
-                                                echo "<span> " . $restaurante->gastoEnvio . " %</span>";
-                                            }
-                                            break;
-                                        case 2:
-                                            //compuesto                                           
-                                            echo '<span class="datosRed">Gastos de Envío: </span>';
-                                            echo "<span>Compuesto</span>";
-                                            break;
-                                    }
-                                    ?>
-                                </div>
+                            <div class="datos row-fluid" style="padding-top: 6px;">
+                                <?php
+                                if ($restaurante->pedidoMinimo == 0) {
+                                    echo '<div class="span6" style="margin-top: 4px;margin-bottom: 4px;">';
+                                    echo '<span class="datosGreen">No hay pedido mínimo</span>';
+                                } else {
+                                    echo '<div class="span6">';
+                                    echo '<span class="datosRed">Pedido mínimo:</span><br>';
+                                    echo '<span> $' . $restaurante->pedidoMinimo . '</span>';
+                                }
+                                echo '</div>';
+                                ?>
+
+                                <?php
+                                switch ($restaurante->tipoGastoEnvio) {
+                                    case 0:
+                                        //monto fijo
+                                        if ($restaurante->gastoEnvio == 0) {
+                                            echo '<div class="span6" style="margin-top: 4px;margin-bottom: 4px;">';
+                                            echo '<span class="datosGreen">No hay gastos de envío</span>';
+                                        } else {
+                                            echo '<div class="span6">';
+                                            echo '<span class="datosRed">Gastos de Envío:</span>';
+                                            echo "<span> $" . $restaurante->gastoEnvio . "</span>";
+                                        }
+                                        break;
+                                    case 1:
+                                        //porcentaje
+                                        if ($restaurante->gastoEnvio == 0) {
+                                            echo '<div class="span6" style="margin-top: 4px;margin-bottom: 4px;">';
+                                            echo '<span class="datosGreen">No hay gastos de envío</span>';
+                                        } else {
+                                            echo '<div class="span6">';
+                                            echo '<span class="datosRed">Gastos de Envío:</span>';
+                                            echo "<span> " . $restaurante->gastoEnvio . "%</span>";
+                                        }
+                                        break;
+                                    case 2:
+                                        //compuesto    
+                                        echo '<div class="span6">';
+                                        echo '<span class="datosRed">Gastos de Envío: </span>';
+                                        echo "<span>Compuesto</span>";
+                                        break;
+                                }
+                                echo '</div>';
+                                ?>
                             </div>
                             <div class="tipoPago row-fluid">
                                 <?php

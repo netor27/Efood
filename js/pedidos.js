@@ -90,7 +90,9 @@ $(document).ready(function(){
             var texto = element.attr("texto");
             var dom;
             dom = '<div class="tooltipHeaderNoDisponible">'+titulo+'</div>';
-            dom += '<div class="tooltipTextNoDisplonible">'+texto+'</div>';
+            if(texto != ""){
+                dom += '<div class="tooltipTextNoDisplonible">'+texto+'</div>';
+            }
             return dom;            
         }, 
         position:{ 
@@ -200,7 +202,7 @@ function obtenerIngredientes(id, disponible){
                             else{
                                 txt=txt+"<input type=\"checkbox\" value=\""+json[x].idIngrediente+"\" name=\""+quitaAcentos(grupo)+"\" id=\""+idDepende+"\" class=\"d"+idDepende+"\" />";
                             }
-                            //txt=txt+"<input type=\"checkbox\" value=\""+json[x].idIngrediente+"\" name=\""+json[x].idIngrediente+"\" id=\""+idDepende+"\" class=\"hab\"/>";
+                        //txt=txt+"<input type=\"checkbox\" value=\""+json[x].idIngrediente+"\" name=\""+json[x].idIngrediente+"\" id=\""+idDepende+"\" class=\"hab\"/>";
                         }
                         txt = txt + "<span class='ingredienteNombre'>" +  json[x].nombreIngrediente + "</span>";
                         //txt=txt + json[x].idGrupoDepende+"<br>";
@@ -248,11 +250,11 @@ function obtenerIngredientes(id, disponible){
             });
             
             //                autoOpen: true,
-//                height: 600,
-//                width: 420,
-//                modal: true,
-//                resizable: false,
-//                draggable: false
+            //                height: 600,
+            //                width: 420,
+            //                modal: true,
+            //                resizable: false,
+            //                draggable: false
 
 
             $("#modalDialogIngredientes").dialog("open");
@@ -440,7 +442,7 @@ function altaDir(){
             success: function(json) {    
                 //alert("Direccion Agregada!");
                 alert(json[0]);
-                //$("#direcciones").append('<input type="radio" id="colonia">');
+            //$("#direcciones").append('<input type="radio" id="colonia">');
             },
             error: function (XMLHttpRequest, textStatus, errThrown) {
                 alert(textStatus + errThrown); 

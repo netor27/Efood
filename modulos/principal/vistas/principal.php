@@ -135,7 +135,7 @@ require_once('layout/headers/headFin.php');
                         <div class="row-fluid">
                             <div class="span12">
                                 <div class="tituloBlog">
-                                    <a href="<?php echo $entry['link']; ?>">
+                                    <a href="<?php echo $entry['link']; ?>" target="_blank">
                                         <?php echo $entry['titulo']; ?>
                                     </a>
                                 </div>
