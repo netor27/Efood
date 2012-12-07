@@ -2,23 +2,24 @@ $(function(){
     $('#slider1').bxSlider({
         //infiniteLoop: false,
         displaySlideQty: 9,
-        moveSlideQty: 1
+        moveSlideQty: 1,
+        onAfterSlide: function(currentSlideNumber, totalSlideQty, currentSlideHtmlObject){
+            var realIndex = (currentSlideNumber + 5) % totalSlideQty;
+            $(".imagen_slider_div").each(function(index) {
+                if(realIndex == index){
+                    id = $(this).attr("id");
+                    var texto = $("#antojo_nombre_"+id).attr("value");
+                    //console.log("index = " + index + " , id = " + id + " , texto = " + texto);
+                    $("#sliderText").html(texto); 
+                }                
+            });            
+        }   
     });
     
     $(".checkbox_vacio").each(function(){
-       $(this).attr("disabled",true); 
+        $(this).attr("disabled",true); 
     });
     
-    $(".checkbox_antojo_container").hover(
-        function(){
-            var id;
-            id = $(this).attr("id");
-            var texto = $(".antojo_nombre_"+id).attr("value");
-            $("#sliderText").html(texto);        
-        }, 
-        function(){
-            $("#sliderText").html("");
-        });
     $(".checkbox_antojo_container").click(function(){
         var id;
         id = $(this).attr("id");
@@ -67,8 +68,7 @@ $(function(){
     
     $(window).scroll(function () { 
         var $top = $(this).scrollTop();
-        console.log($top);
-        if($top > 1131 ){
+        if($top > 1106 ){
             $(".contenedorLikes").addClass("contenedorLikesFijoAbajo"); 
             $(".contenedorLikes").removeClass("contenedorLikesEnMovimiento");                       
             $(".contenedorLikes").removeClass("span10");                        

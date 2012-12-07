@@ -128,11 +128,11 @@ span.selectAmarillo{
     font-size:20px;
     font-weight: bold;
     margin-left: 20px;
-    padding-top: 15px;
+    padding-top: 10px;
 }
 .restauranteAbierto .restauranteHeader .tiposComida{
     color:#ffffff;
-    font-size:10px;
+    font-size:12px;
     margin-left: 20px;
 }
 
@@ -146,11 +146,11 @@ span.selectAmarillo{
     font-size:20px;
     font-weight: bold;
     margin-left: 20px;
-    padding-top: 15px;
+    padding-top: 10px;
 }
 .restauranteAbiertoHover .restauranteHeader .tiposComida{
     color:#373435;
-    font-size:10px;
+    font-size:12px;
     margin-left: 20px;
 }
 
@@ -164,11 +164,11 @@ span.selectAmarillo{
     font-size:20px;
     font-weight: bold;
     margin-left: 20px;
-    padding-top: 15px;
+    padding-top: 10px;
 }
 .restauranteCerrado .restauranteHeader .tiposComida{
     color:#ffffff;
-    font-size:10px;
+    font-size:12px;
     margin-left: 20px;
 }
 
@@ -178,15 +178,15 @@ span.selectAmarillo{
     background:url(../imagenes/resultadosBusqueda/HeaderCerradoHover.png) no-repeat 0 0;
 }
 .restauranteCerradoHover .restauranteHeader .titulo{
-    color:#ffd525;
+    color:#ED3237;
     font-size:20px;
     font-weight: bold;
     margin-left: 20px;
-    padding-top: 15px;
+    padding-top: 10px;
 }
 .restauranteCerradoHover .restauranteHeader .tiposComida{
-    color:#ffffff;
-    font-size:10px;
+    color:black;
+    font-size:12px;
     margin-left: 20px;
 }
 

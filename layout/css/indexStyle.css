@@ -261,7 +261,7 @@
 
 .contenedorLikesFijoAbajo{
     position: relative;
-    top: 540px;
+    top: 510px;
     width: 290px;
 }
 
@@ -285,3 +285,13 @@
     font-weight: bold;
     margin-top: 15px;
 }
+
+.fb-container {
+    width: 258px;
+    height: 95px;
+    overflow: hidden;
+}
+
+.fb-container > div {
+     margin: -1px 0px 0px -1px;  
+}​

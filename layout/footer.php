@@ -24,7 +24,7 @@
                         <div class="footerLinksHeader">
                             Involúcrate
                         </div>
-                        <a href="#">Recomienda un restaurante</a><br>
+                        <a class="btnRecomendar">Recomienda un restaurante</a><br>
                         <a href="#">Invita un amigo</a><br>
                         <a href="#">Contáctanos</a><br>
                     </div>

@@ -107,7 +107,7 @@ require_once('layout/headers/headFin.php');
                     <br><br><br>
                     <div style="margin: 0 auto;">
                         <input type="submit" id="search-submit" value=""
-                        style="background-image: url('layout/imagenes/Home/btn_Buscar_188x37(2).png'); border: solid 0px #000000; width: 188px; height: 37px;" />
+                               style="background-image: url('layout/imagenes/Home/btn_Buscar_188x37(2).png'); border: solid 0px #000000; width: 188px; height: 37px;" />
                     </div>
                 </div>
             </div>
@@ -181,7 +181,9 @@ require_once('layout/headers/headFin.php');
                     </div>
                 </div>
                 <div class="row-fluid">
-                    <div class="fb-like-box" data-href="http://www.facebook.com/eFoodMX" data-width="300" data-show-faces="false" data-stream="false" data-header="false"></div>
+                    <div class="fb-container">
+                        <div class="fb-like-box" data-href="http://www.facebook.com/eFoodMX" data-width="300" data-show-faces="true" data-stream="false" data-header="false"></div>
+                    </div>
                 </div>
                 <div class="row-fluid">
                     <a href="https://twitter.com/eFoodMX" class="twitter-follow-button" data-show-count = true data-lang="es">Follow @eFoodMX</a>
