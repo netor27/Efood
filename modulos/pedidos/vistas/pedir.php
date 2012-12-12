@@ -56,14 +56,15 @@ Da de alta una nueva Direcci&oacute;n:<br>
  <?php
     }//cierre del if para saber si es a domicilio o a recoger
  ?>
-        M&eacute;do de pago<br>
+        <div id="confirmarInfo"></div>
+        
+        M&eacute;todo de pago<br>
          Efectivo:<input type="radio" name="pago" value="0" checked/><br>
          Paypal:<input type="radio" name="pago" value="1"/><br>
         </form>
 
-
         <?php
-        echo '<a id="avanzarp" href="#">Avanzar</a>';
+        echo '<a class="confirmarPedido">Avanzar</a>';
 }
         require_once('layout/footer.php');
         ?>

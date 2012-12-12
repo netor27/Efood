@@ -5,12 +5,12 @@ $(document).ready(function(){
         var ic = getUrlVars()["ic"];
         window.location.href = "pedidos.php?p="+tipoEnvio+"&a=pedir&i="+i+"&ic="+ic;
     });    
-    $("#avanzarp").click(function(){
+    /*$("#avanzarp").click(function(){
         var tipoPago = $("input[name='pago']:checked").val();
         var i = getUrlVars()["i"];
         var ic = getUrlVars()["ic"];
         window.location.href = "pedidos.php?p="+tipoPago+"&a=avanzarPedido&i="+i+"&ic="+ic;
-    });   
+    });*/   
     $("#terminap").click(function(){
         var i = getUrlVars()["i"];
         var ic = getUrlVars()["ic"];
@@ -24,6 +24,9 @@ $(document).ready(function(){
     });
     $(".popuppedir").click(function(){
         pedir(this.id);
+    });
+    $( ".confirmarPedido" ).click(function(){
+        confirmacion();
     });
     $('#btnMostrarMenu').click(function(){
         $('#menuContenido').show();
@@ -190,10 +193,10 @@ function obtenerIngredientes(id, disponible){
                             }
                         }else{
                             if(checked && json[x].idIngredienteDepende==-1){
-                                txt=txt+"<input type=\"checkbox\" value=\""+json[x].idIngrediente+"\" name=\""+quitaAcentos(grupo)+"\" id=\""+idDepende+"\" checked=\"checked\" class=\"hab\" />";
+                                txt=txt+"<input type=\"checkbox\" value=\""+json[x].idIngrediente+"\" name=\""+quitaAcentos(grupo)+"\" id=\""+idDepende+"\"  class=\"hab\" />";
                                 checked = false;
                             }else if(checked && json[x].idIngredienteDepende!=-1){
-                                txt=txt+"<input type=\"checkbox\" value=\""+json[x].idIngrediente+"\" name=\""+quitaAcentos(grupo)+"\" id=\""+idDepende+"\" checked=\"checked\" class=\"d"+idDepende+"\" />";
+                                txt=txt+"<input type=\"checkbox\" value=\""+json[x].idIngrediente+"\" name=\""+quitaAcentos(grupo)+"\" id=\""+idDepende+"\"  class=\"d"+idDepende+"\" />";
                                 checked = false;
                             }else if(json[x].idIngredienteDepende==-1){
                                 txt=txt+"<input type=\"checkbox\" value=\""+json[x].idIngrediente+"\" name=\""+quitaAcentos(grupo)+"\" id=\""+idDepende+"\" class=\"hab\" />";
@@ -327,6 +330,23 @@ function agregarPedido(){
     }
 }
 
+function confirmacion(){
+    $.ajax({
+        type: "POST",
+        url: "pedidos.php?a=confirmarPedido",
+        dataType: "json",
+        success: function(json) {    
+            var email = "Email: " + json['email'];
+            var tel = "Teléfono: " + json['telefono'];
+            var dir ="Dirección: " + $("#direccionesU option:selected").text();
+            var pedir = "<a href='#' id='terminap'>Pedir</a>";
+            $("#confirmarInfo").html(email+"<br>"+tel+"<br>"+dir+"<br>"+pedir);
+        },
+        error: function (XMLHttpRequest, textStatus, errThrown) {
+            alert(textStatus); 
+        }
+    });
+}
 //function pedir(id){
 //    var txt = "<form id='pedidometodos' method='get' action='pedidos.php?a=pedir&i="+id+"'>";
 //    //var txt="";
@@ -440,8 +460,7 @@ function altaDir(){
             }),
             dataType: "json",
             success: function(json) {    
-                //alert("Direccion Agregada!");
-                alert(json[0]);
+                alert("Direccion Agregada!");
             //$("#direcciones").append('<input type="radio" id="colonia">');
             },
             error: function (XMLHttpRequest, textStatus, errThrown) {

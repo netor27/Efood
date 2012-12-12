@@ -154,6 +154,14 @@ function obtenPedidos() {
     return $pedidos;
 }
 
+function confirmarPedido() {
+    require_once('modulos/pedidos/modelos/pedidoModelo.php');
+    require_once('modulos/usuarios/modelos/usuarioModelo.php');
+    require_once 'modulos/pedidos/clases/PlatilloElementos.php';
+    $json = getUsuarioFromEmail($_SESSION['email']);
+    echo json_encode($json);
+}
+
 function agregaAlPedido() {
     require_once('modulos/pedidos/modelos/pedidoModelo.php');
     require_once 'modulos/pedidos/clases/PlatilloElementos.php';

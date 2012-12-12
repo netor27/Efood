@@ -47,33 +47,33 @@ if (strcmp($res, "VERIFIED") == 0) {
         $ipnMensaje->txn_type = $_POST['txn_type'];
     if (isset($_POST['txn_id']))
         $ipnMensaje->txn_id = $_POST['txn_id'];
-    if (isset($_POST['receiver_email']))
+    if (isset($_POST['receiver_email']))//EL MAIL REGISTRADO EN PAYPAL DE PARTE DE EFOOD
         $ipnMensaje->receiver_email = $_POST['receiver_email'];
     if (isset($_POST['item_name']))
         $ipnMensaje->item_name = $_POST['item_name'];
     if (isset($_POST['item_number']))
         $ipnMensaje->item_number = $_POST['item_number'];
-    if (isset($_POST['payment_status']))
+    if (isset($_POST['payment_status']))//CORRECT BIEN O ALGO ASI
         $ipnMensaje->payment_status = $_POST['payment_status'];
     if (isset($_POST['parent_txn_id']))
         $ipnMensaje->parent_txn_id = $_POST['parent_txn_id'];
-    if (isset($_POST['mc_gross']))
+    if (isset($_POST['mc_gross'])) //CUANTO PAGO EL USUARIO A PAYPAL
         $ipnMensaje->mc_gross = $_POST['mc_gross'];
-    if (isset($_POST['mc_fee']))
+    if (isset($_POST['mc_fee']))//LO QUE COBRO PAYPAL DE COMISION
         $ipnMensaje->mc_fee = $_POST['mc_fee'];
-    if (isset($_POST['mc_currency']))
+    if (isset($_POST['mc_currency']))//MX
         $ipnMensaje->mc_currency = $_POST['mc_currency'];
     if (isset($_POST['first_name']))
         $ipnMensaje->first_name = $_POST['first_name'];
     if (isset($_POST['last_name']))
         $ipnMensaje->last_name = $_POST['last_name'];
-    if (isset($_POST['payer_email']))
+    if (isset($_POST['payer_email']))//MAIL DEL USUARIO, AL Q SE MANDA EL MAIL DE Q SU PAGO SE PROCESO NO SE TOMA EN CUENTA
         $ipnMensaje->payer_email = $_POST['payer_email'];
-    if (isset($_POST['payment_date']))
+    if (isset($_POST['payment_date']))//FECHA Y HORA DEL PAGO
         $ipnMensaje->payment_date = $_POST['payment_date'];
-    if (isset($_POST['test_ipn']))
+    if (isset($_POST['test_ipn']))//1 ES UNA TRANSACCION DE PRUEBA SI 0 TRANSACCION REAL
         $ipnMensaje->test_ipn = $_POST['test_ipn'];
-    if (isset($_POST['custom']))
+    if (isset($_POST['custom']))//ID DEL PEDIDO QUE YO GENERÉ
         $ipnMensaje->custom = $_POST['custom'];
 
     $mensaje = "";
