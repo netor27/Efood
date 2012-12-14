@@ -55,14 +55,14 @@ Da de alta una nueva Direcci&oacute;n:<br>
          </div>
  <?php
     }//cierre del if para saber si es a domicilio o a recoger
- ?>
-        <div id="confirmarInfo"></div>
-        
+ ?>  
         M&eacute;todo de pago<br>
          Efectivo:<input type="radio" name="pago" value="0" checked/><br>
          Paypal:<input type="radio" name="pago" value="1"/><br>
         </form>
 
+        <div id="modalDialogConfirmacion" title="Confirmar Informaci&oacute;n" style="display:none;">
+        </div>
         <?php
         echo '<a class="confirmarPedido">Avanzar</a>';
 }

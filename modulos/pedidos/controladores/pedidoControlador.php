@@ -219,6 +219,8 @@ function terminarPedido() {
     require_once 'modulos/pedidos/clases/PlatilloElementos.php';
     $idRestaurante = $_GET['i'];
     $restaurante = getRestaurante($idRestaurante);
+    $pedidos = getPedidos($idRestaurante);
+    $errores = generarPedido($pedidos);
     $cliente = enviaMailSMTP("Pedido a " . $restaurante->nombre, "Se ha generado su pedido con un total de " . $_SESSION['precioTotal'] . " informacion: " . $_SESSION['pedidoResumen'], "no-reply@efood.com.mx", $_SESSION['email']);
     $emailRestaurante = enviaMailSMTP("Pedido de " . $_SESSION['email'], "Se ha generado un pedido con un total de " . $_SESSION['precioTotal'] . " por parte de " . $_SESSION['email'] . " informacion: " . $_SESSION['pedidoResumen'], "no-reply@efood.com.mx", $restaurante->email);
     require_once('modulos/pedidos/vistas/termina.php');

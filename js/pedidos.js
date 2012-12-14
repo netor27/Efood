@@ -11,11 +11,11 @@ $(document).ready(function(){
         var ic = getUrlVars()["ic"];
         window.location.href = "pedidos.php?p="+tipoPago+"&a=avanzarPedido&i="+i+"&ic="+ic;
     });*/   
-    $("#terminap").click(function(){
+    /*$("#terminap").click(function(){
         var i = getUrlVars()["i"];
         var ic = getUrlVars()["ic"];
         window.location.href = "pedidos.php?a=terminarPedido&i="+i+"&ic="+ic;
-    });   
+    });*/   
     $(".popupPlatillo").click(function(){
         obtenerIngredientes(this.id, true);
     });
@@ -331,20 +331,44 @@ function agregarPedido(){
 }
 
 function confirmacion(){
+    var txt="";
     $.ajax({
         type: "POST",
         url: "pedidos.php?a=confirmarPedido",
         dataType: "json",
         success: function(json) {    
             var email = "Email: " + json['email'];
-            var tel = "Teléfono: " + json['telefono'];
+            var tel = "Teléfono: ";
+            if(json['telefono']!=null)
+                tel += json['telefono'];
             var dir ="Dirección: " + $("#direccionesU option:selected").text();
-            var pedir = "<a href='#' id='terminap'>Pedir</a>";
-            $("#confirmarInfo").html(email+"<br>"+tel+"<br>"+dir+"<br>"+pedir);
+            var i = getUrlVars()["i"];
+            var ic = getUrlVars()["ic"];
+            var p = $("input[name='pago']:checked").val();
+            var pedir = "<a href='pedidos.php?a=terminarPedido&p="+p+"&i="+i+"&ic="+ic+"' id='terminap'>Pedir</a>";
+            txt += email+"<br>"+tel+"<br>"+dir+"<br>"+pedir;
+            $("#modalDialogConfirmacion").html(txt);
         },
         error: function (XMLHttpRequest, textStatus, errThrown) {
             alert(textStatus); 
         }
+    });
+    
+    $("#modalDialogConfirmacion").dialog({
+        minHeight: 0,
+        create: function() {
+            $(this).css("maxHeight", 600);        
+        },
+        width: 420,
+        resizable: false,
+        draggable: false,
+        modal: true
+    });
+
+    $("#modalDialogConfirmacion").dialog("open");
+    //evento para cerrar el dialogo al dar click afuera
+    $(".ui-widget-overlay").on("click", function(){
+        $("#modalDialogConfirmacion").dialog("close");
     });
 }
 //function pedir(id){
