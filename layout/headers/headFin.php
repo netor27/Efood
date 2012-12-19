@@ -10,7 +10,10 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
     </script>
-    <script type="text/javascript">if (window.location.hash == '#_=_')window.location.hash = '';</script>
+    <script type="text/javascript">
+        if (window.location.hash == '#_=_')
+            window.location = '';
+    </script>
     <div id="contenedor">
         <div id="contenido">
             <!-- Contenido header -->
