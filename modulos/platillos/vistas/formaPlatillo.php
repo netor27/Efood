@@ -38,7 +38,16 @@ if (isset($error)) {
                 </li>
                 <li>
                     <label>Categoría</label>
-                    <input type="text" name="categoria" value="<?php echo $platillo->categoria; ?>">
+                    <select name="idCategoriaPlatillo">
+                        <?php
+                        foreach ($categorias as $categoria) {
+                            if($categoria->idCategoriaPlatillo == $platillo->idCategoriaPlatillo)
+                                echo '<option selected value="' . $categoria->idCategoriaPlatillo . '">' . $categoria->nombre . '</option>';
+                            else
+                                echo '<option value="' . $categoria->idCategoriaPlatillo . '">' . $categoria->nombre . '</option>';
+                        }
+                        ?>
+                    </select>
                 </li>
                 <li>
                     <label>Descripción</label>  

@@ -5,17 +5,20 @@ class Platillo {
     public $idPlatillo;
     public $idRestaurante;
     public $nombre;
-    public $categoria;
+    public $idCategoriaPlatillo;
     public $descripcion;
     public $precioBase;
     public $hint;
+    
+    //No es parte de la tabla de la bd
+    public $nombreCategoria;
 
     static function printHeader() {
         echo '<tr>';
         echo '<th>idPlatillo</th>';
         echo '<th>idRestaurante</th>';
         echo '<th>nombre</th>';
-        echo '<th>categoria</th>';
+        echo '<th>idCategoriaPlatillo</th>';
         echo '<th>descripcion</th>';
         echo '<th>precioBase</th>';
         echo '<th>Grupos Ingredientes</th>';
@@ -30,7 +33,12 @@ class Platillo {
         echo '<td>' . $this->idPlatillo . '</td>';
         echo '<td>' . $this->idRestaurante . '</td>';
         echo '<td>' . $this->nombre . '</td>';
-        echo '<td>' . $this->categoria . '</td>';
+        if(isset($this->idCategoriaPlatillo)){
+            echo '<td>' . $this->nombreCategoria . '</td>';
+        }else{
+            echo '<td>No asignado</td>';
+        }
+        
         echo '<td>' . $this->descripcion . '</td>';
         echo '<td>' . $this->precioBase . '</td>';
         echo '<td><a href="grupoIngredientes.php?i=' . $this->idPlatillo . '">Ver Grupos Ingredientes </a></td>';

@@ -120,7 +120,7 @@ function obtenerIngredientes(id, disponible){
             var txt="";
             //txt=txt + json[x].idPlatillo;
             //txt=txt + json[x].idRestaurante;
-            //txt=txt + json[x].categoria;
+            //txt=txt + json[x].idCategoriaPlatillo;
             //txt = txt + "<div class='row-fluid'></div>";
             txt = txt + "<form id=\"pedido\" name=\"pedido\">"; 
             txt = txt + "<div class='row-fluid'><div class='detallesNombre'>"+json[0].nombrePlatillo+"</div></div>";            

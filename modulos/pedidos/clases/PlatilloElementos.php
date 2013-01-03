@@ -4,7 +4,7 @@ class PlatilloElementos {
 
     public $idPlatillo;
     public $idRestaurante;
-    public $categoria;
+    public $idCategoriaPlatillo;
     public $nombrePlatillo;
     public $descripcion;
     public $precioBase;

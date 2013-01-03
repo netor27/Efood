@@ -7,11 +7,11 @@ function altaPlatillo($platillo) {
     $id = -1;
     try {
         $conex->beginTransaction();
-        $stmt = $conex->prepare("INSERT into platillo (idRestaurante, nombre, categoria, descripcion, precioBase,hint) 
-                            values (:idRestaurante,:nombre,:categoria,:descripcion,:precioBase,:hint)");
+        $stmt = $conex->prepare("INSERT into platillo (idRestaurante, nombre, idCategoriaPlatillo, descripcion, precioBase,hint) 
+                            values (:idRestaurante,:nombre,:idCategoriaPlatillo,:descripcion,:precioBase,:hint)");
         $stmt->bindParam(':idRestaurante', $platillo->idRestaurante);
         $stmt->bindParam(':nombre', $platillo->nombre);
-        $stmt->bindParam(':categoria', $platillo->categoria);
+        $stmt->bindParam(':idCategoriaPlatillo', $platillo->idCategoriaPlatillo);
         $stmt->bindParam(':descripcion', $platillo->descripcion);
         $stmt->bindParam(':precioBase', $platillo->precioBase);
         $stmt->bindParam(':hint', $platillo->hint);
@@ -64,12 +64,12 @@ function bajaPlatillo($idPlatillo) {
 function modificaPlatillo($platillo) {
     global $conex;
     $stmt = $conex->prepare("UPDATE platillo 
-                            SET nombre=:nombre, categoria=:categoria, descripcion=:descripcion, 
+                            SET nombre=:nombre, idCategoriaPlatillo=:idCategoriaPlatillo, descripcion=:descripcion, 
                             precioBase=:precioBase, hint=:hint
                             WHERE idPlatillo=:idPlatillo");
     $stmt->bindParam(':idPlatillo', $platillo->idPlatillo);
     $stmt->bindParam(':nombre', $platillo->nombre);
-    $stmt->bindParam(':categoria', $platillo->categoria);
+    $stmt->bindParam(':idCategoriaPlatillo', $platillo->idCategoriaPlatillo);
     $stmt->bindParam(':descripcion', $platillo->descripcion);
     $stmt->bindParam(':precioBase', $platillo->precioBase);
     $stmt->bindParam(':hint', $platillo->hint);
@@ -83,7 +83,9 @@ function modificaPlatillo($platillo) {
 
 function getPlatillos() {
     global $conex;
-    $stmt = $conex->query("SELECT * FROM platillo");
+    $stmt = $conex->query("SELECT p.*, c.nombre as categoriaNombre
+                           FROM platillo p
+                           LEFT OUTER JOIN categoriaplatillo c ON p.idCategoriaPlatillo = c.idCategoriaPlatillo");
     if ($stmt->execute()) {
         $platillos = array();
         $rows = $stmt->fetchAll();
@@ -94,11 +96,12 @@ function getPlatillos() {
             $platillo->idPlatillo = $row['idPlatillo'];
             $platillo->idRestaurante = $row['idRestaurante'];
             $platillo->nombre = $row['nombre'];
-            $platillo->categoria = $row['categoria'];
+            $platillo->idCategoriaPlatillo = $row['idCategoriaPlatillo'];
             $platillo->descripcion = $row['descripcion'];
             $platillo->horario = $row['horario'];
             $platillo->precioBase = $row['precioBase'];
             $platillo->hint = $row['hint'];
+            $platillo->nombreCategoria = $row['categoriaNombre'];
             $platillos[$i] = $platillo;
             $i++;
         }
@@ -111,7 +114,10 @@ function getPlatillos() {
 
 function getPlatillo($idPlatillo) {
     global $conex;
-    $stmt = $conex->prepare("SELECT * FROM platillo WHERE idPlatillo = :id");
+    $stmt = $conex->prepare("SELECT p.*, c.nombre as categoriaNombre
+                             FROM platillo p
+                             LEFT OUTER JOIN categoriaplatillo c ON p.idCategoriaPlatillo = c.idCategoriaPlatillo
+                             WHERE p.idPlatillo = :id");
     $stmt->bindParam(':id', $idPlatillo);
     if ($stmt->execute()) {
         $row = $stmt->fetch();
@@ -120,10 +126,11 @@ function getPlatillo($idPlatillo) {
         $platillo->idPlatillo = $row['idPlatillo'];
         $platillo->idRestaurante = $row['idRestaurante'];
         $platillo->nombre = $row['nombre'];
-        $platillo->categoria = $row['categoria'];
+        $platillo->idCategoriaPlatillo = $row['idCategoriaPlatillo'];
         $platillo->descripcion = $row['descripcion'];
         $platillo->precioBase = $row['precioBase'];
         $platillo->hint = $row['hint'];
+        $platillo->nombreCategoria = $row['categoriaNombre'];
         return $platillo;
     } else {
         return NULL;
@@ -132,8 +139,10 @@ function getPlatillo($idPlatillo) {
 
 function getPlatillosDeRestaurante($idRestaurante) {
     global $conex;
-    $stmt = $conex->prepare("SELECT * FROM platillo 
-                            WHERE idRestaurante = :id 
+    $stmt = $conex->prepare("SELECT p.*, c.nombre as categoriaNombre 
+                            FROM platillo p
+                            LEFT OUTER JOIN categoriaplatillo c ON p.idCategoriaPlatillo = c.idCategoriaPlatillo
+                            WHERE p.idRestaurante = :id 
                             ORDER BY idPlatillo ASC");
     $stmt->bindParam(':id', $idRestaurante);
     if ($stmt->execute()) {
@@ -146,10 +155,11 @@ function getPlatillosDeRestaurante($idRestaurante) {
             $platillo->idPlatillo = $row['idPlatillo'];
             $platillo->idRestaurante = $row['idRestaurante'];
             $platillo->nombre = $row['nombre'];
-            $platillo->categoria = $row['categoria'];
+            $platillo->idCategoriaPlatillo = $row['idCategoriaPlatillo'];
             $platillo->descripcion = $row['descripcion'];
             $platillo->precioBase = $row['precioBase'];
             $platillo->hint = $row['hint'];
+            $platillo->nombreCategoria = $row['categoriaNombre'];
             $platillos[$i] = $platillo;
             $i++;
         }

@@ -6,6 +6,8 @@ function alta() {
         $tipo = "alta";
         require_once 'modulos/platillos/clases/Platillo.php';        
         $platillo = new Platillo();
+        require_once 'modulos/platillos/modelos/CategoriaPlatilloModelo.php';
+        $categorias = getCategoriasDeRestaurante($idRestaurante);
         require_once 'modulos/platillos/vistas/formaPlatillo.php';
     } else {
         goToIndex();
@@ -22,7 +24,7 @@ function formaPlatilloSubmit() {
         $platillo->idRestaurante = $idRestaurante;
         $platillo->nombre = $_POST['nombre'];
         $platillo->descripcion = $_POST['descripcion'];
-        $platillo->categoria = $_POST['categoria'];
+        $platillo->idCategoriaPlatillo = $_POST['idCategoriaPlatillo'];
         $platillo->precioBase = $_POST['precioBase'];
         $platillo->hint = $_POST['hint'];
 
@@ -42,7 +44,7 @@ function formaPlatilloSubmit() {
         } else if ($tipo == "editar") {
             $platillo->idPlatillo = $_POST['idPlatillo'];
             if (modificaPlatillo($platillo)) {
-                setSessionMessage('Se modificó el platillo.' . $platillo->nombre);
+                setSessionMessage('Se modificó el platillo ' . $platillo->nombre);
             } else {
                 $tipo = "editar";
                 $error = "Ocurrió un error al modificar el platillo";
@@ -77,6 +79,8 @@ function modificar() {
     require_once 'modulos/platillos/modelos/platilloModelo.php';
     $idRestaurante = getIdRestauranteDePlatillo($idPlatillo);
     if (validarAdministrador() || validarRestauranteLoggeadoId($idRestaurante)) {
+        require_once 'modulos/platillos/modelos/CategoriaPlatilloModelo.php';
+        $categorias = getCategoriasDeRestaurante($idRestaurante);
         require_once 'modulos/platillos/clases/Platillo.php';
         $platillo = getPlatillo($idPlatillo);
         require_once 'modulos/platillos/vistas/formaPlatillo.php';
