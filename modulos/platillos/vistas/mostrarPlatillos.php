@@ -1,7 +1,11 @@
 <?php
 require_once('layout/headers/headInicio.php');
+?>
+<script src="js/mostrarPlatillos.js"></script>
+<?php
 require_once('layout/headers/headFin.php');
 ?>
+<div id="modalDialogBorrarPlatillo"></div>
 <div class="row-fluid"><div class="span12"></div></div>
 <div class="row-fluid"><div class="span12"></div></div>
 <h2>Platillos del restaurante <?php echo $restaurante->nombre; ?></h2>

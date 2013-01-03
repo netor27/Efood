@@ -44,12 +44,7 @@ class Platillo {
         echo '<td><a href="grupoIngredientes.php?i=' . $this->idPlatillo . '">Ver Grupos Ingredientes </a></td>';
         echo '<td><a href="platillos.php?a=horario&i=' . $this->idPlatillo . '">Horario</a></td>';
         echo '<td><a href="platillos.php?a=modificar&i=' . $this->idPlatillo . '">Modificar</a></td>';
-
-        $platillo = "'" . $this->nombre . "'";
-        $texto = "'Se ha eliminado el platillo'";
-        $locacion = "'platillos.php?a=borrar&i='";
-        echo '<td><a href="javascript:confirmation(' . $this->idPlatillo . ',' . $platillo . ',' . $texto . ',' . $locacion . ')">Eliminar</a></td>';
-
+        echo '<td><a class="btnBorrarPlatillo cursorPointer" id="' . $this->idPlatillo . '">Eliminar</a></td>';
         echo '</tr>';
     }
 
