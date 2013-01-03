@@ -95,7 +95,12 @@
                         height: "auto",
                         width: "auto",
                         modal: true,
-                        resizable:false 
+                        resizable:false,
+                        buttons: {
+                            Aceptar: function() {
+                                $( this ).dialog( "close" );
+                            }
+                        }                               
                     });
                     $(".ui-widget-overlay").on("click", function(){
                         $("#modalDialogSessionMessage").dialog("close");

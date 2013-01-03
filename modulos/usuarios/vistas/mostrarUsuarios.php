@@ -1,7 +1,11 @@
 <?php
 require_once('layout/headers/headInicio.php');
+?>
+<script src="js/mostrarUsuarios.js"></script>
+<?php
 require_once('layout/headers/headFin.php');
 ?>
+<div id="modalDialogBorrarUsuario"></div>
 <h1>efood</h1>
 <h2>Todos los usuarios</h2>
 <h4><a href="usuarios.php?a=alta">Agregar usuario</a></h4>
