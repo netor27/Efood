@@ -1,7 +1,11 @@
 <?php
 require_once('layout/headers/headInicio.php');
+?>
+<script src="js/mostrarRestaurantes.js"></script>
+<?php
 require_once('layout/headers/headFin.php');
 ?>
+<div id="modalDialogBorrarRestaurante"></div>
 <h2>Todos los restaurantes</h2>
 <h4><a href="tiposComida.php">Administrar tipos de comida</a></h4>
 <h4><a href="restaurantes.php?a=alta">Agregar restaurante</a></h4>
