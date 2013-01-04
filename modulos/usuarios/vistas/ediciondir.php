@@ -3,6 +3,8 @@ require_once('layout/headers/headInicio.php');
 require_once('layout/headers/headAutocompleteColonias.php');
 require_once('layout/headers/headFin.php');
 ?>
+<div class="row-fluid"><div class="span12"></div></div>
+<div class="row-fluid"><div class="span12"></div></div>
 <form action="usuarios.php?a=modificacionDireccionSubmit" method="POST">
     <ul>
         <li>

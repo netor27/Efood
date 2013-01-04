@@ -3,7 +3,8 @@ require_once('layout/headers/headInicio.php');
 require_once('layout/headers/headFin.php');
 ?>
 
-
+<div class="row-fluid"><div class="span12"></div></div>
+<div class="row-fluid"><div class="span12"></div></div>
 <?php
 if (isset($error)) {
     echo '<h2 style="color: red">' . $error . '</h2>';

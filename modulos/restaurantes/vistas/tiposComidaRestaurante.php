@@ -3,7 +3,8 @@ require_once('layout/headers/headInicio.php');
 require_once('layout/headers/headTiposComida.php');
 require_once('layout/headers/headFin.php');
 ?>
-
+<div class="row-fluid"><div class="span12"></div></div>
+<div class="row-fluid"><div class="span12"></div></div>
 <h2>Tipos de comida de:"<?php echo $restaurante->nombre; ?>"</h2>
 <?php
 if (isset($error)) {

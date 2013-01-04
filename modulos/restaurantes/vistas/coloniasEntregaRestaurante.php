@@ -3,7 +3,8 @@ require_once('layout/headers/headInicio.php');
 require_once('layout/headers/headColoniasEntrega.php');
 require_once('layout/headers/headFin.php');
 ?>
-
+<div class="row-fluid"><div class="span12"></div></div>
+<div class="row-fluid"><div class="span12"></div></div>
 <h2>Colonias de entrega de:"<?php echo $restaurante->nombre; ?>"</h2>
 <?php
 if (isset($error)) {

@@ -5,6 +5,8 @@ require_once('layout/headers/headInicio.php');
 <?php
 require_once('layout/headers/headFin.php');
 ?>
+<div class="row-fluid"><div class="span12"></div></div>
+<div class="row-fluid"><div class="span12"></div></div>
 <div id="modalDialogBorrarRestaurante"></div>
 <h2>Todos los restaurantes</h2>
 <h4><a href="tiposComida.php">Administrar tipos de comida</a></h4>

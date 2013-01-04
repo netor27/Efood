@@ -3,10 +3,8 @@ require_once('layout/headers/headInicio.php');
 require_once('layout/headers/headAutocompleteColonias.php');
 require_once('layout/headers/headFin.php');
 ?>
-<br>
-<br>
-<br>
-<br>
+<div class="row-fluid"><div class="span12"></div></div>
+<div class="row-fluid"><div class="span12"></div></div>
 <div>
     <form action="usuarios.php?a=altaSubmit" method="post">
         <input type="hidden" name="terminos" value="1">

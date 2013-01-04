@@ -2,6 +2,8 @@
 require_once('layout/headers/headInicio.php');
 require_once('layout/headers/headFin.php');
 ?>
+<div class="row-fluid"><div class="span12"></div></div>
+<div class="row-fluid"><div class="span12"></div></div>
 <h1>Cambiar password</h1>
 <form method="post" action="restaurantes.php?a=establecerPasswordSubmit">
     <input type="hidden" name="i" value="<?php echo $idRestaurante; ?>">

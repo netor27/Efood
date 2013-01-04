@@ -2,7 +2,8 @@
 require_once('layout/headers/headInicio.php');
 require_once('layout/headers/headFin.php');
 ?>
-
+<div class="row-fluid"><div class="span12"></div></div>
+<div class="row-fluid"><div class="span12"></div></div>
 <h2><?php echo $tipo; ?> categoría platillo</h2>
 <?php
 if (isset($error)) {

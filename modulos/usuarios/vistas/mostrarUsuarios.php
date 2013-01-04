@@ -5,8 +5,9 @@ require_once('layout/headers/headInicio.php');
 <?php
 require_once('layout/headers/headFin.php');
 ?>
+<div class="row-fluid"><div class="span12"></div></div>
+<div class="row-fluid"><div class="span12"></div></div>
 <div id="modalDialogBorrarUsuario"></div>
-<h1>efood</h1>
 <h2>Todos los usuarios</h2>
 <h4><a href="usuarios.php?a=alta">Agregar usuario</a></h4>
 <h4><a href="usuarios.php?a=modificacion">Editar usuario</a></h4>

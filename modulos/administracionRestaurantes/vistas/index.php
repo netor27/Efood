@@ -2,6 +2,8 @@
 require_once('layout/headers/headInicio.php');
 require_once('layout/headers/headFin.php');
 ?>
+<div class="row-fluid"><div class="span12"></div></div>
+<div class="row-fluid"><div class="span12"></div></div>
 <h1>Pagina de inicio de administracion de restaurantes</h1>
 <br>
 <h2><a href="restaurantes.php?a=editar&i=<?php echo $restaurante->idRestaurante; ?>">Datos del restaurante</a></h2>
