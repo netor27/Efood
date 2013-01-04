@@ -15,12 +15,10 @@ class Platillo {
 
     static function printHeader() {
         echo '<tr>';
-        echo '<th>idPlatillo</th>';
-        echo '<th>idRestaurante</th>';
-        echo '<th>nombre</th>';
-        echo '<th>idCategoriaPlatillo</th>';
-        echo '<th>descripcion</th>';
-        echo '<th>precioBase</th>';
+        echo '<th>Nombre</th>';
+        echo '<th>Categoria Platillo</th>';
+        echo '<th>Descripcion</th>';
+        echo '<th>Precio Base</th>';
         echo '<th>Grupos Ingredientes</th>';
         echo '<th>Horario</th>';
         echo '<th>Modificar</th>';
@@ -30,8 +28,6 @@ class Platillo {
 
     function printPlatillo() {
         echo '<tr>';
-        echo '<td>' . $this->idPlatillo . '</td>';
-        echo '<td>' . $this->idRestaurante . '</td>';
         echo '<td>' . $this->nombre . '</td>';
         if(isset($this->idCategoriaPlatillo)){
             echo '<td>' . $this->nombreCategoria . '</td>';
