@@ -17,8 +17,6 @@ class GrupoIngredientes {
 
     static function printGrupoIngredientesHeader() {
         echo '<tr>';
-        echo '<th>idGrupoIngrediente</th>';
-        echo '<th>idPlatillo</th>';
         echo '<th>Nombre</th>';
         echo '<th>Excluyente</th>';
         echo '<th>Requerido</th>';
@@ -33,8 +31,6 @@ class GrupoIngredientes {
 
     function printGrupoIngredientes() {
         echo '<tr>';
-        echo '<td>' . $this->idGrupoIngredientes . '</td>';
-        echo '<td>' . $this->idPlatillo . '</td>';
         echo '<td>' . $this->nombre . '</tD>';
         if ($this->excluyente == 1)
             echo '<td>Si</td>';
@@ -57,18 +53,11 @@ class GrupoIngredientes {
         } else {
             echo '<td>Ninguno</td>';
         }
-
-
         echo '<td><a href="grupoIngredientes.php?a=modificar&i=' . $this->idGrupoIngredientes . '">Modificar</a></td>';
-
-        $grupoIngrediente = "'" . $this->nombre . "'";
-        $texto = "'Se borrará el grupo de ingrediente'";
         $locacion = "'grupoIngredientes.php?a=borrar&i='";
-        echo '<td><a href="javascript:confirmation(' . $this->idGrupoIngredientes . ',' . $grupoIngrediente . ',' . $texto . ',' . $locacion . ')">Eliminar</a></td>';
-
+        echo '<td><a class="btnBorrarGrupoIngredientes cursorPointer" id="' . $this->idGrupoIngredientes . '">Eliminar</a></td>';
         echo '</tr>';
     }
-
 }
 
 ?>
