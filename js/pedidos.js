@@ -122,7 +122,11 @@ function obtenerIngredientes(id, disponible){
             //txt=txt + json[x].idRestaurante;
             //txt=txt + json[x].idCategoriaPlatillo;
             //txt = txt + "<div class='row-fluid'></div>";
-            txt = txt + "<form id=\"pedido\" name=\"pedido\">"; 
+            txt = txt + "<form id=\"pedido\" name=\"pedido\">";
+            txt = txt + "<input type=\"hidden\" id=\"idCategoriaPlatillo\" name=\"idCategoriaPlatillo\" value=\""+json[0].idCategoriaPlatillo+"\"/>";
+            txt = txt + "<input type=\"hidden\" id=\"nombrecat\" name=\"nombrecat\" value=\""+json[0].nombrecat+"\"/>";
+            txt = txt + "<input type=\"hidden\" id=\"descripcioncat\" name=\"descripcioncat\" value=\""+json[0].descripcioncat+"\"/>";
+            txt = txt + "<input type=\"hidden\" id=\"ordencat\" name=\"ordencat\" value=\""+json[0].ordencat+"\"/>";
             txt = txt + "<div class='row-fluid'><div class='detallesNombre'>"+json[0].nombrePlatillo+"</div></div>";            
             txt = txt + "<div class='row-fluid'><div class='detallesPrecio'>$ "+json[0].precioBase+"</div></div>";
             if(json[0].hint!="" || json[0].hint!=null || json[0].hint!="null")
@@ -295,6 +299,10 @@ function agregarPedido(){
     var cantidad = $("#cantidad").val();
     var especificaciones = $("#especificaciones").val();
     var vals = $('#pedido :radio').serialize();
+    var nombrecat = $("#nombrecat").val();
+    var idcat = $("#idCategoriaPlatillo").val();
+    var descripcioncat = $("#descripcioncat").val();
+    var ordencat = $("#ordencat").val();
     if($('#pedido :checkbox').length>0){
         vals += "&";
         vals += $('#pedido :checkbox').serialize();
@@ -310,7 +318,20 @@ function agregarPedido(){
             }),
             dataType: "json",
             success: function(json) {    
+                $("#modalDialogIngredientes").dialog('close'); //cerramos manualmente el dialogo de añadir porque de otra manera se queda abierto
                 var ic = getUrlVars()["ic"];
+                var i = getUrlVars()["i"];
+                //var eliminar = "<a href=\"pedidos.php?a=eliminarDelPedido&ir=" + i + "&pc=" + ic + "&ic=" + ic + "\">Eliminar</a>";
+                var informacionPlatilloPedido = json[1]+" "+json[0]+" "+json[3]+"<br>";
+                if($("#categoria" +idcat).length == 0) {
+                    var htmlcat = "<div id=\"categoria"+idcat+"\">";
+                        htmlcat += nombrecat+"<br>"+descripcioncat+"<br>";
+                        htmlcat += informacionPlatilloPedido;
+                        htmlcat += "</div>";
+                     $("#pedidos").append(htmlcat);
+                }else{
+                    $("#categoria" +idcat).append(informacionPlatilloPedido);
+                }
                 //$("#agregados").append(json[1]+" ");
                 //$("#agregados").append(json[0]+" ");
                 //$("#agregados").append(json[3]);
@@ -319,7 +340,9 @@ function agregarPedido(){
                 //var total = parseInt($("#totalc").html());
                 //$("#totalc").html(total+json[3]);
                 //$("#botonpedir").html("<br><a href='pedidos.php?p=0&a=pedir&i="+json[4]+"'>Pedir</a></div>");                
-                window.location = "pedidos.php?a=menu&i="+json[4]+"&ic="+ic;
+                
+                //Esta funcion era para mostrar todos los elementos y por eso se recargaba todo               
+                //window.location = "pedidos.php?a=menu&i="+json[4]+"&ic="+ic;
             },
             error: function (XMLHttpRequest, textStatus, errThrown) {
                 alert(textStatus); 

@@ -21,6 +21,10 @@ class PlatilloElementos {
     public $idGrupoIngredientesI;
     public $nombreIngrediente;
     public $precio;
+    
+    public $nombrecat;
+    public $descripcioncat;
+    public $ordencat;
 }
 
 ?>
