@@ -1,5 +1,5 @@
 #menu{
-    margin-left: 10px;
+    
     -webkit-box-shadow:rgba(59, 59, 59, 0.701961) 0px 0px 70px -12px;
     -moz-box-shadow:rgba(59, 59, 59, 0.701961) 0px 0px 70px -12px;
     box-shadow: rgba(59, 59, 59, 0.701961) 0px 0px 70px -12px;
@@ -224,4 +224,8 @@
 
 .recomiendaRestaurante{
     padding-bottom: 15px;
+}
+
+.comandaContainer{
+    margin-left: -10px;
 }

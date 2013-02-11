@@ -80,6 +80,7 @@ function guardaPedido() {
 
 
 
+
         
 //logica para que los valores se conviertan en los ids de la sesion $_SESSION['ingrediente'][id] para sacar los precios y demÃ¡s
     //luego seteamos las sesiones a null o le aplicamos el destroy con unset (no en este momento o pierdo todos los datos
@@ -140,7 +141,7 @@ function getPedidos($idRestaurante) {
     return $pedidos;
 }
 
-function getDireccionesRestauranteUsuario($idUsuario,$idRestaurante) {
+function getDireccionesRestauranteUsuario($idUsuario, $idRestaurante) {
     global $conex;
     $stmt = $conex->prepare("SELECT idDireccion,idColonia,calle,numero,numeroInt,referencia FROM direccion WHERE idUsuario=:idUsuario AND idColonia in(SELECT idColonia FROM restaurantecolonia WHERE idRestaurante = :idRestaurante)");
     $stmt->bindParam(':idUsuario', $idUsuario);
@@ -167,7 +168,6 @@ function getDireccionesRestauranteUsuario($idUsuario,$idRestaurante) {
         return NULL;
     }
 }
-
 
 function mostrarPedidoGenerado($pedido) {
     $pedidoResumen = "";
@@ -217,7 +217,7 @@ function mostrarPedidoGenerado($pedido) {
     } else {
         $pedidoResumen = "<h2>Favor de hacer login</h2>";
     }
-    
+
     $_SESSION['pedidoResumen'] = $pedidoResumen;
 
     return $pedidoResumen;
@@ -378,12 +378,26 @@ function guardaDireccion() {
         $stmtP->bindParam(':referencia', $referencia);
         $val = $stmtP->execute();
     }
-    if($val){
-        $respuesta['direccion'] = $conex->lastInsertId(); 
-    }else{
+    if ($val) {
+        $respuesta['direccion'] = $conex->lastInsertId();
+    } else {
         $respuesta = false;
     }
     return $respuesta;
+}
+
+function getPedidosDeRestaurante($idRestaurante) {
+    global $conex;
+    $stmt = $conex->prepare("SELECT p.*
+                            FROM pedido p
+                            WHERE idRestaurante=:idRestaurante");
+    $stmt->bindParam(':idRestaurante', $idRestaurante);
+    if ($stmt->execute()) {
+        $rows = $stmt->fetchAll();
+        return $rows;
+    }else{
+        return null;
+    }    
 }
 
 ?>

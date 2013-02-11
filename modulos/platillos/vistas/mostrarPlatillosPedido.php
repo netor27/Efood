@@ -77,9 +77,9 @@ if ($habilitado) {
         ?>
 
         <div class="titulo">
-            <?php 
-            echo $restaurante->nombre; 
-            if(!$habilitado)
+            <?php
+            echo $restaurante->nombre;
+            if (!$habilitado)
                 echo " / Cerrado";
             ?>
         </div>
@@ -249,7 +249,7 @@ $gastoEnvio = $restaurante->gastoEnvio;
 $_SESSION['tipoGastoEnvio'] = $restaurante->tipoGastoEnvio;
 ?>
 <div class="row-fluid"><div class="span12"></div></div>
-<div class="row-fluid">
+<div class="row-fluid" style="margin-left:15px;">
     <div id="menu" class="span8">     
         <div class="row-fluid">
             <div class="span3 offset1">
@@ -307,6 +307,10 @@ $_SESSION['tipoGastoEnvio'] = $restaurante->tipoGastoEnvio;
                     }
                     $contador++;
                 }
+                //Si el último renglón es non, cerramos el div
+                if ($contador % 2 == 1) {
+                    echo '</div>'; //termina el renglón
+                }
             }
             ?>
             <div class="row-fluid">
@@ -335,7 +339,7 @@ $_SESSION['tipoGastoEnvio'] = $restaurante->tipoGastoEnvio;
             </div>
         </div>
     </div>
-    <div class="span4">
+    <div class="span4 comandaContainer">
         <div id="pedidos" name="pedidos">
             <?php
             $pedidos = obtenPedidos();

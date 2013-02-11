@@ -55,6 +55,7 @@ class Platillo {
     }
 
     function printPlatilloPedido($tipoPlatillo, $tipoFila) {
+        echo '<!-- Inicia platillo-->';
         echo '<div class="platillo ' . $tipoPlatillo . ' ' . $tipoFila . ' span6 popupPlatillo" id="' . $this->idPlatillo . '" nombre="' . $this->nombre . '" precio="' . $this->precioBase . '" texto="' . $this->descripcion . '">';
         echo '  <div class="span8 offset1">';
         if (strlen($this->nombre) < 25)
@@ -69,7 +70,7 @@ class Platillo {
         echo '          ' . $this->precioBase;
         echo '      </span>';
         echo '  </div>';
-        echo '</div>';
+        echo '</div><!-- Termina platillo-->';        
     }
 
     function printPlatilloPedidoDeshabilitado($tipoPlatillo, $tipoFila) {

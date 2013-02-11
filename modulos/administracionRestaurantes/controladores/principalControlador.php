@@ -38,4 +38,15 @@ function logout() {
     redirect("adminRestaurante.php");
 }
 
+function pedidosActivos() {
+    require_once 'modulos/pedidos/modelos/pedidoModelo.php';
+    if (isset($_SESSION['restauranteUsuario'])) {
+        $restaurante = $_SESSION['restauranteUsuario'];
+        $pedidos = getPedidosDeRestaurante($restaurante->idRestaurante);
+        require_once 'modulos/administracionRestaurantes/vistas/pedidosActivos.php';
+    } else {
+        goToIndex();
+    }
+}
+
 ?>
