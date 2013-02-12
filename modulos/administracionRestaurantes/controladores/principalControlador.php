@@ -38,15 +38,38 @@ function logout() {
     redirect("adminRestaurante.php");
 }
 
+function adminPedidos(){
+    require_once 'modulos/administracionRestaurantes/vistas/adminPedidos.php';
+}
+
+function pedidosPorAceptar() {
+    require_once 'modulos/pedidos/modelos/pedidoModelo.php';
+    if (isset($_SESSION['restauranteUsuario'])) {
+        $restaurante = $_SESSION['restauranteUsuario'];
+        $estado = 1; //Son pedidos no aceptados
+        $pedidos = getPedidosDeRestaurante($restaurante->idRestaurante,$estado);
+        require_once 'modulos/administracionRestaurantes/vistas/pedidosPorAceptar.php';
+    } else {
+        goToIndex();
+    }
+}
+
 function pedidosActivos() {
     require_once 'modulos/pedidos/modelos/pedidoModelo.php';
     if (isset($_SESSION['restauranteUsuario'])) {
         $restaurante = $_SESSION['restauranteUsuario'];
-        $pedidos = getPedidosDeRestaurante($restaurante->idRestaurante);
+        $estado = 2; //Son pedidos aceptados
+        $pedidos = getPedidosDeRestaurante($restaurante->idRestaurante,$estado);
         require_once 'modulos/administracionRestaurantes/vistas/pedidosActivos.php';
     } else {
         goToIndex();
     }
 }
 
+function detallesDePedido(){
+    $idPedido = $_GET['i'];
+    require_once 'modulos/pedidos/modelos/pedidoModelo.php';
+    $platillos = getDetallesDePedido($idPedido);
+    print_r($platillos);
+}
 ?>

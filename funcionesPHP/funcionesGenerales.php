@@ -135,6 +135,23 @@ function getTextoHabilitado($habilitado) {
     }
 }
 
+function getTextoEstadoPedido($idEstadoPedodo) {
+    switch ($idEstadoPedodo) {
+        case 1:
+            return "Por aceptar";
+            break;
+        case 2:
+            return "Aceptado";
+            break;
+        case 3:
+            return "Entregado";
+            break;
+        case 2:
+            return "Cancelado";
+            break;
+    }
+}
+
 function getHoras($strTime) {
     $aux = explode(":", $strTime);
     return intval($aux[0]);
@@ -278,7 +295,7 @@ function restauranteAbiertoAhorita($idRestaurante) {
 }
 
 function platilloDisponibleAhorita($idPlatillo) {
-    
+
     require_once 'modulos/platillos/modelos/platilloModelo.php';
     $hora = getHorarioPlatillo($idPlatillo);
     return horarioDisponibleAhorita($hora);
@@ -323,4 +340,5 @@ function horarioDisponibleAhorita($hora) {
     //cualquier otro caso, esta cerrado
     return $habilitado;
 }
+
 ?>

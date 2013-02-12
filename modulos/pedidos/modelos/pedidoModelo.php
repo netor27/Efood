@@ -81,6 +81,7 @@ function guardaPedido() {
 
 
 
+
         
 //logica para que los valores se conviertan en los ids de la sesion $_SESSION['ingrediente'][id] para sacar los precios y demÃ¡s
     //luego seteamos las sesiones a null o le aplicamos el destroy con unset (no en este momento o pierdo todos los datos
@@ -386,18 +387,38 @@ function guardaDireccion() {
     return $respuesta;
 }
 
-function getPedidosDeRestaurante($idRestaurante) {
+function getPedidosDeRestaurante($idRestaurante, $estado) {
     global $conex;
     $stmt = $conex->prepare("SELECT p.*
                             FROM pedido p
-                            WHERE idRestaurante=:idRestaurante");
+                            WHERE idRestaurante=:idRestaurante AND idEstadoPedido = :estado");
     $stmt->bindParam(':idRestaurante', $idRestaurante);
+    $stmt->bindParam(':estado', $estado);
     if ($stmt->execute()) {
         $rows = $stmt->fetchAll();
         return $rows;
-    }else{
+    } else {
         return null;
-    }    
+    }
+}
+
+function getDetallesDePedido($idPedido) {
+    global $conex;
+    $stmt = $conex->prepare("SELECT p.idPedido, p.idMetodoEntrega, p.idTipoPago,
+                            p.numReferencia, p.total, p.gastoDeEnvio, p.comision, 
+                            pp.especificaciones, pp.cantidad, pp.precio, i.nombre
+                            FROM pedido p
+                            LEFT OUTER JOIN pedidoplatillo pp ON p.idPedido = pp.idPedido
+                            LEFT OUTER JOIN pedidoplatilloingrediente ppi ON pp.idPedidoPlatillo = ppi.idPedidoPlatillo
+                            LEFT OUTER JOIN ingrediente i ON ppi.idIngrediente = i.idIngrediente
+                            WHERE p.idPedido =31");
+    $stmt->bindParam(':idPedido', $idPedido);
+    if ($stmt->execute()) {
+        $rows = $stmt->fetchAll();
+        return $rows;
+    } else {
+        return null;
+    }
 }
 
 ?>
