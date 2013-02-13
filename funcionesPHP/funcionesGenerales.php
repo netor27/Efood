@@ -146,8 +146,8 @@ function getTextoEstadoPedido($idEstadoPedodo) {
         case 3:
             return "Entregado";
             break;
-        case 2:
-            return "Cancelado";
+        case 4:
+            return "Rechazado";
             break;
     }
 }

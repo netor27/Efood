@@ -38,38 +38,109 @@ function logout() {
     redirect("adminRestaurante.php");
 }
 
-function adminPedidos(){
+function adminPedidos() {
     require_once 'modulos/administracionRestaurantes/vistas/adminPedidos.php';
 }
 
 function pedidosPorAceptar() {
+    $t = "pedidosPorAceptar";
+    $titulo = "Pedidos Por Aceptar";
     require_once 'modulos/pedidos/modelos/pedidoModelo.php';
     if (isset($_SESSION['restauranteUsuario'])) {
         $restaurante = $_SESSION['restauranteUsuario'];
         $estado = 1; //Son pedidos no aceptados
-        $pedidos = getPedidosDeRestaurante($restaurante->idRestaurante,$estado);
-        require_once 'modulos/administracionRestaurantes/vistas/pedidosPorAceptar.php';
+        $pedidos = getPedidosDeRestaurante($restaurante->idRestaurante, $estado);
+        require_once 'modulos/administracionRestaurantes/vistas/listaPedidos.php';
     } else {
         goToIndex();
     }
 }
 
 function pedidosActivos() {
+    $t = "pedidosActivos";
+    $titulo = "Pedidos Activos";
     require_once 'modulos/pedidos/modelos/pedidoModelo.php';
     if (isset($_SESSION['restauranteUsuario'])) {
         $restaurante = $_SESSION['restauranteUsuario'];
         $estado = 2; //Son pedidos aceptados
-        $pedidos = getPedidosDeRestaurante($restaurante->idRestaurante,$estado);
-        require_once 'modulos/administracionRestaurantes/vistas/pedidosActivos.php';
+        $pedidos = getPedidosDeRestaurante($restaurante->idRestaurante, $estado);
+        require_once 'modulos/administracionRestaurantes/vistas/listaPedidos.php';
     } else {
         goToIndex();
     }
 }
 
-function detallesDePedido(){
-    $idPedido = $_GET['i'];
+function pedidosRechazados() {
+    $t = "pedidosRechazados";
+    $titulo = "Pedidos Rechazados";
     require_once 'modulos/pedidos/modelos/pedidoModelo.php';
-    $platillos = getDetallesDePedido($idPedido);
-    print_r($platillos);
+    if (isset($_SESSION['restauranteUsuario'])) {
+        $restaurante = $_SESSION['restauranteUsuario'];
+        $estado = 4; //Son pedidos rechazados
+        $pedidos = getPedidosDeRestaurante($restaurante->idRestaurante, $estado);
+        require_once 'modulos/administracionRestaurantes/vistas/listaPedidos.php';
+    } else {
+        goToIndex();
+    }
 }
+
+function pedidosEntregados() {
+    $t = "pedidosEntregados";
+    $titulo = "Pedidos Entregados";
+    require_once 'modulos/pedidos/modelos/pedidoModelo.php';
+    if (isset($_SESSION['restauranteUsuario'])) {
+        $restaurante = $_SESSION['restauranteUsuario'];
+        $estado = 3; //Son pedidos entregados
+        $pedidos = getPedidosDeRestaurante($restaurante->idRestaurante, $estado);
+        require_once 'modulos/administracionRestaurantes/vistas/listaPedidos.php';
+    } else {
+        goToIndex();
+    }
+}
+
+function detallesDePedido() {
+    $t = "pedidoPorAceptar";
+    if (isset($_GET['t'])) {
+        $t = $_GET['t'];
+    }
+    if (isset($_GET['i'])) {
+        $idPedido = $_GET['i'];
+        require_once 'modulos/pedidos/modelos/pedidoModelo.php';
+        $platillos = getDetallesDePedido($idPedido);
+        require_once 'modulos/administracionRestaurantes/vistas/detallesDePedido.php';
+    } else {
+        goToIndex();
+    }
+}
+
+function aceptarPedido() {
+    $idPedido = $_GET['i'];
+    $t = $_GET['t'];
+    require_once 'modulos/pedidos/modelos/pedidoModelo.php';
+    $estado = 2; //pedido aceptado
+    cambiarEstadoDePedido($idPedido, $estado);
+    setSessionMessage("Haz aceptado este pedido");
+    redirect('/adminRestaurante.php?a=detallesDePedido&t=' . $t . '&i=' . $idPedido);
+}
+
+function rechazarPedido() {
+    $idPedido = $_GET['i'];
+    $t = $_GET['t'];
+    require_once 'modulos/pedidos/modelos/pedidoModelo.php';
+    $estado = 4; //pedido rechazado
+    cambiarEstadoDePedido($idPedido, $estado);
+    setSessionMessage("Haz rechazado este pedido");
+    redirect('/adminRestaurante.php?a=detallesDePedido&t=' . $t . '&i=' . $idPedido);
+}
+
+function pedidoEntregado() {
+    $idPedido = $_GET['i'];
+    $t = $_GET['t'];
+    require_once 'modulos/pedidos/modelos/pedidoModelo.php';
+    $estado = 3; //pedido entregado
+    cambiarEstadoDePedido($idPedido, $estado);
+    setSessionMessage("Haz entregado este pedido");
+    redirect('/adminRestaurante.php?a=detallesDePedido&t=' . $t . '&i=' . $idPedido);
+}
+
 ?>

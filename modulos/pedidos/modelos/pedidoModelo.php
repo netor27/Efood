@@ -72,15 +72,7 @@ function guardaPedido() {
     $cadena = str_replace("+", "", $valores);
     $pares = explode("&", $cadena); //datos de la forma tamano=idtamano, salsa=idsalsa
     foreach ($pares as $key => $value)
-        $datos[$key] = explode("=", $value); //datos de la forma [0] tamano, [1] idtamano, [2] salsa, [3] idsalsa
-
-
-
-
-
-
-
-
+        $datos[$key] = explode("=", $value); //datos de la forma [0] tamano, [1] idtamano, [2] salsa, [3] idsalsa     
 
         
 //logica para que los valores se conviertan en los ids de la sesion $_SESSION['ingrediente'][id] para sacar los precios y demÃ¡s
@@ -406,12 +398,15 @@ function getDetallesDePedido($idPedido) {
     global $conex;
     $stmt = $conex->prepare("SELECT p.idPedido, p.idMetodoEntrega, p.idTipoPago,
                             p.numReferencia, p.total, p.gastoDeEnvio, p.comision, 
-                            pp.especificaciones, pp.cantidad, pp.precio, i.nombre
+                            p.idEstadoPedido, pl.nombre, pl.idPlatillo, 
+                            pp.especificaciones, pp.cantidad, pp.precio, 
+                            i.nombre as nombreIngrediente
                             FROM pedido p
                             LEFT OUTER JOIN pedidoplatillo pp ON p.idPedido = pp.idPedido
+                            LEFT OUTER JOIN platillo pl ON pp.idPlatillo = pl.idPlatillo
                             LEFT OUTER JOIN pedidoplatilloingrediente ppi ON pp.idPedidoPlatillo = ppi.idPedidoPlatillo
                             LEFT OUTER JOIN ingrediente i ON ppi.idIngrediente = i.idIngrediente
-                            WHERE p.idPedido =31");
+                            WHERE p.idPedido=:idPedido");
     $stmt->bindParam(':idPedido', $idPedido);
     if ($stmt->execute()) {
         $rows = $stmt->fetchAll();
@@ -419,6 +414,16 @@ function getDetallesDePedido($idPedido) {
     } else {
         return null;
     }
+}
+
+function cambiarEstadoDePedido($idPedido, $estado) {
+    global $conex;
+    $stmt = $conex->prepare("UPDATE pedido 
+                            SET idEstadoPedido = :estado
+                            WHERE idPedido = :idPedido");
+    $stmt->bindParam(':estado', $estado);
+    $stmt->bindParam(':idPedido', $idPedido);
+    return $stmt->execute();
 }
 
 ?>

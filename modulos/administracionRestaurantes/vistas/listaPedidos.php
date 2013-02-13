@@ -4,7 +4,7 @@ require_once('layout/headers/headFin.php');
 ?>
 <div class="row-fluid"><div class="span12"></div></div>
 <div class="row-fluid"><div class="span12"></div></div>
-<h1>Pedidos activos</h1>
+<h1><?php echo $titulo; ?></h1>
 <br>
 <div style="margin-left: 15px;">
     <div class="row-fluid">
@@ -21,7 +21,7 @@ require_once('layout/headers/headFin.php');
                     <th style="width:1%">Total</th>
                     <th style="width:1%">Gasto de envío</th>
                     <th style="width:1%">Comisión</th>
-                    <th style="width:1%">Ver detalles</th>
+                    <th style="width:1%">Ver detalles del pedido</th>
                 </tr>
                 <?php
                 foreach ($pedidos as $pedido) {
@@ -34,7 +34,7 @@ require_once('layout/headers/headFin.php');
                     echo '<td>' . $pedido['total'] . '</td>';
                     echo '<td>' . $pedido['gastoDeEnvio'] . '</td>';
                     echo '<td>' . $pedido['comision'] . '</td>';
-                    echo '<td><a href="/adminRestaurante.php?a=detallesDePedido&i=' . $pedido['idPedido'] . '" class="btn">Ver detalles</a></td>';
+                    echo '<td><a href="/adminRestaurante.php?a=detallesDePedido&t='.$t.'&i=' . $pedido['idPedido'] . '" class="btn">Ver detalles del pedido</a></td>';                    
                     echo '</tr>';
                 }
                 ?>
