@@ -100,7 +100,7 @@ function actualizarOrden(){
     foreach ($ids as $id){
         $idCategoriaPlatillo = $_POST['id'.$id];
         $orden = $_POST['orden'.$id];
-        echo 'Se establecera al id = ' . $idCategoriaPlatillo . ' el orden ' .$orden . '<br>';
+        //echo 'Se establecera al id = ' . $idCategoriaPlatillo . ' el orden ' .$orden . '<br>';
         require_once 'modulos/platillos/modelos/CategoriaPlatilloModelo.php';
         if(modificaOrdenCategoriaPlatillo($idCategoriaPlatillo, $orden)){
             $bandera = true;
